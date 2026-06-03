@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Dimas Kurniawan | 3D Portfolio - Google Cloud Data Center Engineer</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #4285F4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: #4285F4;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+        .lang-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 30px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+        .lang-btn.active {
+            background: #4285F4;
+            box-shadow: 0 0 8px #4285F4;
+        }
+        .lang-btn:hover {
+            background: #4285F4;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+        .hero .highlight {
+            background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-button {
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .section-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(135deg, #4285F4, #EA4335);
+            border-radius: 3px;
+        }
+        .about-content {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.7;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+        }
+        .skills-grid, .exp-grid, .cert-grid, .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .skill-card, .exp-card, .cert-card, .project-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+        .exp-card, .cert-card, .project-card {
+            text-align: left;
+        }
+        .skill-card i, .cert-card i {
+            font-size: 2.5rem;
+            color: #4285F4;
+            margin-bottom: 1rem;
+        }
+        .exp-card h3, .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .exp-company {
+            color: #4285F4;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .exp-date {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+        .exp-card ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        .exp-card li {
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+        .project-img {
+            height: 120px;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.8rem 0;
+        }
+        .tool-tag {
+            background: rgba(66,133,244,0.3);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        .project-link {
+            color: #4285F4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .contact-photo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .profile-contact-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4285F4;
+            box-shadow: 0 0 20px rgba(66,133,244,0.5);
+        }
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .social-icon:hover {
+            background: #4285F4;
+            transform: translateY(-5px);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 1rem;
+            }
+            .lang-toggle {
+                margin-left: 0;
+                margin-top: 0.3rem;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+            .skills-grid, .exp-grid, .cert-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-details {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="canvas-container"></div>
+<div class="overlay"></div>
+
+<div class="content">
+    <nav>
+        <div class="logo">Dimas Kurniawan | GCP</div>
+        <div class="nav-links">
+            <a href="#home" data-key="nav_home">Home</a>
+            <a href="#about" data-key="nav_about">About</a>
+            <a href="#skills" data-key="nav_skills">Skills</a>
+            <a href="#experience" data-key="nav_exp">Experience</a>
+            <a href="#projects" data-key="nav_projects">Projects</a>
+            <a href="#certifications" data-key="nav_certs">Certifications</a>
+            <a href="#contact" data-key="nav_contact">Contact</a>
+            <div class="lang-toggle">
+                <button class="lang-btn" data-lang="id">🇮🇩 ID</button>
+                <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Hi, I'm <span class="highlight" data-key="hero_name">Dimas Kurniawan</span></h1>
+        <p data-key="hero_title">ICT System Administrator | Data Center Engineer @ Google Cloud | 14+ Years Excellence</p>
+        <button class="cta-button" onclick="scrollToSection('projects')" data-key="hero_btn">Explore Portfolio →</button>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2 class="section-title reveal" data-key="about_title">Tentang Saya</h2>
+        <div class="about-content reveal">
+            <p data-key="about_text1">Dedicated ICT System Administrator with 14+ years managing Windows/Linux servers. Currently Data Center Engineer at Google Cloud Indonesia, expert in cloud infra, high-availability, virtualization, backup, and security hardening.</p>
+            <p style="margin-top: 1rem;" data-key="about_text2">Passionate about zero-downtime infrastructure, automation, and modern IT solutions.</p>
+        </div>
+    </section>
+
+    <!-- Core Skills -->
+    <section id="skills">
+        <h2 class="section-title reveal" data-key="skills_title">Keahlian Inti</h2>
+        <div class="skills-grid">
+            <div class="skill-card reveal"><i class="fas fa-server"></i><h3 data-key="skill1_title">Server Admin</h3><p data-key="skill1_desc">Windows/Linux, AD, GPO</p></div>
+            <div class="skill-card reveal"><i class="fas fa-cloud"></i><h3 data-key="skill2_title">Cloud & Virtualization</h3><p data-key="skill2_desc">GCP, VMware, Hyper-V</p></div>
+            <div class="skill-card reveal"><i class="fas fa-shield-alt"></i><h3 data-key="skill3_title">Security</h3><p data-key="skill3_desc">EDR, PAM, Compliance</p></div>
+            <div class="skill-card reveal"><i class="fas fa-network-wired"></i><h3 data-key="skill4_title">Networking</h3><p data-key="skill4_desc">Cisco, MikroTik, Firewall</p></div>
+            <div class="skill-card reveal"><i class="fas fa-database"></i><h3 data-key="skill5_title">Database</h3><p data-key="skill5_desc">SQL, MySQL, PostgreSQL</p></div>
+            <div class="skill-card reveal"><i class="fas fa-chart-line"></i><h3 data-key="skill6_title">Monitoring</h3><p data-key="skill6_desc">Zabbix, SolarWinds, Veeam</p></div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+        <h2 class="section-title reveal" data-key="exp_title">Pengalaman Profesional</h2>
+        <div class="exp-grid">
+            <div class="exp-card reveal">
+                <h3 data-key="exp1_title">Data Center Engineer</h3>
+                <div class="exp-company">Google Cloud Indonesia</div>
+                <span class="exp-date" data-key="exp1_date">Feb 2026 – Present</span>
+                <ul data-key="exp1_list">
+                    <li>Manage data center infrastructure, 99.9% uptime</li>
+                    <li>Deploy servers, networking, storage; monitor environment</li>
+                    <li>Security policies, incident response, RCA</li>
+                    <li>Capacity upgrades & lifecycle management</li>
+                </ul>
+            </div>
+            <div class="exp-card reveal">
+                <h3 data-key="exp2_title">ICT Server</h3>
+                <div class="exp-company">PT Antam tbk</div>
+                <span class="exp-date" data-key="exp2_date">Jan 2022 – July 2025</span>
+                <ul data-key="exp2_list">
+                    <li>Administered 100+ Windows/Linux servers, AD, DNS/DHCP</li>
+                    <li>VMware ESXi, Hyper-V virtualization</li>
+                    <li>Backup with Acronis Cyber Protect</li>
+                </ul>
+            </div>
+            <div class="exp-card reveal">
+                <h3 data-key="exp3_title">IT Aplikasi dan Database</h3>
+                <div class="exp-company">PT Antam tbk</div>
+                <span class="exp-date" data-key="exp3_date">Mar 2019 – Jan 2022</span>
+                <ul data-key="exp3_list">
+                    <li>Business apps installation & maintenance</li>
+                    <li>SQL Server, MySQL, PostgreSQL admin, backup strategies</li>
+                    <li>Technical documentation & training</li>
+                </ul>
+            </div>
+            <div class="exp-card reveal">
+                <h3 data-key="exp4_title">IT Network & Technician</h3>
+                <div class="exp-company">PT Antam tbk, Kolaka</div>
+                <span class="exp-date" data-key="exp4_date">Apr 2011 – Mar 2019</span>
+                <ul data-key="exp4_list">
+                    <li>Desktop, network, server support; Cisco routers/switches</li>
+                    <li>Monitoring CACTI, SNMP, SolarWinds</li>
+                    <li>OS deployment & printer management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <h2 class="section-title reveal" data-key="projects_title">Project Unggulan</h2>
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-database"></i></div>
+                <h3 data-key="proj1_title">Google Cloud DC Optimization</h3>
+                <p data-key="proj1_desc">Optimizing data center operations & automated monitoring for GCP.</p>
+                <div class="project-tools"><span class="tool-tag">GCP</span><span class="tool-tag">Data Center</span></div>
+                <a href="#" class="project-link" data-key="proj_link" onclick="alertDemo()">Lihat Detail →</a>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-cloud-upload-alt"></i></div>
+                <h3 data-key="proj2_title">Microsoft 365 Backup</h3>
+                <p data-key="proj2_desc">Comprehensive backup for M365: Exchange, OneDrive, Teams.</p>
+                <div class="project-tools"><span class="tool-tag">Acronis</span><span class="tool-tag">M365</span></div>
+                <a href="#" class="project-link" data-key="proj_link" onclick="alertDemo()">Lihat Detail →</a>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-cloud-migrate"></i></div>
+                <h3 data-key="proj3_title">Website Migration to GCP</h3>
+                <p data-key="proj3_desc">Migrated internal web apps from on-prem to GCP + Cloudflare.</p>
+                <div class="project-tools"><span class="tool-tag">GCP</span><span class="tool-tag">Cloudflare</span></div>
+                <a href="#" class="project-link" data-key="proj_link" onclick="alertDemo()">Lihat Detail →</a>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-key"></i></div>
+                <h3 data-key="proj4_title">Privileged Access Management</h3>
+                <p data-key="proj4_desc">Implemented PAM (Senhasegura) for secure remote access.</p>
+                <div class="project-tools"><span class="tool-tag">PAM</span><span class="tool-tag">Security</span></div>
+                <a href="#" class="project-link" data-key="proj_link" onclick="alertDemo()">Lihat Detail →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications">
+        <h2 class="section-title reveal" data-key="certs_title">Sertifikasi Profesional</h2>
+        <div class="cert-grid">
+            <div class="cert-card reveal"><i class="fab fa-google"></i><h4>Google Cloud Certified</h4><p data-key="cert1">Professional Data Engineer (In Progress)</p></div>
+            <div class="cert-card reveal"><i class="fab fa-microsoft"></i><h4>MCSA: Windows Server</h4><p data-key="cert2">Microsoft SN: H319-9174</p></div>
+            <div class="cert-card reveal"><i class="fas fa-network-wired"></i><h4>MTCNA</h4><p data-key="cert3">MikroTik SN: 1811NA3406</p></div>
+            <div class="cert-card reveal"><i class="fas fa-certificate"></i><h4>ITIL v4 Foundation</h4><p data-key="cert4">AXELOS SN: GR750581779DK</p></div>
+            <div class="cert-card reveal"><i class="fas fa-shield-alt"></i><h4>CompTIA Security+</h4><p data-key="cert5">SN: 0G6DGPPFW3Q4QQWY</p></div>
+            <div class="cert-card reveal"><i class="fab fa-aws"></i><h4>AWS Cloud Practitioner</h4><p data-key="cert6">SN: b08b747ac05049c58e950b2b404c7dc3</p></div>
+        </div>
+    </section>
+
+    <!-- Contact with Photo -->
+    <section id="contact">
+        <h2 class="section-title reveal" data-key="contact_title">Hubungi Saya</h2>
+        <div class="contact-content">
+            <div class="contact-photo reveal">
+                <img src="foto-saya.jpeg" alt="Dimas Kurniawan" class="profile-contact-img">
+            </div>
+            <div class="contact-details reveal">
+                <div class="contact-item" data-copy="Jakarta, Indonesia"><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</div>
+                <div class="contact-item" data-copy="+62-813-8008-6961"><i class="fas fa-phone-alt"></i> +62-813-8008-6961</div>
+                <div class="contact-item" data-copy="dimas.kurniawan@cakrawala.ac.id"><i class="fas fa-envelope"></i> dimas.kurniawan@cakrawala.ac.id</div>
+            </div>
+            <div class="social-links reveal">
+                <div class="social-icon" data-url="https://linkedin.com/in/dimaz-kurniawan"><i class="fab fa-linkedin-in"></i></div>
+                <div class="social-icon" data-url="https://dimask016.github.io/portofolio-cv/"><i class="fab fa-github"></i></div>
+                <div class="social-icon" data-email="dimas.kurniawan@cakrawala.ac.id"><i class="fas fa-envelope"></i></div>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2026 Dimas Kurniawan — 3D Interactive Portfolio</p>
+        </div>
+    </section>
+</div>
+
+<!-- Three.js -->
+<script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
+</script>
+<script type="module">
+    import * as THREE from 'three';
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050510);
+    scene.fog = new THREE.FogExp2(0x050510, 0.002);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 2, 7);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    // Lights
+    const ambient = new THREE.AmbientLight(0x404060);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(2, 5, 3);
+    scene.add(dirLight);
+    const backLight = new THREE.PointLight(0x4285F4, 0.5);
+    backLight.position.set(0, 2, -4);
+    scene.add(backLight);
+
+    // Google Logo 3D Group
+    const mainGroup = new THREE.Group();
+    scene.add(mainGroup);
+    const centerGeo = new THREE.SphereGeometry(0.9, 64, 64);
+    const canvas = document.createElement('canvas');
+    canvas.width = 512; canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = 'Bold 400px "Segoe UI"';
+    ctx.fillStyle = '#4285F4';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('G', canvas.width/2, canvas.height/2);
+    const texture = new THREE.CanvasTexture(canvas);
+    const centerMat = new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, emissive: 0x2244aa });
+    const centerSphere = new THREE.Mesh(centerGeo, centerMat);
+    mainGroup.add(centerSphere);
+    
+    const colors = [0x4285F4, 0xEA4335, 0xFBBC05, 0x34A853];
+    const orbits = [];
+    const orbGeo = new THREE.SphereGeometry(0.45, 48, 48);
+    for (let i = 0; i < 4; i++) {
+        const orbMat = new THREE.MeshStandardMaterial({ color: colors[i], emissive: colors[i], emissiveIntensity: 0.3 });
+        const orb = new THREE.Mesh(orbGeo, orbMat);
+        mainGroup.add(orb);
+        orbits.push(orb);
+    }
+    const ringGeo = new THREE.TorusGeometry(1.4, 0.05, 64, 200);
+    const ringMat = new THREE.MeshStandardMaterial({ color: 0x4285F4, emissive: 0x4285F4 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    mainGroup.add(ring);
+
+    // Particles
+    const particleCount = 1200;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+        positions[i*3] = (Math.random() - 0.5) * 80;
+        positions[i*3+1] = (Math.random() - 0.5) * 50;
+        positions[i*3+2] = (Math.random() - 0.5) * 60 - 30;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({ color: 0x88aaff, size: 0.06, transparent: true, blending: THREE.AdditiveBlending });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+    
+    const starCount = 800;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+        starPos[i*3] = (Math.random() - 0.5) * 200;
+        starPos[i*3+1] = (Math.random() - 0.5) * 100;
+        starPos[i*3+2] = (Math.random() - 0.5) * 100 - 50;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.04, transparent: true }));
+    scene.add(stars);
+
+    let time = 0, mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+    function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+        mainGroup.rotation.y = time * 0.4;
+        mainGroup.rotation.x = Math.sin(time * 0.2) * 0.2;
+        orbits.forEach((orb, idx) => {
+            const angle = time * 0.8 + idx * Math.PI/2;
+            orb.position.x = Math.cos(angle) * 1.8;
+            orb.position.z = Math.sin(angle) * 1.8;
+            orb.position.y = Math.sin(time * 1.5 + idx) * 0.4;
+        });
+        ring.rotation.x = time * 0.5;
+        ring.rotation.y = time * 0.7;
+        particles.rotation.y = time * 0.03;
+        stars.rotation.x = time * 0.01;
+        camera.position.x += (mouseX * 1.2 - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY * 0.8 - camera.position.y) * 0.05;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+    }
+    animate();
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+
+<script>
+    // Bilingual Dictionary
+    const translations = {
+        id: {
+            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
+            hero_name: "Dimas Kurniawan", hero_title: "ICT System Administrator | Data Center Engineer @ Google Cloud | 14+ Tahun Pengalaman", hero_btn: "Lihat Portfolio →",
+            about_title: "Tentang Saya", about_text1: "System Administrator berdedikasi dengan pengalaman 14+ tahun mengelola server Windows/Linux. Saat ini Data Center Engineer di Google Cloud Indonesia, ahli dalam infrastruktur cloud, ketersediaan tinggi, virtualisasi, backup, dan keamanan.",
+            about_text2: "Bersemangat memberikan infrastruktur tanpa downtime, otomatisasi, dan solusi IT modern.",
+            skills_title: "Keahlian Inti",
+            skill1_title: "Server Admin", skill1_desc: "Windows/Linux, AD, GPO",
+            skill2_title: "Cloud & Virtualisasi", skill2_desc: "GCP, VMware, Hyper-V",
+            skill3_title: "Keamanan", skill3_desc: "EDR, PAM, Kepatuhan",
+            skill4_title: "Jaringan", skill4_desc: "Cisco, MikroTik, Firewall",
+            skill5_title: "Database", skill5_desc: "SQL, MySQL, PostgreSQL",
+            skill6_title: "Monitoring", skill6_desc: "Zabbix, SolarWinds, Veeam",
+            exp_title: "Pengalaman Profesional",
+            exp1_title: "Data Center Engineer", exp1_date: "Feb 2026 – Sekarang", exp1_list: ["Kelola infrastruktur data center, uptime 99.9%", "Deploy server, jaringan, storage", "Kebijakan keamanan, insiden, RCA", "Upgrade kapasitas & manajemen siklus hidup"],
+            exp2_title: "ICT Server", exp2_date: "Jan 2022 – Jul 2025", exp2_list: ["Administrasi 100+ server Windows/Linux, AD, DNS/DHCP", "Virtualisasi VMware ESXi, Hyper-V", "Backup dengan Acronis Cyber Protect"],
+            exp3_title: "IT Aplikasi dan Database", exp3_date: "Mar 2019 – Jan 2022", exp3_list: ["Instalasi & pemeliharaan aplikasi bisnis", "Admin SQL Server, MySQL, PostgreSQL, strategi backup", "Dokumentasi teknis & pelatihan"],
+            exp4_title: "IT Network & Teknisi", exp4_date: "Apr 2011 – Mar 2019", exp4_list: ["Dukungan desktop, jaringan, server; router/switch Cisco", "Monitoring CACTI, SNMP, SolarWinds", "Deploy OS & manajemen printer"],
+            projects_title: "Proyek Unggulan",
+            proj1_title: "Optimasi Data Center Google Cloud", proj1_desc: "Mengoptimalkan operasi data center & monitoring otomatis untuk GCP.",
+            proj2_title: "Backup Microsoft 365", proj2_desc: "Backup komprehensif untuk M365: Exchange, OneDrive, Teams.",
+            proj3_title: "Migrasi Website ke GCP", proj3_desc: "Migrasi aplikasi web internal dari on-prem ke GCP + Cloudflare.",
+            proj4_title: "Manajemen Akses Istimewa", proj4_desc: "Implementasi PAM (Senhasegura) untuk akses remote aman.",
+            proj_link: "Lihat Detail →",
+            certs_title: "Sertifikasi Profesional",
+            cert1: "Professional Data Engineer (Sedang Berjalan)", cert2: "Microsoft SN: H319-9174", cert3: "MikroTik SN: 1811NA3406", cert4: "AXELOS SN: GR750581779DK", cert5: "CompTIA SN: 0G6DGPPFW3Q4QQWY", cert6: "AWS SN: b08b747ac05049c58e950b2b404c7dc3",
+            contact_title: "Hubungi Saya"
+        },
+        en: {
+            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
+            hero_name: "Dimas Kurniawan", hero_title: "ICT System Administrator | Data Center Engineer @ Google Cloud | 14+ Years Excellence", hero_btn: "Explore Portfolio →",
+            about_title: "About Me", about_text1: "Dedicated ICT System Administrator with 14+ years managing Windows/Linux servers. Currently Data Center Engineer at Google Cloud Indonesia, expert in cloud infra, high-availability, virtualization, backup, and security hardening.",
+            about_text2: "Passionate about zero-downtime infrastructure, automation, and modern IT solutions.",
+            skills_title: "Core Competencies",
+            skill1_title: "Server Admin", skill1_desc: "Windows/Linux, AD, GPO",
+            skill2_title: "Cloud & Virtualization", skill2_desc: "GCP, VMware, Hyper-V",
+            skill3_title: "Security", skill3_desc: "EDR, PAM, Compliance",
+            skill4_title: "Networking", skill4_desc: "Cisco, MikroTik, Firewall",
+            skill5_title: "Database", skill5_desc: "SQL, MySQL, PostgreSQL",
+            skill6_title: "Monitoring", skill6_desc: "Zabbix, SolarWinds, Veeam",
+            exp_title: "Professional Experience",
+            exp1_title: "Data Center Engineer", exp1_date: "Feb 2026 – Present", exp1_list: ["Manage data center infrastructure, 99.9% uptime", "Deploy servers, networking, storage", "Security policies, incident response, RCA", "Capacity upgrades & lifecycle management"],
+            exp2_title: "ICT Server", exp2_date: "Jan 2022 – July 2025", exp2_list: ["Administered 100+ Windows/Linux servers, AD, DNS/DHCP", "VMware ESXi, Hyper-V virtualization", "Backup with Acronis Cyber Protect"],
+            exp3_title: "IT Applications & Database", exp3_date: "Mar 2019 – Jan 2022", exp3_list: ["Business apps installation & maintenance", "SQL Server, MySQL, PostgreSQL admin, backup strategies", "Technical documentation & training"],
+            exp4_title: "IT Network & Technician", exp4_date: "Apr 2011 – Mar 2019", exp4_list: ["Desktop, network, server support; Cisco routers/switches", "Monitoring CACTI, SNMP, SolarWinds", "OS deployment & printer management"],
+            projects_title: "Featured Projects",
+            proj1_title: "Google Cloud DC Optimization", proj1_desc: "Optimizing data center operations & automated monitoring for GCP.",
+            proj2_title: "Microsoft 365 Backup", proj2_desc: "Comprehensive backup for M365: Exchange, OneDrive, Teams.",
+            proj3_title: "Website Migration to GCP", proj3_desc: "Migrated internal web apps from on-prem to GCP + Cloudflare.",
+            proj4_title: "Privileged Access Management", proj4_desc: "Implemented PAM (Senhasegura) for secure remote access.",
+            proj_link: "View Detail →",
+            certs_title: "Professional Certifications",
+            cert1: "Professional Data Engineer (In Progress)", cert2: "Microsoft SN: H319-9174", cert3: "MikroTik SN: 1811NA3406", cert4: "AXELOS SN: GR750581779DK", cert5: "CompTIA SN: 0G6DGPPFW3Q4QQWY", cert6: "AWS SN: b08b747ac05049c58e950b2b404c7dc3",
+            contact_title: "Contact Me"
+        }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'id';
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (translations[lang][key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = translations[lang][key];
+                else if (el.tagName === 'BUTTON') el.innerText = translations[lang][key];
+                else el.innerText = translations[lang][key];
+            }
+        });
+        // Handle list items separately (for ul)
+        document.querySelectorAll('.exp-card ul').forEach((ul, idx) => {
+            const parentCard = ul.closest('.exp-card');
+            if (!parentCard) return;
+            const titleElem = parentCard.querySelector('h3');
+            let listKey = '';
+            if (titleElem.innerText.includes('Data Center')) listKey = 'exp1_list';
+            else if (titleElem.innerText.includes('ICT Server')) listKey = 'exp2_list';
+            else if (titleElem.innerText.includes('Aplikasi')) listKey = 'exp3_list';
+            else if (titleElem.innerText.includes('Network')) listKey = 'exp4_list';
+            if (listKey && translations[lang][listKey]) {
+                const items = translations[lang][listKey];
+                ul.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+            }
+        });
+        // For date spans
+        document.querySelectorAll('.exp-date').forEach((span, i) => {
+            const keys = ['exp1_date', 'exp2_date', 'exp3_date', 'exp4_date'];
+            if (translations[lang][keys[i]]) span.innerText = translations[lang][keys[i]];
+        });
+        // Update active class on buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        localStorage.setItem('lang', lang);
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            currentLang = lang;
+            applyLanguage(lang);
+        });
+    });
+    applyLanguage(currentLang);
+
+    // Helper functions
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+    window.scrollToSection = scrollToSection;
+    window.alertDemo = () => alert("Detail proyek tersedia. Hubungi saya untuk demo lengkap!");
+
+    // Scroll reveal
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return rect.top <= (window.innerHeight*0.8) && rect.bottom >= 0;
+    }
+    function handleReveal() {
+        document.querySelectorAll('.reveal').forEach(el => { if(isInViewport(el)) el.classList.add('active'); });
+    }
+    window.addEventListener('scroll', handleReveal);
+    window.addEventListener('load', handleReveal);
+
+    // Copy contact items
+    document.querySelectorAll('.contact-item').forEach(el => {
+        el.addEventListener('click', () => {
+            const text = el.getAttribute('data-copy') || el.innerText;
+            navigator.clipboard.writeText(text);
+            alert(`✅ "${text}" copied to clipboard`);
+        });
+    });
+    // Social links
+    document.querySelectorAll('.social-icon').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const url = icon.getAttribute('data-url');
+            const email = icon.getAttribute('data-email');
+            if(url) window.open(url, '_blank');
+            else if(email) window.location.href = `mailto:${email}`;
+        });
+    });
+    // Skill cards alert
+    document.querySelectorAll('.skill-card').forEach(card => {
+        card.addEventListener('click', () => alert("💼 Keahlian mendalam dengan pengalaman industri dan sertifikasi."));
+    });
+    // Smooth nav
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('href').substring(1);
+            scrollToSection(target);
+        });
+    });
+</script>
+</body>
+</html>
