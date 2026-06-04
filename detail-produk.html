@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Detail Produk - Amazonia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f7;
+            color: #131921;
+        }
+
+        /* Header */
+        .header {
+            background: #131921;
+            color: white;
+            padding: 12px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9900, #ffcc33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        .cart-badge {
+            background: #ff9900;
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .back-link {
+            background: #232f3e;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Main Content */
+        .product-detail {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 28px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .breadcrumb a {
+            color: #ff9900;
+            text-decoration: none;
+        }
+
+        /* Product Main Section */
+        .product-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Product Gallery */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .main-image {
+            background: linear-gradient(145deg, #f8fafc, #eef2f6);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 180px;
+            border: 1px solid #eee;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 12px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .thumbnail.active {
+            border-color: #ff9900;
+        }
+
+        /* Product Info */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stars {
+            color: #ffa41c;
+            font-size: 16px;
+        }
+
+        .rating-score {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .review-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .product-price {
+            background: #fff5e6;
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .current-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: #b12704;
+        }
+
+        .original-price {
+            font-size: 18px;
+            color: #888;
+            text-decoration: line-through;
+            margin-left: 12px;
+        }
+
+        .discount {
+            background: #ff9900;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-left: 12px;
+        }
+
+        /* Varian Section */
+        .variant-section {
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+        }
+
+        .variant-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            width: 50px;
+            padding: 10px 0;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .size-btn.selected {
+            border-color: #ff9900;
+            background: #fff5e6;
+            color: #ff9900;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px #ddd;
+            cursor: pointer;
+        }
+
+        .color-btn.selected {
+            box-shadow: 0 0 0 2px #ff9900;
+        }
+
+        /* Quantity */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            width: fit-content;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .qty-value {
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-cart {
+            flex: 1;
+            background: #ffd814;
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-buy {
+            flex: 1;
+            background: #ff9900;
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Shipping Info */
+        .shipping-info {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .shipping-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        /* Tabs (Deskripsi, Review, Toko) */
+        .product-tabs {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tab-headers {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+        .tab-btn {
+            padding: 16px 28px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .tab-btn.active {
+            color: #ff9900;
+            border-bottom: 2px solid #ff9900;
+        }
+
+        .tab-content {
+            padding: 28px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Deskripsi */
+        .description-text {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .spec-list {
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        .spec-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+        }
+
+        .spec-label {
+            width: 150px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Review */
+        .review-summary {
+            display: flex;
+            gap: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 24px;
+        }
+
+        .avg-rating {
+            text-align: center;
+        }
+
+        .avg-score {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ff9900;
+        }
+
+        .rating-bars {
+            flex: 1;
+        }
+
+        .rating-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .bar-bg {
+            flex: 1;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #ffa41c;
+            border-radius: 4px;
+        }
+
+        .review-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            background: #ff9900;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .review-stars {
+            color: #ffa41c;
+            font-size: 12px;
+            margin: 8px 0;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .review-helpful {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Store Info */
+        .store-card {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .store-avatar {
+            width: 70px;
+            height: 70px;
+            background: #ff9900;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .store-name {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .store-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #131921;
+            color: #ddd;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Toast */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #232f3e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .product-main {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            .main-image {
+                height: 300px;
+                font-size: 120px;
+            }
+            .product-name {
+                font-size: 20px;
+            }
+            .current-price {
+                font-size: 26px;
+            }
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+            .review-summary {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo" onclick="window.location.href='dashboard.html'">✨ AMAZONIA</div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Kembali</a>
+            <button class="nav-btn" id="cartBtn"><i class="fas fa-shopping-cart"></i> Keranjang <span id="cartCount" class="cart-badge">0</span></button>
+        </div>
+    </div>
+
+    <div class="product-detail">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Beranda</a> / 
+            <a href="dashboard.html">Katalog</a> / 
+            <span id="breadcrumbCategory">Sepatu</span> / 
+            <span id="breadcrumbName">Loading...</span>
+        </div>
+
+        <div class="product-main" id="productMain">
+            <!-- Akan diisi dengan JavaScript -->
+        </div>
+
+        <div class="product-tabs">
+            <div class="tab-headers">
+                <button class="tab-btn active" data-tab="desc">📝 Deskripsi Produk</button>
+                <button class="tab-btn" data-tab="review">⭐ Ulasan Pembeli</button>
+                <button class="tab-btn" data-tab="store">🏪 Informasi Toko</button>
+            </div>
+            
+            <div class="tab-content active" id="tab-desc">
+                <div class="description-text" id="productDesc"></div>
+                <ul class="spec-list" id="productSpecs"></ul>
+            </div>
+            
+            <div class="tab-content" id="tab-review">
+                <div id="reviewContainer"></div>
+            </div>
+            
+            <div class="tab-content" id="tab-store">
+                <div class="store-card">
+                    <div class="store-avatar" id="storeIcon">🏪</div>
+                    <div>
+                        <div class="store-name" id="storeName">Official Amazonia Store</div>
+                        <div class="store-stats" id="storeStats"></div>
+                        <button style="margin-top:12px; background:#ff9900; border:none; padding:8px 20px; border-radius:30px; cursor:pointer;">Kunjungi Toko</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Amazonia - Toko Online Premium</p>
+    </div>
+
+    <div class="toast-msg" id="toastMsg">✓ Ditambahkan ke keranjang</div>
+
+    <script>
+        // Data Produk Lengkap dengan Detail
+        const productsData = {
+            1: {
+                id: 1,
+                name: "Sepatu Aerox Elite",
+                category: "Sepatu Pria",
+                price: 899000,
+                originalPrice: 1299000,
+                icon: "👟",
+                rating: 4.8,
+                totalReviews: 1247,
+                sold: "1.2rb",
+                badge: "Best Seller",
+                description: "Sepatu lari premium dengan teknologi terbaru. Dilengkapi dengan bantalan udara di bagian tumit untuk kenyamanan maksimal saat berlari jarak jauh. Upper material menggunakan mesh breathable yang membuat kaki tetap kering dan sejuk. Sol karet premium memberikan traksi luar biasa di berbagai permukaan.",
+                specs: [
+                    { label: "Merk", value: "Aerox Sport" },
+                    { label: "Material Upper", value: "Mesh Breathable + Sintetis" },
+                    { label: "Material Sole", value: "Karet Premium + EVA Foam" },
+                    { label: "Teknologi", value: "Air Cushion, Anti Slip" },
+                    { label: "Berat", value: "280 gram (ukuran 42)" }
+                ],
+                sizes: [39, 40, 41, 42, 43, 44],
+                colors: [
+                    { name: "Hitam", code: "#1a1a1a" },
+                    { name: "Putih", code: "#ffffff" },
+                    { name: "Biru", code: "#2c5f8a" }
+                ],
+                shipping: {
+                    from: "Jakarta Pusat",
+                    estDays: "2-3 hari",
+                    courier: "JNE, SiCepat, Anteraja"
+                },
+                store: {
+                    name: "Aerox Official Store",
+                    avatar: "👟",
+                    followers: "125rb",
+                    products: "48 produk",
+                    rating: 4.9,
+                    joinYear: "2019"
+                },
+                reviews: [
+                    { name: "Budi S.", rating: 5, date: "2 hari lalu", text: "Sepatu sangat nyaman dipakai lari. Ukuran sesuai, pengiriman cepat!", helpful: 45, avatar: "BS" },
+                    { name: "Anisa R.", rating: 4, date: "5 hari lalu", text: "Bagus cuma agak sempit di bagian jempol. Mungkin size up.", helpful: 23, avatar: "AR" },
+                    { name: "Rizal H.", rating: 5, date: "1 minggu lalu", text: "Recommended! Kualitas premium, worth it dengan harga diskon.", helpful: 67, avatar: "RH" },
+                    { name: "Dewi K.", rating: 4, date: "2 minggu lalu", text: "Warna sesuai gambar, pengiriman cepat. Sayangnya box agak penyok.", helpful: 12, avatar: "DK" },
+                    { name: "Andre G.", rating: 5, date: "3 minggu lalu", text: "Best sepatu lari yang pernah saya punya!", helpful: 89, avatar: "AG" }
+                ],
+                ratingDistribution: { 5: 789, 4: 321, 3: 98, 2: 29, 1: 10 }
+            },
+            2: {
+                id: 2,
+                name: "Headphone Sonix Pro",
+                category: "Aksesoris Audio",
+                price: 1799000,
+                originalPrice: 2499000,
+                icon: "🎧",
+                rating: 4.7,
+                totalReviews: 845,
+                sold: "2.1rb",
+                badge: "Gaming",
+                description: "Headphone gaming dengan noise cancellation aktif. Baterai tahan hingga 40 jam, driver 50mm untuk suara immersive. Dilengkapi microphone fleksibel dengan teknologi noise isolation.",
+                specs: [
+                    { label: "Merk", value: "Sonix" },
+                    { label: "Jenis", value: "Over-Ear, Wireless" },
+                    { label: "Baterai", value: "40 jam (ANC off), 30 jam (ANC on)" },
+                    { label: "Fitur", value: "Active Noise Cancellation, Low Latency" },
+                    { label: "Koneksi", value: "Bluetooth 5.2, 3.5mm Jack" }
+                ],
+                sizes: [],
+                colors: [
+                    { name: "Hitam", code: "#1a1a1a" },
+                    { name: "Silver", code: "#c0c0c0" }
+                ],
+                shipping: { from: "Surabaya", estDays: "2-4 hari", courier: "JNE, SiCepat" },
+                store: { name: "Sonix Audio Official", avatar: "🎧", followers: "89rb", products: "32 produk", rating: 4.8, joinYear: "2020" },
+                reviews: [
+                    { name: "Michael T.", rating: 5, date: "3 hari lalu", text: "Noise cancellation mantap! Suara jernih, bass dalam.", helpful: 56, avatar: "MT" },
+                    { name: "Sarah L.", rating: 5, date: "1 minggu lalu", text: "Pengiriman cepat, kualitas sesuai harga. Recommended!", helpful: 34, avatar: "SL" }
+                ],
+                ratingDistribution: { 5: 512, 4: 234, 3: 67, 2: 22, 1: 10 }
+            },
+            3: {
+                id: 3,
+                name: "Smartwatch Orbit",
+                category: "Jam Tangan Pintar",
+                price: 1499000,
+                originalPrice: 1999000,
+                icon: "⌚",
+                rating: 4.8,
+                totalReviews: 2340,
+                sold: "3.4rb",
+                badge: "Terlaris",
+                description: "Smartwatch dengan layar AMOLED 1.43 inch, monitor detak jantung 24 jam, tahan air 5ATM, GPS built-in, baterai tahan 7 hari.",
+                specs: [
+                    { label: "Merk", value: "Orbit" },
+                    { label: "Layar", value: "AMOLED 1.43 inch" },
+                    { label: "Tahan Air", value: "5ATM (50 meter)" },
+                    { label: "Sensor", value: "Heart Rate, SpO2, GPS, Accelerometer" },
+                    { label: "Baterai", value: "7 hari (normal use)" }
+                ],
+                sizes: [],
+                colors: [{ name: "Hitam", code: "#1a1a1a" }, { name: "Silver", code: "#c0c0c0" }, { name: "Rose Gold", code: "#e8b4b8" }],
+                shipping: { from: "Bandung", estDays: "2-3 hari", courier: "JNE, SiCepat, Anteraja" },
+                store: { name: "Orbit Smart Store", avatar: "⌚", followers: "210rb", products: "56 produk", rating: 4.9, joinYear: "2018" },
+                reviews: [
+                    { name: "Rina W.", rating: 5, date: "2 hari lalu", text: "Bagus banget, fitur lengkap, baterai awet.", helpful: 89, avatar: "RW" },
+                    { name: "Fajar N.", rating: 4, date: "1 minggu lalu", text: "Oke cuma GPS kadang agak lemot sync.", helpful: 23, avatar: "FN" }
+                ],
+                ratingDistribution: { 5: 1450, 4: 620, 3: 180, 2: 60, 1: 30 }
+            }
+        };
+
+        // Ambil ID produk dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let productId = parseInt(urlParams.get('id'));
+        
+        // Default ke ID 1 jika tidak ada atau invalid
+        if (!productId || !productsData[productId]) productId = 1;
+        
+        const product = productsData[productId];
+        let currentLang = 'id';
+        let cart = JSON.parse(localStorage.getItem('cart_amazonia')) || [];
+        
+        // State untuk varian
+        let selectedSize = product.sizes && product.sizes.length > 0 ? product.sizes[0] : null;
+        let selectedColor = product.colors && product.colors.length > 0 ? product.colors[0] : null;
+        let quantity = 1;
+
+        function formatPrice(price) {
+            return `Rp ${price.toLocaleString('id-ID')}`;
+        }
+
+        function updateCartUI() {
+            const total = cart.reduce((sum, item) => sum + item.qty, 0);
+            const cartCountSpan = document.getElementById('cartCount');
+            if (cartCountSpan) cartCountSpan.innerText = total;
+            localStorage.setItem('cart_amazonia', JSON.stringify(cart));
+        }
+
+        function addToCart() {
+            const existing = cart.find(item => item.id === productId);
+            if (existing) existing.qty += quantity;
+            else cart.push({ id: productId, qty: quantity, size: selectedSize, color: selectedColor });
+            updateCartUI();
+            showToast('✓ Ditambahkan ke keranjang');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }
+
+        function buyNow() {
+            addToCart();
+            window.location.href = 'checkout.html';
+        }
+
+        function renderProduct() {
+            const mainContainer = document.getElementById('productMain');
+            
+            // Rating distribution bars
+            const totalRatings = Object.values(product.ratingDistribution).reduce((a, b) => a + b, 0);
+            let ratingBarsHtml = '';
+            for (let star = 5; star >= 1; star--) {
+                const count = product.ratingDistribution[star] || 0;
+                const percentage = totalRatings > 0 ? (count / totalRatings) * 100 : 0;
+                ratingBarsHtml += `
+                    <div class="rating-bar-item">
+                        <span style="width:30px">${star} ★</span>
+                        <div class="bar-bg"><div class="bar-fill" style="width: ${percentage}%"></div></div>
+                        <span style="width:50px">${count}</span>
+                    </div>
+                `;
+            }
+            
+            // Size options HTML
+            let sizeHtml = '';
+            if (product.sizes && product.sizes.length > 0) {
+                sizeHtml = `
+                    <div class="variant-section">
+                        <div class="variant-title">📏 Pilih Ukuran (Nomor Sepatu)</div>
+                        <div class="size-options" id="sizeOptions">
+                            ${product.sizes.map(size => `
+                                <button class="size-btn ${selectedSize === size ? 'selected' : ''}" data-size="${size}">${size}</button>
+                            `).join('')}
+                        </div>
+                        <div style="font-size:12px; color:#666; margin-top:8px;">
+                            <i class="fas fa-ruler"></i> <a href="#" style="color:#ff9900;">Panduan Ukuran</a>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Color options HTML
+            let colorHtml = '';
+            if (product.colors && product.colors.length > 0) {
+                colorHtml = `
+                    <div class="variant-section">
+                        <div class="variant-title">🎨 Pilih Warna</div>
+                        <div class="color-options" id="colorOptions">
+                            ${product.colors.map(color => `
+                                <div class="color-btn ${selectedColor && selectedColor.name === color.name ? 'selected' : ''}" 
+                                     style="background: ${color.code}" 
+                                     data-color-name="${color.name}" 
+                                     data-color-code="${color.code}">
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Reviews HTML
+            let reviewsHtml = `
+                <div class="review-summary">
+                    <div class="avg-rating">
+                        <div class="avg-score">${product.rating}</div>
+                        <div class="stars">★★★★★</div>
+                        <div>${product.totalReviews} ulasan</div>
+                    </div>
+                    <div class="rating-bars">${ratingBarsHtml}</div>
+                </div>
+                <div class="review-list">
+                    ${product.reviews.map(review => `
+                        <div class="review-item">
+                            <div class="reviewer">
+                                <div class="reviewer-avatar">${review.avatar}</div>
+                                <div>
+                                    <div class="reviewer-name">${review.name}</div>
+                                    <div class="review-date">${review.date}</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                            <div class="review-text">${review.text}</div>
+                            <div class="review-helpful"><i class="far fa-thumbs-up"></i> ${review.helpful} orang merasa terbantu</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            mainContainer.innerHTML = `
+                <div class="product-gallery">
+                    <div class="main-image">${product.icon}</div>
+                    <div class="thumbnail-list">
+                        <div class="thumbnail active">${product.icon}</div>
+                        <div class="thumbnail">📸</div>
+                        <div class="thumbnail">📷</div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-rating">
+                        <span class="stars">${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '½' : ''}${'☆'.repeat(5-Math.ceil(product.rating))}</span>
+                        <span class="rating-score">${product.rating}</span>
+                        <span class="review-count">${product.totalReviews} ulasan | ${product.sold} terjual</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="current-price">${formatPrice(product.price)}</span>
+                        <span class="original-price">${formatPrice(product.originalPrice)}</span>
+                        <span class="discount">${Math.round((1 - product.price/product.originalPrice) * 100)}% OFF</span>
+                    </div>
+                    
+                    ${sizeHtml}
+                    ${colorHtml}
+                    
+                    <div class="variant-section">
+                        <div class="variant-title">📦 Jumlah</div>
+                        <div class="quantity-selector">
+                            <button class="qty-btn" id="qtyMinus">-</button>
+                            <span class="qty-value" id="qtyValue">${quantity}</span>
+                            <button class="qty-btn" id="qtyPlus">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-cart" id="addToCartBtn"><i class="fas fa-shopping-cart"></i> + Keranjang</button>
+                        <button class="btn-buy" id="buyNowBtn"><i class="fas fa-bolt"></i> Beli Sekarang</button>
+                    </div>
+                    
+                    <div class="shipping-info">
+                        <div class="shipping-item"><i class="fas fa-store"></i> Dikirim dari ${product.shipping.from}</div>
+                        <div class="shipping-item"><i class="fas fa-truck"></i> Estimasi tiba ${product.shipping.estDays}</div>
+                        <div class="shipping-item"><i class="fas fa-box"></i> Kurir: ${product.shipping.courier}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Update deskripsi dan spesifikasi
+            document.getElementById('productDesc').innerHTML = product.description;
+            const specsHtml = product.specs.map(spec => `
+                <li><span class="spec-label">${spec.label}</span><span>${spec.value}</span></li>
+            `).join('');
+            document.getElementById('productSpecs').innerHTML = specsHtml;
+            
+            // Update review
+            document.getElementById('reviewContainer').innerHTML = reviewsHtml;
+            
+            // Update store
+            document.getElementById('storeName').innerHTML = product.store.name;
+            document.getElementById('storeIcon').innerHTML = product.store.avatar;
+            document.getElementById('storeStats').innerHTML = `
+                <span>⭐ ${product.store.rating}</span>
+                <span>👥 ${product.store.followers} pengikut</span>
+                <span>📦 ${product.store.products}</span>
+                <span>📅 Bergabung ${product.store.joinYear}</span>
+            `;
+            
+            // Breadcrumb
+            document.getElementById('breadcrumbCategory').innerText = product.category;
+            document.getElementById('breadcrumbName').innerText = product.name;
+            
+            // Event listeners untuk size
+            if (product.sizes && product.sizes.length > 0) {
+                document.querySelectorAll('.size-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedSize = parseInt(btn.dataset.size);
+                    });
+                });
+            }
+            
+            // Color selection
+            if (product.colors && product.colors.length > 0) {
+                document.querySelectorAll('.color-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedColor = {
+                            name: btn.dataset.colorName,
+                            code: btn.dataset.colorCode
+                        };
+                    });
+                });
+            }
+            
+            // Quantity
+            document.getElementById('qtyMinus').addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    document.getElementById('qtyValue').innerText = quantity;
+                }
+            });
+            document.getElementById('qtyPlus').addEventListener('click', () => {
+                if (quantity < 10) {
+                    quantity++;
+                    document.getElementById('qtyValue').innerText = quantity;
+                }
+            });
+            
+            // Buttons
+            document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+            document.getElementById('buyNowBtn').addEventListener('click', buyNow);
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+            });
+        });
+        
+        renderProduct();
+        updateCartUI();
+    </script>
+</body>
+</html>

@@ -455,6 +455,10 @@
             });
         });
     }
+
+    card.addEventListener('click', () => {
+    window.location.href = `detail-produk.html?id=${prod.id}`;
+});
     
     function updateUILanguage() {
         renderProducts();
