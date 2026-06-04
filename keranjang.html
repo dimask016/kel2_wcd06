@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Keranjang Belanja - Amazonia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f7;
+            padding-bottom: 30px;
+        }
+
+        /* Header */
+        .header {
+            background: #131921;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9900, #ffcc33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-icon {
+            position: relative;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #ff9900;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #131921;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Cart Layout */
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+
+        /* Cart Items */
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .cart-header {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 0.5fr;
+            padding: 16px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 0.5fr;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .product-info {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #f8fafc, #eef2f6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .product-details h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .product-variant {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: #b12704;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            width: fit-content;
+        }
+
+        .quantity-control button {
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+
+        .quantity-control span {
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .item-total {
+            font-weight: 700;
+            color: #b12704;
+        }
+
+        .remove-item {
+            color: #dc2626;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 80px;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid #eee;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Shipping Section */
+        .shipping-section, .payment-section {
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .section-label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shipping-option, .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .shipping-option.selected, .payment-option.selected {
+            border-color: #ff9900;
+            background: #fff5e6;
+        }
+
+        .shipping-option input, .payment-option input {
+            accent-color: #ff9900;
+        }
+
+        .shipping-detail, .payment-detail {
+            flex: 1;
+        }
+
+        .shipping-name, .payment-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .shipping-price, .payment-desc {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .shipping-cost {
+            font-weight: 700;
+            color: #b12704;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            background: #ff9900;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .checkout-btn:hover {
+            background: #e68a00;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .empty-cart i {
+            font-size: 80px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .shop-now-btn {
+            background: #ff9900;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            background: #131921;
+            color: #ddd;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        /* Toast */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #232f3e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            z-index: 1100;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+            .cart-header {
+                display: none;
+            }
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                position: relative;
+                padding-right: 40px;
+            }
+            .remove-item {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            .quantity-control {
+                margin: 0 auto;
+            }
+            .item-total {
+                text-align: center;
+            }
+            .cart-summary {
+                position: static;
+            }
+            .toast-msg {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> <span>Lanjut Belanja</span></a>
+    <div class="logo" onclick="window.location.href='dashboard.html'">✨ AMAZONIA</div>
+    <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </div>
+</div>
+
+<div class="cart-container" id="cartContainer">
+    <div class="page-title">
+        <i class="fas fa-shopping-cart"></i> Keranjang Belanja
+    </div>
+    <div id="cartContent"></div>
+</div>
+
+<div class="footer">
+    <p>© 2024 Amazonia - Toko Online Premium</p>
+    <p>🌏 Layanan 24 Jam | 💳 Pembayaran Aman | 🚚 Pengiriman Cepat</p>
+</div>
+
+<div class="toast-msg" id="toastMsg">✓ Berhasil diperbarui</div>
+
+<script>
+    // ==================== DATA PRODUK ====================
+    const productsData = {
+        1: { id: 1, name: "Sepatu Aerox Elite", price: 899000, icon: "👟", category: "Sepatu" },
+        2: { id: 2, name: "Kacamata Vision AR", price: 2199000, icon: "🕶️", category: "Aksesoris" },
+        3: { id: 3, name: "Headphone Sonix Pro", price: 1799000, icon: "🎧", category: "Audio" },
+        4: { id: 4, name: "Smartwatch Orbit", price: 1499000, icon: "⌚", category: "Elektronik" },
+        5: { id: 5, name: "Laptop UltraBook X", price: 12599000, icon: "💻", category: "Elektronik" },
+        6: { id: 6, name: "Speaker Boom 360", price: 649000, icon: "🔊", category: "Audio" },
+        7: { id: 7, name: "Action Camera Pro", price: 2899000, icon: "📷", category: "Kamera" },
+        8: { id: 8, name: "Power Bank 20000mAh", price: 349000, icon: "🔋", category: "Aksesoris" }
+    };
+
+    // ==================== DATA EKSPEDISI & TARIF ====================
+    const shippingOptions = [
+        { id: "jne_reg", name: "JNE Reguler", price: 15000, estDays: "2-3 hari", icon: "📦" },
+        { id: "jne_yes", name: "JNE YES", price: 25000, estDays: "1-2 hari", icon: "⚡" },
+        { id: "sicepat_reg", name: "SiCepat Reguler", price: 12000, estDays: "2-3 hari", icon: "📦" },
+        { id: "sicepat_best", name: "SiCepat BEST", price: 20000, estDays: "1 hari", icon: "🚀" },
+        { id: "anteraja_reg", name: "Anteraja Reguler", price: 10000, estDays: "2-4 hari", icon: "📦" },
+        { id: "anteraja_cek", name: "Anteraja Cek Kilat", price: 18000, estDays: "1-2 hari", icon: "⚡" },
+        { id: "grab_instant", name: "Grab Instant", price: 30000, estDays: "1-3 jam", icon: "🛵" },
+        { id: "gojek_sameday", name: "GoSend Same Day", price: 32000, estDays: "1-3 jam", icon: "🛵" }
+    ];
+
+    // ==================== DATA METODE PEMBAYARAN ====================
+    const paymentMethods = [
+        { id: "cod", name: "COD (Bayar di Tempat)", desc: "Bayar langsung saat barang diterima", icon: "💵", fee: 0 },
+        { id: "transfer", name: "Transfer Bank", desc: "BCA, Mandiri, BRI, BNI, CIMB", icon: "🏦", fee: 0 },
+        { id: "debit", name: "Kartu Debit", desc: "Visa, Mastercard, GPN", icon: "💳", fee: 0 },
+        { id: "credit", name: "Kartu Kredit", desc: "Visa, Mastercard, JCB (Cicilan 0% 3x)", icon: "💎", fee: 0 }
+    ];
+
+    // ==================== STATE ====================
+    let cart = JSON.parse(localStorage.getItem('cart_amazonia')) || [];
+    let selectedShipping = shippingOptions[0];
+    let selectedPayment = paymentMethods[0];
+
+    // ==================== HELPER FUNCTIONS ====================
+    function formatPrice(price) {
+        return `Rp ${price.toLocaleString('id-ID')}`;
+    }
+
+    function updateCartBadge() {
+        const total = cart.reduce((sum, item) => sum + item.qty, 0);
+        const badge = document.getElementById('cartBadge');
+        if (badge) badge.innerText = total;
+        localStorage.setItem('cart_amazonia', JSON.stringify(cart));
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toastMsg');
+        toast.innerText = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+    }
+
+    function updateQuantity(productId, newQty) {
+        const item = cart.find(i => i.id === productId);
+        if (item) {
+            if (newQty <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+                showToast('Produk dihapus dari keranjang');
+            } else {
+                item.qty = Math.min(newQty, 10);
+                showToast('Jumlah diperbarui');
+            }
+            updateCartBadge();
+            renderCart();
+        }
+    }
+
+    function removeItem(productId) {
+        cart = cart.filter(i => i.id !== productId);
+        updateCartBadge();
+        renderCart();
+        showToast('Produk dihapus dari keranjang');
+    }
+
+    // ==================== RENDER KERANJANG ====================
+    function renderCart() {
+        const container = document.getElementById('cartContent');
+        
+        if (cart.length === 0) {
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>Keranjang Belanja Kosong</h3>
+                    <p>Yuk, isi dengan produk favorit Anda!</p>
+                    <button class="shop-now-btn" onclick="window.location.href='dashboard.html'">
+                        <i class="fas fa-store"></i> Belanja Sekarang
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        // Hitung subtotal
+        let subtotal = 0;
+        const cartItemsHtml = cart.map(item => {
+            const product = productsData[item.id];
+            const itemTotal = product.price * item.qty;
+            subtotal += itemTotal;
+            return `
+                <div class="cart-item">
+                    <div class="product-info">
+                        <div class="product-image">${product.icon}</div>
+                        <div class="product-details">
+                            <h4>${product.name}</h4>
+                            <div class="product-variant">${item.size ? `Ukuran: ${item.size}` : ''} ${item.color ? `| Warna: ${item.color.name || item.color}` : ''}</div>
+                            <div class="product-price">${formatPrice(product.price)}</div>
+                        </div>
+                    </div>
+                    <div class="quantity-control">
+                        <button onclick="updateQuantity(${item.id}, ${item.qty - 1})">-</button>
+                        <span>${item.qty}</span>
+                        <button onclick="updateQuantity(${item.id}, ${item.qty + 1})">+</button>
+                    </div>
+                    <div class="item-total">${formatPrice(itemTotal)}</div>
+                    <div class="remove-item" onclick="removeItem(${item.id})">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Hitung ongkir berdasarkan berat estimasi (simulasi: 1kg = 1000)
+        const estimatedWeight = cart.reduce((sum, item) => sum + (item.qty * 500), 0); // estimasi 500gr per item
+        const weightKg = Math.ceil(estimatedWeight / 1000);
+        
+        // Update shipping options dengan ongkir berdasarkan berat
+        const shippingOptionsWithCost = shippingOptions.map(opt => ({
+            ...opt,
+            price: opt.id.includes('instant') || opt.id.includes('sameday') ? opt.price + (weightKg > 1 ? (weightKg - 1) * 5000 : 0) : opt.price + (weightKg > 1 ? (weightKg - 1) * 3000 : 0)
+        }));
+
+        const totalShipping = selectedShipping ? (shippingOptionsWithCost.find(s => s.id === selectedShipping.id)?.price || selectedShipping.price) : 0;
+        const totalPayment = subtotal + totalShipping;
+
+        // Shipping options HTML
+        const shippingHtml = shippingOptionsWithCost.map(opt => `
+            <div class="shipping-option ${selectedShipping?.id === opt.id ? 'selected' : ''}" onclick="selectShipping('${opt.id}')">
+                <input type="radio" name="shipping" ${selectedShipping?.id === opt.id ? 'checked' : ''}>
+                <div class="shipping-detail">
+                    <div class="shipping-name">${opt.icon} ${opt.name}</div>
+                    <div class="shipping-price">Estimasi tiba ${opt.estDays}</div>
+                </div>
+                <div class="shipping-cost">${formatPrice(opt.price)}</div>
+            </div>
+        `).join('');
+
+        // Payment options HTML
+        const paymentHtml = paymentMethods.map(pay => `
+            <div class="payment-option ${selectedPayment?.id === pay.id ? 'selected' : ''}" onclick="selectPayment('${pay.id}')">
+                <input type="radio" name="payment" ${selectedPayment?.id === pay.id ? 'checked' : ''}>
+                <div class="payment-detail">
+                    <div class="payment-name">${pay.icon} ${pay.name}</div>
+                    <div class="payment-desc">${pay.desc}</div>
+                </div>
+            </div>
+        `).join('');
+
+        container.innerHTML = `
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <div class="cart-header">
+                        <span>Produk</span>
+                        <span>Jumlah</span>
+                        <span>Subtotal</span>
+                        <span></span>
+                    </div>
+                    ${cartItemsHtml}
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-title">Ringkasan Belanja</div>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal (${cart.reduce((s,i)=>s+i.qty,0)} barang)</span>
+                        <span>${formatPrice(subtotal)}</span>
+                    </div>
+                    
+                    <div class="shipping-section">
+                        <div class="section-label"><i class="fas fa-truck"></i> Pengiriman</div>
+                        <div id="shippingOptions">${shippingHtml}</div>
+                        <div style="font-size: 11px; color: #666; margin-top: 8px;">
+                            <i class="fas fa-weight-hanging"></i> Estimasi berat: ${weightKg} kg
+                        </div>
+                    </div>
+                    
+                    <div class="payment-section">
+                        <div class="section-label"><i class="fas fa-credit-card"></i> Metode Pembayaran</div>
+                        <div id="paymentOptions">${paymentHtml}</div>
+                    </div>
+                    
+                    <div class="summary-total">
+                        <span>Total Belanja</span>
+                        <span style="color: #b12704; font-size: 24px;">${formatPrice(totalPayment)}</span>
+                    </div>
+                    
+                    <button class="checkout-btn" onclick="processCheckout()">
+                        <i class="fas fa-check-circle"></i> Buat Pesanan
+                    </button>
+                    
+                    <div style="font-size: 11px; color: #888; text-align: center; margin-top: 12px;">
+                        <i class="fas fa-lock"></i> Transaksi aman & terenkripsi
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==================== SELECT SHIPPING ====================
+    window.selectShipping = function(shippingId) {
+        const shipping = shippingOptions.find(s => s.id === shippingId);
+        if (shipping) {
+            selectedShipping = shipping;
+            renderCart();
+        }
+    };
+
+    window.selectPayment = function(paymentId) {
+        const payment = paymentMethods.find(p => p.id === paymentId);
+        if (payment) {
+            selectedPayment = payment;
+            renderCart();
+        }
+    };
+
+    // ==================== CHECKOUT ====================
+    window.processCheckout = function() {
+        if (cart.length === 0) {
+            alert('Keranjang Anda kosong!');
+            return;
+        }
+
+        let subtotal = 0;
+        cart.forEach(item => {
+            const product = productsData[item.id];
+            subtotal += product.price * item.qty;
+        });
+
+        const shippingCost = selectedShipping.price;
+        const total = subtotal + shippingCost;
+
+        const orderSummary = {
+            items: cart.map(item => ({
+                name: productsData[item.id].name,
+                qty: item.qty,
+                price: productsData[item.id].price
+            })),
+            subtotal: subtotal,
+            shipping: {
+                name: selectedShipping.name,
+                cost: shippingCost,
+                estDays: selectedShipping.estDays
+            },
+            payment: selectedPayment.name,
+            total: total,
+            orderDate: new Date().toLocaleString('id-ID')
+        };
+
+        localStorage.setItem('last_order', JSON.stringify(orderSummary));
+        
+        let message = `🛒 PESANAN DIBUAT 🛒\n\n`;
+        message += `📦 Produk:\n`;
+        cart.forEach(item => {
+            const product = productsData[item.id];
+            message += `- ${product.name} x${item.qty} = ${formatPrice(product.price * item.qty)}\n`;
+        });
+        message += `\n🚚 Pengiriman: ${selectedShipping.name} (${formatPrice(selectedShipping.price)})\n`;
+        message += `💳 Pembayaran: ${selectedPayment.name}\n`;
+        message += `━━━━━━━━━━━━━━━━\n`;
+        message += `💰 TOTAL: ${formatPrice(total)}\n\n`;
+        message += `✅ Pesanan berhasil! Terima kasih telah berbelanja di Amazonia.`;
+
+        alert(message);
+        
+        // Optional: Clear cart after checkout
+        // cart = [];
+        // updateCartBadge();
+        // renderCart();
+    };
+
+    // ==================== UPDATE FUNCTIONS ====================
+    window.updateQuantity = updateQuantity;
+    window.removeItem = removeItem;
+
+    // ==================== INITIAL RENDER ====================
+    renderCart();
+    updateCartBadge();
+
+    // Redirect ke dashboard jika klik cart icon
+    document.getElementById('cartIcon')?.addEventListener('click', () => {
+        window.location.href = 'dashboard.html';
+    });
+</script>
+</body>
+</html>

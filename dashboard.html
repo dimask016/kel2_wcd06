@@ -350,7 +350,10 @@
             <span id="userNameDisplay"></span>
             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
         </div>
-        <button class="nav-btn" id="cartBtn"><i class="fas fa-shopping-cart"></i> <span id="cartText">Keranjang</span> <span id="cartCount" class="cart-badge">0</span></button>
+        <!-- INTEGRASI KERANJANG: Tombol ini akan mengarah ke keranjang.html -->
+        <button class="nav-btn" id="cartBtn" onclick="window.location.href='keranjang.html'">
+            <i class="fas fa-shopping-cart"></i> <span id="cartText">Keranjang</span> <span id="cartCount" class="cart-badge">0</span>
+        </button>
     </div>
 </div>
 
@@ -373,7 +376,7 @@
 </div>
 
 <div class="footer">
-    <p>© 2026 Amazonia - Toko Online Premium</p>
+    <p>© 2024 Amazonia - Toko Online Premium</p>
     <p>🌏 Layanan 24 Jam | 💳 Pembayaran Aman | 🚚 Pengiriman Cepat</p>
 </div>
 
@@ -385,102 +388,14 @@
 <script>
     // ==================== DATA PRODUK LENGKAP ====================
     const products = [
-        { 
-            id: 1, 
-            name: { id: "Sepatu Aerox Elite", en: "Aerox Elite Shoes" }, 
-            price: 899000, 
-            originalPrice: 1299000, 
-            icon: "👟", 
-            rating: 4.8, 
-            sold: "1.2rb", 
-            badge: "Best Seller",
-            category: "Sepatu",
-            description: "Sepatu lari premium dengan teknologi terbaru. Dilengkapi dengan bantalan udara di bagian tumit untuk kenyamanan maksimal saat berlari jarak jauh."
-        },
-        { 
-            id: 2, 
-            name: { id: "Kacamata Vision AR", en: "Vision AR Glasses" }, 
-            price: 2199000, 
-            originalPrice: 3499000, 
-            icon: "🕶️", 
-            rating: 4.9, 
-            sold: "843", 
-            badge: "New",
-            category: "Aksesoris",
-            description: "Kacamata pintar dengan layar AR, koneksi Bluetooth, dan baterai tahan seharian."
-        },
-        { 
-            id: 3, 
-            name: { id: "Headphone Sonix Pro", en: "Sonix Pro Headset" }, 
-            price: 1799000, 
-            originalPrice: 2499000, 
-            icon: "🎧", 
-            rating: 4.7, 
-            sold: "2.1rb", 
-            badge: "Gaming",
-            category: "Audio",
-            description: "Headphone gaming dengan noise cancellation aktif, baterai 40 jam, driver 50mm."
-        },
-        { 
-            id: 4, 
-            name: { id: "Smartwatch Orbit", en: "Orbit Smartwatch" }, 
-            price: 1499000, 
-            originalPrice: 1999000, 
-            icon: "⌚", 
-            rating: 4.8, 
-            sold: "3.4rb", 
-            badge: "Terlaris",
-            category: "Elektronik",
-            description: "Smartwatch dengan layar AMOLED, monitor detak jantung, tahan air 5ATM."
-        },
-        { 
-            id: 5, 
-            name: { id: "Laptop UltraBook X", en: "UltraBook X Laptop" }, 
-            price: 12599000, 
-            originalPrice: 15999000, 
-            icon: "💻", 
-            rating: 4.9, 
-            sold: "562", 
-            badge: "Premium",
-            category: "Elektronik",
-            description: "Laptop tipis dengan prosesor Intel i7, RAM 16GB, SSD 512GB."
-        },
-        { 
-            id: 6, 
-            name: { id: "Speaker Boom 360", en: "Boom 360 Speaker" }, 
-            price: 649000, 
-            originalPrice: 899000, 
-            icon: "🔊", 
-            rating: 4.6, 
-            sold: "987", 
-            badge: "Hot Deal",
-            category: "Audio",
-            description: "Speaker portable dengan suara 360°, tahan air IPX7, baterai 24 jam."
-        },
-        { 
-            id: 7, 
-            name: { id: "Action Camera Pro", en: "Action Camera Pro" }, 
-            price: 2899000, 
-            originalPrice: 3999000, 
-            icon: "📷", 
-            rating: 4.7, 
-            sold: "1.1rb", 
-            badge: "Diskon",
-            category: "Kamera",
-            description: "Kamera aksi 4K dengan stabilisasi gambar, tahan air hingga 10 meter."
-        },
-        { 
-            id: 8, 
-            name: { id: "Power Bank 20000mAh", en: "Power Bank 20000mAh" }, 
-            price: 349000, 
-            originalPrice: 499000, 
-            icon: "🔋", 
-            rating: 4.8, 
-            sold: "5.2rb", 
-            badge: "Best Value",
-            category: "Aksesoris",
-            description: "Power bank kapasitas besar dengan fast charging 18W, dual output."
-        }
+        { id: 1, name: { id: "Sepatu Aerox Elite", en: "Aerox Elite Shoes" }, price: 899000, originalPrice: 1299000, icon: "👟", rating: 4.8, sold: "1.2rb", badge: "Best Seller", category: "Sepatu" },
+        { id: 2, name: { id: "Kacamata Vision AR", en: "Vision AR Glasses" }, price: 2199000, originalPrice: 3499000, icon: "🕶️", rating: 4.9, sold: "843", badge: "New", category: "Aksesoris" },
+        { id: 3, name: { id: "Headphone Sonix Pro", en: "Sonix Pro Headset" }, price: 1799000, originalPrice: 2499000, icon: "🎧", rating: 4.7, sold: "2.1rb", badge: "Gaming", category: "Audio" },
+        { id: 4, name: { id: "Smartwatch Orbit", en: "Orbit Smartwatch" }, price: 1499000, originalPrice: 1999000, icon: "⌚", rating: 4.8, sold: "3.4rb", badge: "Terlaris", category: "Elektronik" },
+        { id: 5, name: { id: "Laptop UltraBook X", en: "UltraBook X Laptop" }, price: 12599000, originalPrice: 15999000, icon: "💻", rating: 4.9, sold: "562", badge: "Premium", category: "Elektronik" },
+        { id: 6, name: { id: "Speaker Boom 360", en: "Boom 360 Speaker" }, price: 649000, originalPrice: 899000, icon: "🔊", rating: 4.6, sold: "987", badge: "Hot Deal", category: "Audio" },
+        { id: 7, name: { id: "Action Camera Pro", en: "Action Camera Pro" }, price: 2899000, originalPrice: 3999000, icon: "📷", rating: 4.7, sold: "1.1rb", badge: "Diskon", category: "Kamera" },
+        { id: 8, name: { id: "Power Bank 20000mAh", en: "Power Bank 20000mAh" }, price: 349000, originalPrice: 499000, icon: "🔋", rating: 4.8, sold: "5.2rb", badge: "Best Value", category: "Aksesoris" }
     ];
 
     // ==================== GLOBAL STATE ====================
@@ -508,7 +423,6 @@
     }
 
     function addToCart(productId, event) {
-        // Stop propagation agar tidak trigger klik card (navigasi ke detail)
         if (event) event.stopPropagation();
         
         const existing = cart.find(item => item.id === productId);
@@ -534,7 +448,7 @@
         products.forEach(prod => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            // Menambahkan event klik ke card untuk navigasi ke detail produk
+            // Klik card untuk ke detail produk
             card.addEventListener('click', () => {
                 window.location.href = `detail-produk.html?id=${prod.id}`;
             });
@@ -554,10 +468,10 @@
             grid.appendChild(card);
         });
         
-        // Attach event listeners untuk tombol Add to Cart (tanpa trigger card click)
+        // Attach event listeners untuk tombol Add to Cart
         document.querySelectorAll('.add-to-cart').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Mencegah navigasi ke detail produk
+                e.stopPropagation();
                 addToCart(parseInt(btn.dataset.id), e);
             });
         });
@@ -567,24 +481,16 @@
     function updateUILanguage() {
         renderProducts();
         
-        // Header
         document.getElementById('homeText').innerText = currentLang === 'id' ? 'Beranda' : 'Home';
         document.getElementById('catalogText').innerText = currentLang === 'id' ? 'Katalog' : 'Catalog';
         document.getElementById('cartText').innerText = currentLang === 'id' ? 'Keranjang' : 'Cart';
-        
-        // Hero
         document.getElementById('heroTitle').innerText = currentLang === 'id' ? 'Belanja Mudah, Aman, Terpercaya' : 'Easy, Safe, Trusted Shopping';
         document.getElementById('heroDesc').innerHTML = currentLang === 'id' ? 'Temukan ribuan produk berkualitas dengan harga terbaik. Gratis ongkir untuk pembelian pertama!' : 'Find thousands of quality products at the best prices. Free shipping for first purchase!';
-        
-        // Section
         document.getElementById('catalogTitle').innerHTML = currentLang === 'id' ? '✨ Koleksi Unggulan' : '✨ Featured Collection';
-        
-        // Banner
         document.getElementById('bannerTitle').innerText = currentLang === 'id' ? '🔥 Diskon Akhir Tahun' : '🔥 Year End Sale';
         document.getElementById('bannerDesc').innerText = currentLang === 'id' ? 'Dapatkan diskon hingga 50% untuk semua produk pilihan' : 'Get up to 50% off on all selected products';
         document.getElementById('shopNowText').innerText = currentLang === 'id' ? 'Belanja Sekarang' : 'Shop Now';
         
-        // User name
         if (currentUser) {
             document.getElementById('userNameDisplay').innerHTML = currentUser.name;
         }
@@ -625,17 +531,6 @@
     
     document.getElementById('shopNowBtn').addEventListener('click', () => {
         document.querySelector('.products-section').scrollIntoView({ behavior: 'smooth' });
-    });
-    
-    document.getElementById('cartBtn').addEventListener('click', () => {
-        let totalItems = cart.reduce((s, i) => s + i.qty, 0);
-        let totalPrice = cart.reduce((sum, item) => {
-            const product = products.find(p => p.id === item.id);
-            return sum + (product ? product.price * item.qty : 0);
-        }, 0);
-        alert(currentLang === 'id' 
-            ? `Keranjang: ${totalItems} item\nTotal: ${formatPrice(totalPrice)}` 
-            : `Cart: ${totalItems} items\nTotal: ${formatPrice(totalPrice)}`);
     });
 
     // ==================== INITIAL RENDER ====================
