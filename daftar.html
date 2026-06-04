@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Daftar - Amazonia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #131921 0%, #1a2a3a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            max-width: 440px;
+            width: 100%;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff9900, #ffcc33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 40px 32px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #131921;
+            margin-bottom: 8px;
+        }
+
+        .card .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff9900;
+            box-shadow: 0 0 0 3px rgba(255,153,0,0.1);
+        }
+
+        .register-btn {
+            background: #ff9900;
+            color: #131921;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .register-btn:hover {
+            background: #e68a00;
+            transform: scale(1.02);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .divider::before {
+            margin-right: 12px;
+        }
+
+        .divider::after {
+            margin-left: 12px;
+        }
+
+        .google-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        #googleButton {
+            display: flex;
+            justify-content: center;
+        }
+
+        .demo-mode-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+
+        .demo-mode-btn:hover {
+            background: #1a2a3a;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #ff9900;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 24px;
+            }
+            .card h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="logo">
+            <h1>✨ AMAZONIA</h1>
+            <p>Toko Online Premium</p>
+        </div>
+        <div class="card">
+            <h2>Daftar Akun</h2>
+            <p class="subtitle">Bergabung dan nikmati belanja mudah!</p>
+
+            <div id="errorMsg" class="error-message"></div>
+            <div id="successMsg" class="success-message"></div>
+
+            <div class="input-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="regName" placeholder="John Doe">
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="contoh@email.com">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="Minimal 6 karakter">
+            </div>
+            <div class="input-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Ulangi password">
+            </div>
+
+            <button class="register-btn" id="registerBtn">
+                <i class="fas fa-user-plus"></i> Daftar
+            </button>
+
+            <div class="divider">atau</div>
+
+            <!-- Google Button -->
+            <div id="googleButton"></div>
+
+            <!-- Demo Mode -->
+            <button class="demo-mode-btn" id="demoModeBtn">
+                <i class="fas fa-user-astronaut"></i> Demo Mode (Tanpa Login)
+            </button>
+
+            <div class="login-link">
+                Sudah punya akun? <a href="masuk.html">Masuk Sekarang</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_CLIENT_ID = '1080624974263-5t0p4b63p2jv0tq0i0tqudv3qo2eqqj6.apps.googleusercontent.com';
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMsg');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function getUsers() {
+            const users = localStorage.getItem('amazonia_users');
+            if (users) return JSON.parse(users);
+            const demoUsers = [
+                { name: "Admin Amazonia", email: "admin@amazonia.com", password: "admin123", fromGoogle: false },
+                { name: "User Demo", email: "demo@amazonia.com", password: "123456", fromGoogle: false }
+            ];
+            localStorage.setItem('amazonia_users', JSON.stringify(demoUsers));
+            return demoUsers;
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('amazonia_users', JSON.stringify(users));
+        }
+
+        function registerUser(name, email, password) {
+            const users = getUsers();
+            
+            if (users.find(u => u.email === email)) {
+                showError('Email sudah terdaftar! Silakan gunakan email lain.');
+                return false;
+            }
+            
+            users.push({
+                name: name,
+                email: email,
+                password: password,
+                fromGoogle: false
+            });
+            saveUsers(users);
+            
+            localStorage.setItem('amazonia_current_user', JSON.stringify({
+                name: name,
+                email: email,
+                fromGoogle: false
+            }));
+            
+            return true;
+        }
+
+        // Demo Mode
+        function demoMode() {
+            localStorage.setItem('amazonia_current_user', JSON.stringify({
+                name: "Demo User",
+                email: "demo@mode.com",
+                fromGoogle: false,
+                isDemo: true
+            }));
+            window.location.href = 'dashboard.html';
+        }
+
+        // Google Registrasi Handler
+        function handleGoogleResponse(response) {
+            try {
+                const payload = JSON.parse(atob(response.credential.split('.')[1]));
+                const userData = {
+                    name: payload.name,
+                    email: payload.email,
+                    picture: payload.picture,
+                    fromGoogle: true
+                };
+                
+                const users = getUsers();
+                if (!users.find(u => u.email === userData.email)) {
+                    users.push({
+                        name: userData.name,
+                        email: userData.email,
+                        password: null,
+                        fromGoogle: true
+                    });
+                    saveUsers(users);
+                }
+                
+                localStorage.setItem('amazonia_current_user', JSON.stringify(userData));
+                window.location.href = 'dashboard.html';
+            } catch(e) {
+                showError('Registrasi Google gagal, silakan coba lagi');
+            }
+        }
+
+        function initGoogleLogin() {
+            try {
+                if (typeof google === 'undefined') {
+                    setTimeout(initGoogleLogin, 500);
+                    return;
+                }
+                
+                google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleResponse,
+                    auto_select: false
+                });
+                
+                google.accounts.id.renderButton(
+                    document.getElementById('googleButton'),
+                    { 
+                        theme: 'outline', 
+                        size: 'large', 
+                        width: '100%',
+                        text: 'signup_with',
+                        shape: 'pill'
+                    }
+                );
+            } catch(e) {
+                const googleDiv = document.getElementById('googleButton');
+                googleDiv.innerHTML = `
+                    <button style="background:white; border:1px solid #ddd; padding:12px 20px; border-radius:40px; width:100%; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; font-weight:600;">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Daftar dengan Google
+                    </button>
+                `;
+                googleDiv.querySelector('button').addEventListener('click', () => {
+                    showError('Gunakan Demo Mode atau daftar manual');
+                });
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showError('Semua field harus diisi!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Password minimal 6 karakter!');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Password dan konfirmasi password tidak sama!');
+                return;
+            }
+            
+            if (registerUser(name, email, password)) {
+                showSuccess('Pendaftaran berhasil! Mengalihkan...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+        });
+
+        document.getElementById('demoModeBtn').addEventListener('click', demoMode);
+
+        const currentUserData = localStorage.getItem('amazonia_current_user');
+        if (currentUserData && window.location.pathname.includes('daftar.html')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        initGoogleLogin();
+    </script>
+</body>
+</html>
