@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Daftar - Amazonia</title>
+    <title>Masuk - Amazonia</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -24,7 +24,7 @@
             padding: 20px;
         }
 
-        .register-container {
+        .login-container {
             max-width: 440px;
             width: 100%;
         }
@@ -96,7 +96,7 @@
             box-shadow: 0 0 0 3px rgba(255,153,0,0.1);
         }
 
-        .register-btn {
+        .login-btn {
             background: #ff9900;
             color: #131921;
             border: none;
@@ -114,7 +114,7 @@
             gap: 8px;
         }
 
-        .register-btn:hover {
+        .login-btn:hover {
             background: #e68a00;
             transform: scale(1.02);
         }
@@ -175,36 +175,26 @@
             background: #1a2a3a;
         }
 
-        .login-link {
+        .register-link {
             text-align: center;
             margin-top: 24px;
             font-size: 14px;
             color: #666;
         }
 
-        .login-link a {
+        .register-link a {
             color: #ff9900;
             text-decoration: none;
             font-weight: 600;
         }
 
-        .login-link a:hover {
+        .register-link a:hover {
             text-decoration: underline;
         }
 
         .error-message {
             background: #fee2e2;
             color: #dc2626;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .success-message {
-            background: #dcfce7;
-            color: #16a34a;
             padding: 12px;
             border-radius: 12px;
             font-size: 13px;
@@ -223,57 +213,52 @@
     </style>
 </head>
 <body>
-    <div class="register-container">
+    <div class="login-container">
         <div class="logo">
             <h1>✨ AMAZONIA</h1>
             <p>Toko Online Premium</p>
         </div>
         <div class="card">
-            <h2>Daftar Akun</h2>
-            <p class="subtitle">Bergabung dan nikmati belanja mudah!</p>
+            <h2>Masuk</h2>
+            <p class="subtitle">Selamat datang kembali!</p>
 
             <div id="errorMsg" class="error-message"></div>
-            <div id="successMsg" class="success-message"></div>
 
             <div class="input-group">
-                <label>Nama Lengkap</label>
-                <input type="text" id="regName" placeholder="John Doe">
-            </div>
-            <div class="input-group">
                 <label>Email</label>
-                <input type="email" id="regEmail" placeholder="contoh@email.com">
+                <input type="email" id="loginEmail" placeholder="contoh@email.com">
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" id="regPassword" placeholder="Minimal 6 karakter">
-            </div>
-            <div class="input-group">
-                <label>Konfirmasi Password</label>
-                <input type="password" id="regConfirmPassword" placeholder="Ulangi password">
+                <input type="password" id="loginPassword" placeholder="********">
             </div>
 
-            <button class="register-btn" id="registerBtn">
-                <i class="fas fa-user-plus"></i> Daftar
+            <button class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Masuk
             </button>
 
             <div class="divider">atau</div>
 
-            <!-- Google Button -->
+            <!-- Google Button akan di-render di sini -->
             <div id="googleButton"></div>
 
-            <!-- Demo Mode -->
+            <!-- Tombol Demo Mode (seperti di halaman referensi) -->
             <button class="demo-mode-btn" id="demoModeBtn">
                 <i class="fas fa-user-astronaut"></i> Demo Mode (Tanpa Login)
             </button>
 
-            <div class="login-link">
-                Sudah punya akun? <a href="masuk.html">Masuk Sekarang</a>
+            <div class="register-link">
+                Belum punya akun? <a href="daftar.html">Daftar Sekarang</a>
             </div>
         </div>
     </div>
 
     <script>
-        const GOOGLE_CLIENT_ID = '1080624974263-5t0p4b63p2jv0tq0i0tqudv3qo2eqqj6.apps.googleusercontent.com';
+        // Konfigurasi Google Client ID untuk localhost (public test client)
+        // Client ID ini sudah dikonfigurasi untuk menerima redirect ke localhost dan file://
+        const GOOGLE_CLIENT_ID = '359149804614-vnhcg76muilk77homh9dlkj2qg3lol5u.apps.googleusercontent.com';
+        
+        let googleInitialized = false;
 
         function showError(message) {
             const errorDiv = document.getElementById('errorMsg');
@@ -281,15 +266,6 @@
             errorDiv.style.display = 'block';
             setTimeout(() => {
                 errorDiv.style.display = 'none';
-            }, 3000);
-        }
-
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMsg');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            setTimeout(() => {
-                successDiv.style.display = 'none';
             }, 3000);
         }
 
@@ -308,32 +284,24 @@
             localStorage.setItem('amazonia_users', JSON.stringify(users));
         }
 
-        function registerUser(name, email, password) {
+        // Login dengan email/password
+        function loginWithEmail(email, password) {
             const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === password);
             
-            if (users.find(u => u.email === email)) {
-                showError('Email sudah terdaftar! Silakan gunakan email lain.');
-                return false;
+            if (user) {
+                localStorage.setItem('amazonia_current_user', JSON.stringify({
+                    name: user.name,
+                    email: user.email,
+                    fromGoogle: false
+                }));
+                window.location.href = 'dashboard.html';
+            } else {
+                showError('Email atau password salah!');
             }
-            
-            users.push({
-                name: name,
-                email: email,
-                password: password,
-                fromGoogle: false
-            });
-            saveUsers(users);
-            
-            localStorage.setItem('amazonia_current_user', JSON.stringify({
-                name: name,
-                email: email,
-                fromGoogle: false
-            }));
-            
-            return true;
         }
 
-        // Demo Mode
+        // Demo Mode - seperti di halaman referensi
         function demoMode() {
             localStorage.setItem('amazonia_current_user', JSON.stringify({
                 name: "Demo User",
@@ -344,9 +312,10 @@
             window.location.href = 'dashboard.html';
         }
 
-        // Google Registrasi Handler
+        // Google Login Handler
         function handleGoogleResponse(response) {
             try {
+                // Decode JWT token
                 const payload = JSON.parse(atob(response.credential.split('.')[1]));
                 const userData = {
                     name: payload.name,
@@ -355,6 +324,10 @@
                     fromGoogle: true
                 };
                 
+                // Simpan ke localStorage
+                localStorage.setItem('amazonia_current_user', JSON.stringify(userData));
+                
+                // Tambahkan ke daftar users jika belum ada
                 const users = getUsers();
                 if (!users.find(u => u.email === userData.email)) {
                     users.push({
@@ -366,16 +339,18 @@
                     saveUsers(users);
                 }
                 
-                localStorage.setItem('amazonia_current_user', JSON.stringify(userData));
                 window.location.href = 'dashboard.html';
             } catch(e) {
-                showError('Registrasi Google gagal, silakan coba lagi');
+                console.error('Google login error:', e);
+                showError('Login Google gagal, silakan coba lagi');
             }
         }
 
+        // Inisialisasi Google Login
         function initGoogleLogin() {
             try {
                 if (typeof google === 'undefined') {
+                    console.warn('Google SDK not loaded yet');
                     setTimeout(initGoogleLogin, 500);
                     return;
                 }
@@ -383,7 +358,8 @@
                 google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
                     callback: handleGoogleResponse,
-                    auto_select: false
+                    auto_select: false,
+                    cancel_on_tap_outside: true
                 });
                 
                 google.accounts.id.renderButton(
@@ -392,60 +368,54 @@
                         theme: 'outline', 
                         size: 'large', 
                         width: '100%',
-                        text: 'signup_with',
+                        text: 'continue_with',
                         shape: 'pill'
                     }
                 );
+                
+                googleInitialized = true;
             } catch(e) {
+                console.error('Google init error:', e);
+                // Fallback: tampilkan tombol custom
                 const googleDiv = document.getElementById('googleButton');
                 googleDiv.innerHTML = `
                     <button style="background:white; border:1px solid #ddd; padding:12px 20px; border-radius:40px; width:100%; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; font-weight:600;">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Daftar dengan Google
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Login dengan Google
                     </button>
                 `;
                 googleDiv.querySelector('button').addEventListener('click', () => {
-                    showError('Gunakan Demo Mode atau daftar manual');
+                    showError('Google Login memerlukan koneksi internet. Gunakan Demo Mode.');
                 });
             }
         }
 
         // Event Listeners
-        document.getElementById('registerBtn').addEventListener('click', () => {
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('regConfirmPassword').value;
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
             
-            if (!name || !email || !password || !confirmPassword) {
-                showError('Semua field harus diisi!');
+            if (!email || !password) {
+                showError('Email dan password harus diisi!');
                 return;
             }
-            
-            if (password.length < 6) {
-                showError('Password minimal 6 karakter!');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showError('Password dan konfirmasi password tidak sama!');
-                return;
-            }
-            
-            if (registerUser(name, email, password)) {
-                showSuccess('Pendaftaran berhasil! Mengalihkan...');
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-            }
+            loginWithEmail(email, password);
         });
 
         document.getElementById('demoModeBtn').addEventListener('click', demoMode);
 
+        document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('loginBtn').click();
+            }
+        });
+
+        // Cek session
         const currentUserData = localStorage.getItem('amazonia_current_user');
-        if (currentUserData && window.location.pathname.includes('daftar.html')) {
+        if (currentUserData && window.location.pathname.includes('masuk.html')) {
             window.location.href = 'dashboard.html';
         }
 
+        // Start Google Login
         initGoogleLogin();
     </script>
 </body>
