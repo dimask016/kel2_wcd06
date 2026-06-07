@@ -65,7 +65,7 @@ Tunjukkan alur navigasi yang logis
 
 Demonstrasi efek 3D yang elegan
 
-"Background bola dengan orbit berwarna (merah, biru, kuning, hijau) merepresentasikan stabilitas dan konektivitas data center. Gerakan kamera mengikuti kursor memberi kesan teknologi mutakhir, namun tetap tidak mengganggu teks berkat lapisan gelap."
+"Background bola dengan orbit berwarna (merah, biru, kuning, hijau) merepresentasikan stabilitas dan konektivitas. Gerakan kamera mengikuti kursor memberi kesan teknologi mutakhir, namun tetap tidak mengganggu teks berkat lapisan gelap."
 
 Tunjukkan keunggulan fungsional
 
