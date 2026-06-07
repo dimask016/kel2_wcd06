@@ -114,7 +114,8 @@ kel2_wcd06/
 └── (folder screenshots jika ada)
 Catatan: Semua halaman menggunakan Three.js yang sama dan sistem translasi yang terintegrasi.
 
-👥 Kontributor
+👥 Kontributor :
+
 Deva Agriani – Ketua tim, koordinasi proyek
 
 Gempur Mahya Reksa – Pengembangan UI/UX
@@ -126,7 +127,7 @@ Dimas Kurniawan – Konten, sertifikasi, dan pengalaman profesional
 Dharma Satriadi – Dokumentasi & deployment
 
 📄 Lisensi
-Proyek ini dibuat untuk keperluan tugas Web Class Design (WCD) dan boleh digunakan sebagai referensi pembelajaran.
+Proyek ini dibuat untuk keperluan tugas Web Class Design (WCD06) dan boleh digunakan sebagai referensi pembelajaran.
 
 Terima kasih telah mengunjungi portofolio Dimas Kurniawan!
 💼 "Infrastruktur tanpa downtime, solusi IT modern."
