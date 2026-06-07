@@ -1,7 +1,7 @@
 
 # 🚀 Web CV Portofolio Interaktif 
 
-> Portfolio 3D Data Center Engineer dengan dukungan dua bahasa (ID/EN) dan latar belakang Three.js.
+> Portfolio 3D Web dengan dukungan dua bahasa (ID/EN) dan latar belakang Three.js.
 
 ---
 
