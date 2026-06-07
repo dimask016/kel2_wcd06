@@ -98,6 +98,13 @@ Website ini sudah di‑deploy menggunakan GitHub Pages dan dapat diakses publik 
 
 🔗 https://dimask016.github.io/kel2_wcd06/home.html
 
+| Tautan | Deskripsi |
+| :--- | :--- |
+| 🌐 **Live Demo** | 🔗[https://dimask016.github.io/kel2_wcd06/home.html](https://dimask016.github.io/kel2_wcd06/home.html) |
+| 🎨 **Wireframe / Desain Figma** | [Klik di sini untuk melihat desain di Figma](https://www.figma.com/design/kpRJ78bmtzMSTtH1hq3NM8/kel2_wcd06?node-id=0-1&t=2bCSBcfKEAcEsIex-1) |
+
+> **Catatan:** Tautan Figma digunakan untuk melihat wireframe dan purwarupa desain antarmuka proyek ini sebelum dikembangkan. [reference:0]
+
 Klik tautan di atas untuk melihat demo langsung dari portofolio interaktif ini.
 
 ## 📁 Struktur File
