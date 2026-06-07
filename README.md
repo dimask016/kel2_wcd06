@@ -1,5 +1,5 @@
 markdown
-# 🚀 Web Portofolio Interaktif – Dimas Kurniawan
+# 🚀 Web CV Portofolio Interaktif 
 
 > Portfolio 3D Data Center Engineer dengan dukungan dua bahasa (ID/EN) dan latar belakang Three.js.
 
@@ -7,8 +7,8 @@ markdown
 
 ## 📌 1. Nama & Deskripsi Proyek
 
-**Nama Proyek:** Web Portofolio Interaktif – Dimas Kurniawan  
-**Kelompok 2 – Web Class Design (WCD)**
+**Nama Proyek:** Web CV Portofolio Interaktif   
+**Kelompok 2 – Web Class Design (WCD) 06**
 
 **Deskripsi:**  
 Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari **Dimas Kurniawan** – seorang Data Center Engineer di Google Cloud Indonesia. Halaman ini dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
