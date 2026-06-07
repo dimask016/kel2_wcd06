@@ -107,17 +107,25 @@ Website ini sudah di‑deploy menggunakan GitHub Pages dan dapat diakses publik 
 
 Klik tautan di atas untuk melihat demo langsung dari portofolio interaktif ini.
 
-📁 6. Struktur File
-Nama File / Folder	Keterangan
-home.html	Halaman utama (beranda)
-tentang.html	Halaman profil / tentang saya
-keahlian.html	Halaman daftar keahlian
-pengalaman.html	Halaman riwayat pengalaman kerja
-proyek.html	Halaman proyek unggulan
-sertifikasi.html	Halaman sertifikasi profesional
-kontak.html	Halaman informasi kontak
-README.md	Dokumentasi proyek ini
-screenshots/	Folder berisi tangkapan layar (jika ada)
+
+
+
+## 📁 6. Struktur File
+
+| Nama File / Folder | Keterangan |
+|-----------|-------------|
+| **home.html** | Halaman utama (beranda) |
+| **tentang.html** | Halaman profil / tentang saya |
+| **keahlian.html** | Halaman daftar keahlian |
+| **pengalaman.html** | Halaman riwayat pengalaman kerja |
+| **proyek.html** | Halaman proyek unggulan |
+| **sertifikasi.html** | Halaman sertifikasi profesional |
+| **kontak.html** | Halaman informasi kontak |
+| **README.md** | Dokumentasi proyek |
+| **screenshots/** | Folder berisi tangkapan layar |
+
+
+---
 Catatan: Semua halaman menggunakan Three.js yang sama dan sistem translasi yang terintegrasi.
 
 👥 Kontributor :
@@ -131,7 +139,6 @@ Fajar Muhammad Ramadhan – Implementasi Three.js & animasi
 Dimas Kurniawan – Konten, sertifikasi, dan pengalaman profesional
 
 Dharma Satriadi – Dokumentasi & deployment
-
 
 
 
