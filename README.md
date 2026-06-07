@@ -11,7 +11,7 @@ markdown
 **Kelompok 2 – Web Class Design (WCD) 06**
 
 **Deskripsi:**  
-Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari **Dimas Kurniawan** – seorang Data Center Engineer di Google Cloud Indonesia. Halaman ini dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
+Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari seorang profesional di bidang teknologi informasi. Halaman ini dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
 
 **Anggota Tim:**
 - Deva Agriani (Ketua)
@@ -100,18 +100,19 @@ Website ini sudah di‑deploy menggunakan GitHub Pages dan dapat diakses publik 
 
 Klik tautan di atas untuk melihat demo langsung dari portofolio interaktif ini.
 
-📁 Struktur File
-text
-kel2_wcd06/
-├── home.html
-├── tentang.html
-├── keahlian.html
-├── pengalaman.html
-├── proyek.html
-├── sertifikasi.html
-├── kontak.html
-├── README.md
-└── (folder screenshots jika ada)
+## 📁 Struktur File
+
+| Nama File / Folder | Keterangan |
+|--------------------|-------------|
+| `home.html` | Halaman utama (beranda) |
+| `tentang.html` | Halaman profil / tentang saya |
+| `keahlian.html` | Halaman daftar keahlian |
+| `pengalaman.html` | Halaman riwayat pengalaman kerja |
+| `proyek.html` | Halaman proyek unggulan |
+| `sertifikasi.html` | Halaman sertifikasi profesional |
+| `kontak.html` | Halaman informasi kontak |
+| `README.md` | Dokumentasi proyek ini |
+| `screenshots/` | Folder berisi tangkapan layar (jika ada) |
 Catatan: Semua halaman menggunakan Three.js yang sama dan sistem translasi yang terintegrasi.
 
 👥 Kontributor :
