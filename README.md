@@ -13,11 +13,11 @@
 **Deskripsi:**  
 Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari seorang profesional di bidang teknologi informasi. Halaman ini dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
 
-**Anggota Tim:**
+**Anggota Tim dan Akun Github:**
 - Deva Agriani (Ketua)
 - Gempur Mahya Reksa
 - Fajar Muhammad Ramadhan
-- Dimas Kurniawan
+- Dimas Kurniawan - dimas.kurniawan@cakrwala.ac.id
 - Dharma Satriadi
 
 ---
