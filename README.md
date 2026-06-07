@@ -1,4 +1,4 @@
-markdown
+
 # 🚀 Web CV Portofolio Interaktif 
 
 > Portfolio 3D Data Center Engineer dengan dukungan dua bahasa (ID/EN) dan latar belakang Three.js.
@@ -69,6 +69,66 @@ Ikuti langkah-langkah berikut untuk menjalankan website ini di komputer Anda:
    git clone https://github.com/dimask016/kel2_wcd06.git
 Masuk ke folder proyek
 
+1. git clone – Menyalin repository dari GitHub ke komputer lokal
+bash
+git clone https://github.com/dimask016/kel2_wcd06.git
+Penjelasan:
+Perintah ini mengunduh semua file proyek kel2_wcd06 (termasuk riwayat versi) dari akun GitHub dimask016 ke folder baru di komputer Anda. Setelah ini, Anda bisa mulai mengedit file seperti home.html, keahlian.html, dll.
+
+2. Masuk ke folder proyek
+bash
+cd kel2_wcd06
+Penjelasan:
+Berpindah direktori ke dalam folder hasil clone, tempat semua file proyek berada.
+
+3. git pull – Memperbarui kode lokal dengan perubahan terbaru dari tim
+bash
+git pull origin main
+Penjelasan:
+Mengambil semua perubahan terbaru dari branch main di GitHub dan menggabungkannya ke kode lokal Anda. Lakukan ini setiap akan mulai bekerja agar Anda tidak bekerja dengan versi usang, terutama jika ada anggota tim lain yang sudah melakukan push.
+
+4. git status – Melihat file apa saja yang berubah
+bash
+git status
+Penjelasan:
+Menampilkan daftar file yang baru, diubah, atau dihapus. Berguna untuk memastikan Anda tahu file mana yang akan di-commit.
+
+5. git add – Menambahkan perubahan ke staging area
+bash
+# Menambahkan semua file yang berubah
+git add .
+
+# Atau tambahkan file tertentu
+git add home.html tentang.html
+Penjelasan:
+Memberi tahu Git bahwa perubahan pada file-file tersebut akan disertakan dalam commit berikutnya.
+
+6. git commit – Menyimpan perubahan ke repository lokal
+bash
+git commit -m "Pesan singkat tentang perubahan"
+Contoh pesan yang baik:
+
+bash
+git commit -m "Memperbaiki tampilan kartu keahlian di halaman keahlian.html"
+Penjelasan:
+Merekam snapshot dari staging area ke dalam riwayat proyek. Pesan commit harus jelas agar tim lain (atau Anda di masa depan) mudah memahami perubahan.
+
+7. git pull (lagi) – Tarik perubahan terbaru sebelum push
+bash
+git pull origin main
+Penjelasan:
+Langkah wajib sebelum melakukan push. Jika ada anggota tim lain yang sudah mengunggah perubahan, perintah ini akan menggabungkannya secara otomatis. Ini mencegah terjadinya konflik.
+
+8. git push – Mengirim commit lokal ke GitHub
+bash
+git push origin main
+Penjelasan:
+Mengunggah commit yang telah Anda buat ke repository remote. Setelah ini, file-file di GitHub akan terbarui, dan anggota tim lain bisa melihat perubahan Anda. Live demo GitHub Pages juga akan otomatis terupdate (biasanya dalam beberapa menit).
+
+
+
+
+
 bash
 cd kel2_wcd06
 Buka file home.html
@@ -135,62 +195,7 @@ Dimas Kurniawan – Konten, sertifikasi, dan pengalaman profesional
 Dharma Satriadi – Dokumentasi & deployment
 
 
-🚀 Urutan Perintah Git untuk Proyek kel2_wcd06
-1. git clone – Menyalin repository dari GitHub ke komputer lokal
-bash
-git clone https://github.com/dimask016/kel2_wcd06.git
-Penjelasan:
-Perintah ini mengunduh semua file proyek kel2_wcd06 (termasuk riwayat versi) dari akun GitHub dimask016 ke folder baru di komputer Anda. Setelah ini, Anda bisa mulai mengedit file seperti home.html, keahlian.html, dll.
 
-2. Masuk ke folder proyek
-bash
-cd kel2_wcd06
-Penjelasan:
-Berpindah direktori ke dalam folder hasil clone, tempat semua file proyek berada.
-
-3. git pull – Memperbarui kode lokal dengan perubahan terbaru dari tim
-bash
-git pull origin main
-Penjelasan:
-Mengambil semua perubahan terbaru dari branch main di GitHub dan menggabungkannya ke kode lokal Anda. Lakukan ini setiap akan mulai bekerja agar Anda tidak bekerja dengan versi usang, terutama jika ada anggota tim lain yang sudah melakukan push.
-
-4. git status – Melihat file apa saja yang berubah
-bash
-git status
-Penjelasan:
-Menampilkan daftar file yang baru, diubah, atau dihapus. Berguna untuk memastikan Anda tahu file mana yang akan di-commit.
-
-5. git add – Menambahkan perubahan ke staging area
-bash
-# Menambahkan semua file yang berubah
-git add .
-
-# Atau tambahkan file tertentu
-git add home.html tentang.html
-Penjelasan:
-Memberi tahu Git bahwa perubahan pada file-file tersebut akan disertakan dalam commit berikutnya.
-
-6. git commit – Menyimpan perubahan ke repository lokal
-bash
-git commit -m "Pesan singkat tentang perubahan"
-Contoh pesan yang baik:
-
-bash
-git commit -m "Memperbaiki tampilan kartu keahlian di halaman keahlian.html"
-Penjelasan:
-Merekam snapshot dari staging area ke dalam riwayat proyek. Pesan commit harus jelas agar tim lain (atau Anda di masa depan) mudah memahami perubahan.
-
-7. git pull (lagi) – Tarik perubahan terbaru sebelum push
-bash
-git pull origin main
-Penjelasan:
-Langkah wajib sebelum melakukan push. Jika ada anggota tim lain yang sudah mengunggah perubahan, perintah ini akan menggabungkannya secara otomatis. Ini mencegah terjadinya konflik.
-
-8. git push – Mengirim commit lokal ke GitHub
-bash
-git push origin main
-Penjelasan:
-Mengunggah commit yang telah Anda buat ke repository remote. Setelah ini, file-file di GitHub akan terbarui, dan anggota tim lain bisa melihat perubahan Anda. Live demo GitHub Pages juga akan otomatis terupdate (biasanya dalam beberapa menit).
 
 
 
