@@ -73,66 +73,18 @@ Masuk ke folder proyek
 
 Ikuti urutan perintah di bawah ini untuk berkontribusi pada proyek ini.
 
-### 1. Clone repository
-```bash
-git clone https://github.com/dimask016/kel2_wcd06.git
-Penjelasan:
-Mengunduh semua file proyek kel2_wcd06 (termasuk riwayat versi) dari GitHub ke komputer lokal Anda.
+Langkah-langkah Kerja dengan Git
+Ikuti urutan perintah di bawah ini untuk berkontribusi pada proyek ini.
 
-2. Masuk ke folder proyek
-bash
-cd kel2_wcd06
-Penjelasan:
-Berpindah ke direktori hasil clone, tempat semua file proyek berada.
-
-3. Perbarui kode lokal (sebelum mulai bekerja)
-bash
-git pull origin main
-atau menggunakan URL langsung:
-
-bash
-git pull https://github.com/dimask016/kel2_wcd06.git main
-Penjelasan:
-Mengambil perubahan terbaru dari branch main di GitHub dan menggabungkannya ke kode lokal Anda. Lakukan ini setiap akan mulai bekerja agar tidak menggunakan versi usang.
-
-4. Cek status file yang berubah
-bash
-git status
-Penjelasan:
-Menampilkan daftar file yang baru, diubah, atau dihapus. Berguna untuk mengetahui file mana yang akan di-commit.
-
-5. Tambahkan perubahan ke staging area
-bash
-# Menambahkan semua file yang berubah
-git add .
-
-# Atau menambahkan file tertentu
-git add home.html tentang.html
-Penjelasan:
-Memberi tahu Git bahwa perubahan pada file-file tersebut akan disertakan dalam commit berikutnya.
-
-6. Simpan perubahan ke repository lokal
-bash
-git commit -m "Pesan singkat tentang perubahan"
-Contoh pesan yang baik:
-
-bash
-git commit -m "Memperbaiki tampilan kartu keahlian di halaman keahlian.html"
-Penjelasan:
-Merekam snapshot dari staging area ke dalam riwayat proyek. Pesan commit harus jelas agar tim lain mudah memahami perubahan.
-
-7. Tarik perubahan terbaru sebelum push (wajib)
-bash
-git pull origin main
-Penjelasan:
-Langkah wajib sebelum melakukan push. Jika ada anggota tim lain yang sudah mengunggah perubahan, perintah ini akan menggabungkannya secara otomatis dan mencegah konflik.
-
-8. Kirim commit ke GitHub
-bash
-git push origin main
-Penjelasan:
-Mengunggah commit yang telah Anda buat ke repository remote. Setelah ini, file-file di GitHub akan terbarui, dan anggota tim lain bisa melihat perubahan Anda. Live demo GitHub Pages akan otomatis terupdate (biasanya dalam beberapa menit).
-
+Langkah	Perintah	Penjelasan
+1. Clone repository	git clone https://github.com/dimask016/kel2_wcd06.git	Mengunduh semua file proyek ke komputer lokal.
+2. Masuk ke folder proyek	cd kel2_wcd06	Berpindah ke direktori hasil clone.
+3. Perbarui kode lokal	git pull origin main / git pull https://github.com/dimask016/kel2_wcd06.git main	Mengambil perubahan terbaru dari GitHub sebelum mulai bekerja.
+4. Cek status file	git status	Menampilkan file yang baru, diubah, atau dihapus.
+5. Tambahkan perubahan	git add . atau git add <file>	Menambahkan file ke staging area (persiapan commit).
+6. Simpan perubahan (commit)	git commit -m "Pesan perubahan"	Merekam snapshot ke riwayat proyek.
+7. Tarik perubahan terbaru (wajib)	git pull origin main	Menghindari konflik sebelum push.
+8. Kirim ke GitHub	git push origin main	Mengunggah commit ke repository remote.
 
 
 ⚠️ Catatan penting:
@@ -155,19 +107,17 @@ Website ini sudah di‑deploy menggunakan GitHub Pages dan dapat diakses publik 
 
 Klik tautan di atas untuk melihat demo langsung dari portofolio interaktif ini.
 
-## 📁 Struktur File
-
-| Nama File / Folder | Keterangan |
-|--------------------|-------------|
-| `home.html` | Halaman utama (beranda) |
-| `tentang.html` | Halaman profil / tentang saya |
-| `keahlian.html` | Halaman daftar keahlian |
-| `pengalaman.html` | Halaman riwayat pengalaman kerja |
-| `proyek.html` | Halaman proyek unggulan |
-| `sertifikasi.html` | Halaman sertifikasi profesional |
-| `kontak.html` | Halaman informasi kontak |
-| `README.md` | Dokumentasi proyek ini |
-| `screenshots/` | Folder berisi tangkapan layar (jika ada) |
+📁 6. Struktur File
+Nama File / Folder	Keterangan
+home.html	Halaman utama (beranda)
+tentang.html	Halaman profil / tentang saya
+keahlian.html	Halaman daftar keahlian
+pengalaman.html	Halaman riwayat pengalaman kerja
+proyek.html	Halaman proyek unggulan
+sertifikasi.html	Halaman sertifikasi profesional
+kontak.html	Halaman informasi kontak
+README.md	Dokumentasi proyek ini
+screenshots/	Folder berisi tangkapan layar (jika ada)
 Catatan: Semua halaman menggunakan Three.js yang sama dan sistem translasi yang terintegrasi.
 
 👥 Kontributor :
