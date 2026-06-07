@@ -8,7 +8,7 @@
 ## 📌 1. Nama & Deskripsi Proyek
 
 **Nama Proyek:** Web CV Portofolio Interaktif   
-**Kelompok 2 – Web Class Design (WCD) 06**
+**Kelompok 2 – Web Client Development (WCD) 06**
 
 **Deskripsi:**  
 Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari seorang profesional di bidang teknologi informasi. Halaman ini dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
