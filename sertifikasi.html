@@ -36,6 +36,69 @@
             section { padding:5rem 1rem 3rem; }
             .cert-grid { grid-template-columns:1fr; }
         }
+
+
+        /* Efek flip 3D untuk kartu sertifikasi */
+.cert-card {
+    background-color: transparent;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.cert-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    border-radius: 20px;
+}
+
+/* Saat di-hover, kartu berputar 180 derajat */
+.cert-card:hover .cert-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Sisi depan dan belakang kartu */
+.cert-front, .cert-back {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Sisi belakang diputar 180 derajat */
+.cert-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(66,133,244,0.2);
+    border-color: #4285f4;
+}
+
+/* Ikon di sisi belakang */
+.cert-back i {
+    font-size: 2rem;
+    color: #4285f4;
+    margin-bottom: 0.8rem;
+}
+
+.cert-back p {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin: 0;
+}
     </style>
 </head>
 <body>
@@ -60,13 +123,96 @@
     </nav>
     <section>
         <h2 class="section-title" data-key="certs_title">Sertifikasi Profesional</h2>
-        <div class="cert-grid">
-            <div class="cert-card"><i class="fab fa-google"></i><h4>Foundations of Cybersecurity</h4><p data-key="cert1">Google SN :  HUO8SDTW3KMW</p></div>
-            <div class="cert-card"><i class="fab fa-microsoft"></i><h4>MCSA: Windows Server</h4><p data-key="cert2">Microsoft SN: H319-9174</p></div>
-            <div class="cert-card"><i class="fas fa-network-wired"></i><h4>MTCNA</h4><p data-key="cert3">MikroTik SN: 1811NA3406</p></div>
-            <div class="cert-card"><i class="fas fa-certificate"></i><h4>ITIL v4 Foundation</h4><p data-key="cert4">AXELOS SN: GR750581779DK</p></div>
-            <div class="cert-card"><i class="fas fa-shield-alt"></i><h4>CompTIA Security+</h4><p data-key="cert5">SN: 0G6DGPPFW3Q4QQWY</p></div>
-            <div class="cert-card"><i class="fab fa-aws"></i><h4>AWS Cloud Practitioner</h4><p data-key="cert6">SN: b08b747ac05049c58e950b2b404c7dc3</p></div>
+         <div class="cert-grid">
+            <!-- Kartu 1: Google Cybersecurity -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fab fa-google"></i>
+                        <h4>Foundations of Cybersecurity</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-qrcode"></i>
+                        <p data-key="cert1">Google SN : HUO8SDTW3KMW</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu 2: MCSA Windows Server -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fab fa-microsoft"></i>
+                        <h4>MCSA: Windows Server</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-server"></i>
+                        <p data-key="cert2">Microsoft SN: H319-9174</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu 3: MTCNA -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>MTCNA</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-wifi"></i>
+                        <p data-key="cert3">MikroTik SN: 1811NA3406</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu 4: ITIL v4 Foundation -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fas fa-certificate"></i>
+                        <h4>ITIL v4 Foundation</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-chalkboard-user"></i>
+                        <p data-key="cert4">AXELOS SN: GR750581779DK</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu 5: CompTIA Security+ -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>CompTIA Security+</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-lock"></i>
+                        <p data-key="cert5">CompTIA SN: 0G6DGPPFW3Q4QQWY</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kartu 6: AWS Cloud Practitioner -->
+            <div class="cert-card">
+                <div class="cert-card-inner">
+                    <div class="cert-front">
+                        <i class="fab fa-aws"></i>
+                        <h4>AWS Cloud Practitioner</h4>
+                    </div>
+                    <div class="cert-back">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <p data-key="cert6">AWS SN: b08b747ac05049c58e950b2b404c7dc3</p>
+                        <small>Klik untuk verifikasi</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>
@@ -213,6 +359,57 @@
         btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
     });
     applyLanguage(currentLang);
+</script>
+
+<!-- Script Translasi & Interaksi -->
+<script>
+    const translations = {
+        id: {
+            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", 
+            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
+            certs_title: "Sertifikasi Profesional",
+            cert1: "Google SN : HUO8SDTW3KMW", cert2: "Microsoft SN: H319-9174", 
+            cert3: "MikroTik SN: 1811NA3406", cert4: "AXELOS SN: GR750581779DK", 
+            cert5: "CompTIA SN: 0G6DGPPFW3Q4QQWY", cert6: "AWS SN: b08b747ac05049c58e950b2b404c7dc3"
+        },
+        en: {
+            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", 
+            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
+            certs_title: "Professional Certifications",
+            cert1: "Google SN : HUO8SDTW3KMW", cert2: "Microsoft SN: H319-9174", 
+            cert3: "MikroTik SN: 1811NA3406", cert4: "AXELOS SN: GR750581779DK", 
+            cert5: "CompTIA SN: 0G6DGPPFW3Q4QQWY", cert6: "AWS SN: b08b747ac05049c58e950b2b404c7dc3"
+        }
+    };
+    let currentLang = localStorage.getItem('lang') || 'id';
+    
+    function applyLanguage(lang) {
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if(translations[lang][key]) el.innerText = translations[lang][key];
+        });
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        localStorage.setItem('lang', lang);
+    }
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+    });
+    applyLanguage(currentLang);
+    
+    // Efek interaksi untuk kartu sertifikasi (klik = alert)
+    document.querySelectorAll('.cert-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Mencegah event bubbling agar tidak mengganggu animasi flip
+            e.stopPropagation();
+            const title = card.querySelector('.cert-front h4')?.innerText || 'Sertifikasi';
+            const sn = card.querySelector('.cert-back p')?.innerText || 'Nomor seri tidak tersedia';
+            alert(`📜 ${title}\n\n${sn}\n\nSertifikasi ini dapat diverifikasi melalui penyedia resmi.`);
+        });
+    });
 </script>
 </body>
 </html>
