@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dimas Kurniawan | Pengalaman</title>
+    <title>Dimas Kurniawan | Pengalaman Profesional</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -24,20 +24,273 @@
         section { padding:6rem 2rem 4rem; min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
         .section-title { font-size:clamp(1.8rem,6vw,2.5rem); text-align:center; margin-bottom:3rem; position:relative; }
         .section-title::after { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:70px; height:3px; background:linear-gradient(135deg,#4285F4,#EA4335); border-radius:3px; }
-        .exp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; max-width:1200px; margin:0 auto; }
-        .exp-card { background:rgba(255,255,255,0.08); backdrop-filter:blur(10px); border-radius:20px; padding:1.5rem; border:1px solid rgba(255,255,255,0.2); transition:all 0.3s; }
-        .exp-card:hover { transform:translateY(-5px); background:rgba(66,133,244,0.1); border-color:#4285F4; }
-        .exp-card h3 { font-size:1.2rem; margin-bottom:0.3rem; }
-        .exp-company { color:#4285F4; font-weight:500; margin-bottom:0.5rem; }
-        .exp-date { font-size:0.8rem; opacity:0.7; display:inline-block; margin-bottom:0.8rem; }
-        .exp-card ul { padding-left:1.2rem; margin-top:0.5rem; }
-        .exp-card li { font-size:0.85rem; margin-bottom:0.4rem; }
-        @media (max-width:768px) {
+        
+        /* ========== TIMELINE ZIG-ZAG CARD LEBAR ========== */
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Garis vertikal timeline di tengah */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            bottom: 20px;
+            width: 3px;
+            background: linear-gradient(to bottom, #4285F4, #EA4335, #FBBC05, #34A853);
+            border-radius: 3px;
+            transform: translateX(-50%);
+        }
+        
+        /* Setiap item pengalaman */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Wrapper untuk konten (kiri atau kanan) - card lebih lebar */
+        .timeline-wrapper {
+            width: 42%;
+            position: relative;
+        }
+        
+        /* Posisi kiri */
+        .timeline-item.left .timeline-wrapper {
+            margin-right: auto;
+            padding-right: 2rem;
+            text-align: right;
+        }
+        
+        /* Posisi kanan */
+        .timeline-item.right .timeline-wrapper {
+            margin-left: auto;
+            padding-left: 2rem;
+            text-align: left;
+        }
+        
+        /* Lingkaran indikator pada garis tengah */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #4285F4;
+            border: 3px solid #fff;
+            transform: translateX(-50%);
+            z-index: 3;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 2px rgba(66,133,244,0.3);
+        }
+        
+        .timeline-item:nth-child(1) .timeline-dot { background: #4285F4; }
+        .timeline-item:nth-child(2) .timeline-dot { background: #EA4335; }
+        .timeline-item:nth-child(3) .timeline-dot { background: #FBBC05; }
+        
+        /* Tanggal di atas/samping card */
+        .timeline-date {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-date .year {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4285F4;
+            background: rgba(66,133,244,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Card konten - LEBIH LEBAR dengan layout horizontal */
+        .timeline-content {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        /* Efek hover pada card */
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: #4285F4;
+            background: rgba(66,133,244,0.12);
+            box-shadow: 0 10px 25px rgba(66,133,244,0.25);
+        }
+        
+        /* Panah penghubung ke garis tengah - untuk card kiri */
+        .timeline-item.left .timeline-content::before {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 18px;
+            width: 15px;
+            height: 2px;
+            background: #4285F4;
+        }
+        
+        .timeline-item.left .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -19px;
+            top: 15px;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid #4285F4;
+            border-top: 2px solid #4285F4;
+            transform: rotate(45deg);
+        }
+        
+        /* Panah penghubung ke garis tengah - untuk card kanan */
+        .timeline-item.right .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 18px;
+            width: 15px;
+            height: 2px;
+            background: #4285F4;
+        }
+        
+        .timeline-item.right .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -19px;
+            top: 15px;
+            width: 8px;
+            height: 8px;
+            border-left: 2px solid #4285F4;
+            border-bottom: 2px solid #4285F4;
+            transform: rotate(45deg);
+        }
+        
+        /* Card konten - TEKS */
+        .timeline-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .timeline-content .company {
+            color: #4285F4;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.3px;
+        }
+        
+        .timeline-content .description {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+        
+        /* RESPONSIBILITIES - menggunakan FLEX untuk tidak terlalu panjang ke bawah */
+        .responsibilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .responsibilities li {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(66,133,244,0.15);
+            border-radius: 20px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        /* Responsive: saat layar mengecil, responsibilites membungkus */
+        @media (max-width: 900px) {
+            .responsibilities li {
+                white-space: normal;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Animasi fade in */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive untuk mobile (menjadi vertikal biasa) */
+        @media (max-width: 768px) {
             nav { flex-direction:column; padding:0.8rem; gap:0.5rem; }
             .nav-links { justify-content:center; gap:0.8rem; }
             .lang-toggle { margin-left:0; margin-top:0.3rem; }
             section { padding:5rem 1rem 3rem; }
-            .exp-grid { grid-template-columns:1fr; }
+            
+            .timeline-container::before {
+                left: 20px;
+                transform: translateX(0);
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 2rem;
+            }
+            
+            .timeline-wrapper {
+                width: calc(100% - 30px);
+                margin-left: 35px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+                transform: translateX(0);
+            }
+            
+            .timeline-item.left .timeline-content::before,
+            .timeline-item.right .timeline-content::before,
+            .timeline-item.left .timeline-content::after,
+            .timeline-item.right .timeline-content::after {
+                display: none;
+            }
+            
+            .timeline-item.left .timeline-wrapper,
+            .timeline-item.right .timeline-wrapper {
+                margin-left: 20px;
+            }
+            
+            .responsibilities li {
+                white-space: normal;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
@@ -63,49 +316,84 @@
     </nav>
     <section>
         <h2 class="section-title" data-key="exp_title">Pengalaman Profesional</h2>
-        <div class="exp-grid">
-            <div class="exp-card">
-                <h3 data-key="exp1_title">Data Center Engineer</h3>
-                <div class="exp-company">Google Cloud Indonesia</div>
-                <span class="exp-date" data-key="exp1_date">Feb 2026 – Present</span>
-                <ul data-key="exp1_list">
-                    <li>Manage data center infrastructure, 99.9% uptime</li>
-                    <li>Deploy servers, networking, storage; monitor environment</li>
-                    <li>Security policies, incident response, RCA</li>
-                    <li>Capacity upgrades & lifecycle management</li>
-                </ul>
+        <div class="timeline-container" id="timelineContainer">
+            <!-- Timeline item 1: Data Center Engineer (KANAN) -->
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-wrapper">
+                    <div class="timeline-date">
+                        <span class="year" data-key="exp1_year">2026 - Sekarang</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 data-key="exp1_title">Data Center Engineer</h3>
+                        <div class="company">Google Cloud Indonesia</div>
+                        <div class="description" data-key="exp1_desc">
+                            Mengelola dan memelihara infrastruktur data center Google Cloud.
+                        </div>
+                        <ul class="responsibilities" data-key="exp1_list">
+                            <li>Uptime 99.9%</li>
+                            <li>Deploy Server & Storage</li>
+                            <li>Security & RCA</li>
+                            <li>Capacity Management</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="exp-card">
-                <h3 data-key="exp2_title">ICT Server</h3>
-                <div class="exp-company">PT Antam tbk</div>
-                <span class="exp-date" data-key="exp2_date">Jan 2022 – July 2025</span>
-                <ul data-key="exp2_list">
-                    <li>Administered 100+ Windows/Linux servers, AD, DNS/DHCP</li>
-                    <li>VMware ESXi, Hyper-V virtualization</li>
-                    <li>Backup with Acronis Cyber Protect</li>
-                </ul>
+            
+            <!-- Timeline item 2: ICT Server (KIRI) -->
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-wrapper">
+                    <div class="timeline-date">
+                        <span class="year" data-key="exp2_year">2022 - 2025</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 data-key="exp2_title">ICT Server</h3>
+                        <div class="company">PT Antam tbk</div>
+                        <div class="description" data-key="exp2_desc">
+                            Mengelola 100+ server & virtualisasi perusahaan.
+                        </div>
+                        <ul class="responsibilities" data-key="exp2_list">
+                            <li>Windows/Linux Server</li>
+                            <li>Active Directory & GPO</li>
+                            <li>VMware & Hyper-V</li>
+                            <li>Acronis Backup</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="exp-card">
-                <h3 data-key="exp3_title">IT Aplikasi dan Database</h3>
-                <div class="exp-company">PT Antam tbk</div>
-                <span class="exp-date" data-key="exp3_date">Mar 2019 – Jan 2022</span>
-                <ul data-key="exp3_list">
-                    <li>Business apps installation & maintenance</li>
-                    <li>SQL Server, MySQL, PostgreSQL admin, backup strategies</li>
-                    <li>Technical documentation & training</li>
-                </ul>
+            
+            <!-- Timeline item 3: IT Aplikasi dan Database (KANAN) -->
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-wrapper">
+                    <div class="timeline-date">
+                        <span class="year" data-key="exp3_year">2019 - 2022</span>
+                    </div>
+                    <div class="timeline-content">
+                        <h3 data-key="exp3_title">IT Aplikasi & Database</h3>
+                        <div class="company">PT Antam tbk</div>
+                        <div class="description" data-key="exp3_desc">
+                            Mengelola aplikasi bisnis dan database perusahaan.
+                        </div>
+                        <ul class="responsibilities" data-key="exp3_list">
+                            <li>Business Apps</li>
+                            <li>SQL Server / MySQL</li>
+                            <li>Backup Strategy</li>
+                            <li>Technical Docs</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-           
+        </div>
     </section>
 </div>
 
-<!-- Three.js Script (sama seperti di keahlian.html, silakan copy dari atas) -->
+<!-- Three.js Background -->
 <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
 </script>
 <script type="module">
-    // Copy persis kode Three.js dari keahlian.html (dari import hingga animate)
-    // Saya singkat di sini karena identik, Anda bisa copy dari file sebelumnya
     import * as THREE from 'three';
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x050510);
@@ -210,57 +498,95 @@
     });
 </script>
 
+<!-- Script Translasi & Scroll Reveal -->
 <script>
     const translations = {
         id: {
-            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
+            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", 
+            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
             exp_title: "Pengalaman Profesional",
-            exp1_title: "Data Center Engineer", exp1_date: "Feb 2026 – Sekarang", exp1_list: ["Kelola infrastruktur data center, uptime 99.9%", "Deploy server, jaringan, storage", "Kebijakan keamanan, insiden, RCA", "Upgrade kapasitas & manajemen siklus hidup"],
-            exp2_title: "ICT Server", exp2_date: "Jan 2022 – Jul 2025", exp2_list: ["Administrasi 100+ server Windows/Linux, AD, DNS/DHCP", "Virtualisasi VMware ESXi, Hyper-V", "Backup dengan Acronis Cyber Protect"],
-            exp3_title: "IT Aplikasi dan Database", exp3_date: "Mar 2019 – Jan 2022", exp3_list: ["Instalasi & pemeliharaan aplikasi bisnis", "Admin SQL Server, MySQL, PostgreSQL, strategi backup", "Dokumentasi teknis & pelatihan"],
-            exp4_title: "IT Network & Teknisi", exp4_date: "Apr 2011 – Mar 2019", exp4_list: ["Dukungan desktop, jaringan, server; router/switch Cisco", "Monitoring CACTI, SNMP, SolarWinds", "Deploy OS & manajemen printer"]
+            exp1_title: "Data Center Engineer", exp1_year: "2026 - Sekarang",
+            exp1_desc: "Mengelola dan memelihara infrastruktur data center Google Cloud.",
+            exp1_list: ["Uptime 99.9%", "Deploy Server & Storage", "Security & RCA", "Capacity Management"],
+            exp2_title: "ICT Server", exp2_year: "2022 - 2025",
+            exp2_desc: "Mengelola 100+ server & virtualisasi perusahaan.",
+            exp2_list: ["Windows/Linux Server", "Active Directory & GPO", "VMware & Hyper-V", "Acronis Backup"],
+            exp3_title: "IT Aplikasi & Database", exp3_year: "2019 - 2022",
+            exp3_desc: "Mengelola aplikasi bisnis dan database perusahaan.",
+            exp3_list: ["Business Apps", "SQL Server / MySQL", "Backup Strategy", "Technical Docs"]
         },
         en: {
-            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
+            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", 
+            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
             exp_title: "Professional Experience",
-            exp1_title: "Data Center Engineer", exp1_date: "Feb 2026 – Present", exp1_list: ["Manage data center infrastructure, 99.9% uptime", "Deploy servers, networking, storage", "Security policies, incident response, RCA", "Capacity upgrades & lifecycle management"],
-            exp2_title: "ICT Server", exp2_date: "Jan 2022 – July 2025", exp2_list: ["Administered 100+ Windows/Linux servers, AD, DNS/DHCP", "VMware ESXi, Hyper-V virtualization", "Backup with Acronis Cyber Protect"],
-            exp3_title: "IT Applications & Database", exp3_date: "Mar 2019 – Jan 2022", exp3_list: ["Business apps installation & maintenance", "SQL Server, MySQL, PostgreSQL admin, backup strategies", "Technical documentation & training"],
-            exp4_title: "IT Network & Technician", exp4_date: "Apr 2011 – Mar 2019", exp4_list: ["Desktop, network, server support; Cisco routers/switches", "Monitoring CACTI, SNMP, SolarWinds", "OS deployment & printer management"]
+            exp1_title: "Data Center Engineer", exp1_year: "2026 - Present",
+            exp1_desc: "Manage and maintain Google Cloud data center infrastructure.",
+            exp1_list: ["99.9% Uptime", "Server & Storage Deployment", "Security & RCA", "Capacity Management"],
+            exp2_title: "ICT Server", exp2_year: "2022 - 2025",
+            exp2_desc: "Manage 100+ servers & corporate virtualization.",
+            exp2_list: ["Windows/Linux Server", "Active Directory & GPO", "VMware & Hyper-V", "Acronis Backup"],
+            exp3_title: "IT Apps & Database", exp3_year: "2019 - 2022",
+            exp3_desc: "Manage business applications and corporate databases.",
+            exp3_list: ["Business Apps", "SQL Server / MySQL", "Backup Strategy", "Technical Docs"]
         }
     };
+    
     let currentLang = localStorage.getItem('lang') || 'id';
+    
     function applyLanguage(lang) {
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.getAttribute('data-key');
-            if(translations[lang][key]) el.innerText = translations[lang][key];
-        });
-        document.querySelectorAll('.exp-card ul').forEach((ul, idx) => {
-            const parent = ul.closest('.exp-card');
-            if(!parent) return;
-            const title = parent.querySelector('h3').innerText;
-            let listKey = '';
-            if(title.includes('Data Center')) listKey = 'exp1_list';
-            else if(title.includes('ICT Server')) listKey = 'exp2_list';
-            else if(title.includes('Aplikasi')) listKey = 'exp3_list';
-            else if(title.includes('Network')) listKey = 'exp4_list';
-            if(listKey && translations[lang][listKey]) {
-                ul.innerHTML = translations[lang][listKey].map(item => `<li>${item}</li>`).join('');
+            if(translations[lang][key] && typeof translations[lang][key] === 'string') {
+                el.innerText = translations[lang][key];
             }
         });
-        document.querySelectorAll('.exp-date').forEach((span, i) => {
-            const keys = ['exp1_date', 'exp2_date', 'exp3_date', 'exp4_date'];
-            if(translations[lang][keys[i]]) span.innerText = translations[lang][keys[i]];
+        
+        const listKeys = ['exp1_list', 'exp2_list', 'exp3_list'];
+        document.querySelectorAll('.responsibilities').forEach((ul, idx) => {
+            if(translations[lang][listKeys[idx]]) {
+                const items = translations[lang][listKeys[idx]];
+                ul.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+            }
         });
+        
         document.querySelectorAll('.lang-btn').forEach(btn => {
             if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
             else btn.classList.remove('active');
         });
+        
         localStorage.setItem('lang', lang);
     }
+    
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
     });
+    
+    // Efek klik pada card
+    document.querySelectorAll('.timeline-content').forEach(card => {
+        card.addEventListener('click', () => {
+            const title = card.querySelector('h3')?.innerText || 'Pengalaman';
+            const company = card.querySelector('.company')?.innerText || '';
+            alert(`💼 ${title}\n${company}\n\nKlik untuk melihat detail lebih lanjut atau hubungi untuk referensi.`);
+        });
+    });
+    
+    // Scroll reveal animation
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return rect.top < window.innerHeight - 100;
+    }
+    
+    function checkVisibility() {
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            if (isElementInViewport(item) && !item.classList.contains('visible')) {
+                item.classList.add('visible');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', checkVisibility);
+    window.addEventListener('load', checkVisibility);
+    
     applyLanguage(currentLang);
 </script>
 </body>
