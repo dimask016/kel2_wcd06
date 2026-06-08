@@ -25,17 +25,115 @@
         .section-title { font-size:clamp(1.8rem,6vw,2.5rem); text-align:center; margin-bottom:3rem; position:relative; }
         .section-title::after { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:70px; height:3px; background:linear-gradient(135deg,#4285F4,#EA4335); border-radius:3px; }
         .projects-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; max-width:1200px; margin:0 auto; }
-        .project-card { background:rgba(255,255,255,0.08); backdrop-filter:blur(10px); border-radius:20px; padding:1.5rem; border:1px solid rgba(255,255,255,0.2); transition:0.3s; }
-        .project-img { height:120px; background:linear-gradient(135deg,#4285F4,#34A853); display:flex; align-items:center; justify-content:center; font-size:2.5rem; border-radius:15px; margin-bottom:1rem; }
-        .project-tools { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.8rem 0; }
-        .tool-tag { background:rgba(66,133,244,0.3); padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem; }
-        .project-link { color:#4285F4; text-decoration:none; font-weight:600; cursor:pointer; }
+        
+        /* ========== EFEK CARD PROYEK ========== */
+        .project-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            
+            /* Efek fade in bertahap */
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        /* Delay fade in untuk setiap kartu */
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Animasi fade in dari bawah */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Efek hover: scale + neon glow */
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #4285F4;
+            box-shadow: 0 15px 35px rgba(66,133,244,0.3), 0 0 15px rgba(66,133,244,0.2);
+            background: rgba(66,133,244,0.1);
+        }
+        
+        /* Efek icon berdenyut saat hover */
+        .project-card:hover .project-img i {
+            animation: pulse 0.6s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.9; text-shadow: 0 0 8px #4285F4; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .project-img {
+            height: 120px;
+            background: linear-gradient(135deg,#4285F4,#34A853);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.8rem 0;
+        }
+        
+        .tool-tag {
+            background: rgba(66,133,244,0.3);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            transition: all 0.2s ease;
+        }
+        
+        .project-card:hover .tool-tag {
+            background: rgba(66,133,244,0.6);
+        }
+        
+        .project-link {
+            color: #4285F4;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            text-decoration: underline;
+            letter-spacing: 0.5px;
+        }
+        
         @media (max-width:768px) {
             nav { flex-direction:column; padding:0.8rem; gap:0.5rem; }
             .nav-links { justify-content:center; gap:0.8rem; }
             .lang-toggle { margin-left:0; margin-top:0.3rem; }
             section { padding:5rem 1rem 3rem; }
             .projects-grid { grid-template-columns:1fr; }
+            
+            /* Kurangi efek scale di mobile agar tidak terlalu ekstrim */
+            .project-card:hover {
+                transform: translateY(-5px) scale(1.01);
+            }
         }
     </style>
 </head>
@@ -62,39 +160,58 @@
     <section>
         <h2 class="section-title" data-key="projects_title">Proyek Unggulan</h2>
         <div class="projects-grid">
+            <!-- Proyek 1 -->
             <div class="project-card">
                 <div class="project-img"><i class="fas fa-database"></i></div>
-                <h3 data-key="proj1_title">Google Cloud DC Optimization</h3>
-                <p data-key="proj1_desc">Optimizing data center operations & automated monitoring for GCP.</p>
-                <div class="project-tools"><span class="tool-tag">GCP</span><span class="tool-tag">Data Center</span></div>
-                <a class="project-link" data-key="proj_link" onclick="alertDemo()"></a>
+                <h3 data-key="proj1_title">Optimasi Data Center Google Cloud</h3>
+                <p data-key="proj1_desc">Mengoptimalkan operasi data center & monitoring otomatis untuk GCP.</p>
+                <div class="project-tools">
+                    <span class="tool-tag">GCP</span>
+                    <span class="tool-tag">Data Center</span>
+                </div>
+                <a class="project-link" data-key="proj_link" onclick="alertDemo('Optimasi Data Center Google Cloud')">Lihat Detail →</a>
             </div>
+            
+            <!-- Proyek 2 -->
             <div class="project-card">
                 <div class="project-img"><i class="fas fa-cloud-upload-alt"></i></div>
-                <h3 data-key="proj2_title">Microsoft 365 Backup</h3>
-                <p data-key="proj2_desc">Comprehensive backup for M365: Exchange, OneDrive, Teams.</p>
-                <div class="project-tools"><span class="tool-tag">Acronis</span><span class="tool-tag">M365</span></div>
-                <a class="project-link" data-key="proj_link" onclick="alertDemo()"></a>
+                <h3 data-key="proj2_title">Backup Microsoft 365</h3>
+                <p data-key="proj2_desc">Backup komprehensif untuk M365: Exchange, OneDrive, Teams.</p>
+                <div class="project-tools">
+                    <span class="tool-tag">Acronis</span>
+                    <span class="tool-tag">M365</span>
+                </div>
+                <a class="project-link" data-key="proj_link" onclick="alertDemo('Backup Microsoft 365')">Lihat Detail →</a>
             </div>
+            
+            <!-- Proyek 3 -->
             <div class="project-card">
                 <div class="project-img"><i class="fas fa-cloud-migrate"></i></div>
-                <h3 data-key="proj3_title">Website Migration to GCP</h3>
-                <p data-key="proj3_desc">Migrated internal web apps from on-prem to GCP + Cloudflare.</p>
-                <div class="project-tools"><span class="tool-tag">GCP</span><span class="tool-tag">Cloudflare</span></div>
-                <a class="project-link" data-key="proj_link" onclick="alertDemo()"></a>
+                <h3 data-key="proj3_title">Migrasi Website ke GCP</h3>
+                <p data-key="proj3_desc">Migrasi aplikasi web internal dari on-prem ke GCP + Cloudflare.</p>
+                <div class="project-tools">
+                    <span class="tool-tag">GCP</span>
+                    <span class="tool-tag">Cloudflare</span>
+                </div>
+                <a class="project-link" data-key="proj_link" onclick="alertDemo('Migrasi Website ke GCP')">Lihat Detail →</a>
             </div>
+            
+            <!-- Proyek 4 -->
             <div class="project-card">
                 <div class="project-img"><i class="fas fa-key"></i></div>
-                <h3 data-key="proj4_title">Privileged Access Management</h3>
-                <p data-key="proj4_desc">Implemented PAM (Senhasegura) for secure remote access.</p>
-                <div class="project-tools"><span class="tool-tag">PAM</span><span class="tool-tag">Security</span></div>
-                <a class="project-link" data-key="proj_link" onclick="alertDemo()"></a>
+                <h3 data-key="proj4_title">Manajemen Akses Istimewa</h3>
+                <p data-key="proj4_desc">Implementasi PAM (Senhasegura) untuk akses remote aman.</p>
+                <div class="project-tools">
+                    <span class="tool-tag">PAM</span>
+                    <span class="tool-tag">Security</span>
+                </div>
+                <a class="project-link" data-key="proj_link" onclick="alertDemo('Manajemen Akses Istimewa')">Lihat Detail →</a>
             </div>
         </div>
     </section>
 </div>
 
-<!-- Three.js Background (sama persis dengan tentang.html) -->
+<!-- Three.js Background (sama persis dengan halaman lain) -->
 <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
 </script>
@@ -203,28 +320,33 @@
     });
 </script>
 
+<!-- Script Translasi & Interaksi -->
 <script>
     const translations = {
         id: {
-            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
+            nav_home: "Home", nav_about: "Tentang", nav_skills: "Keahlian", nav_exp: "Pengalaman", 
+            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
             projects_title: "Proyek Unggulan",
             proj1_title: "Optimasi Data Center Google Cloud", proj1_desc: "Mengoptimalkan operasi data center & monitoring otomatis untuk GCP.",
             proj2_title: "Backup Microsoft 365", proj2_desc: "Backup komprehensif untuk M365: Exchange, OneDrive, Teams.",
             proj3_title: "Migrasi Website ke GCP", proj3_desc: "Migrasi aplikasi web internal dari on-prem ke GCP + Cloudflare.",
             proj4_title: "Manajemen Akses Istimewa", proj4_desc: "Implementasi PAM (Senhasegura) untuk akses remote aman.",
-            proj_link: ""
+            proj_link: "Lihat Detail →"
         },
         en: {
-            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
+            nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_exp: "Experience", 
+            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
             projects_title: "Featured Projects",
             proj1_title: "Google Cloud DC Optimization", proj1_desc: "Optimizing data center operations & automated monitoring for GCP.",
             proj2_title: "Microsoft 365 Backup", proj2_desc: "Comprehensive backup for M365: Exchange, OneDrive, Teams.",
             proj3_title: "Website Migration to GCP", proj3_desc: "Migrated internal web apps from on-prem to GCP + Cloudflare.",
             proj4_title: "Privileged Access Management", proj4_desc: "Implemented PAM (Senhasegura) for secure remote access.",
-            proj_link: ""
+            proj_link: "View Details →"
         }
     };
+    
     let currentLang = localStorage.getItem('lang') || 'id';
+    
     function applyLanguage(lang) {
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.getAttribute('data-key');
@@ -239,14 +361,26 @@
         });
         localStorage.setItem('lang', lang);
     }
+    
+    function alertDemo(projectName) {
+        alert(`📋 Detail Proyek: ${projectName}\n\nHubungi saya untuk informasi lebih lanjut mengenai proyek ini.`);
+    }
+    
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
     });
+    
+    // Tambahkan event click pada card (opsional)
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Cegah jika yang diklik adalah link
+            if(e.target.tagName === 'A') return;
+            const title = card.querySelector('h3')?.innerText || 'Proyek';
+            alertDemo(title);
+        });
+    });
+    
     applyLanguage(currentLang);
-
-    function alertDemo() {
-        alert("Detail proyek tersedia. Hubungi saya untuk demo lengkap!");
-    }
     window.alertDemo = alertDemo;
 </script>
 </body>
