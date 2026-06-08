@@ -15,7 +15,7 @@ Sebuah website portofolio personal yang menampilkan profil, keahlian, pengalaman
 
 **Anggota Tim dan Akun Github:**
 - Deva Agriani (Ketua)
-- Gempur Mahya Reksa
+- Gempur Mahya Reksa - reksamahya@gmail.com
 - Fajar Muhammad Ramadhan
 - Dimas Kurniawan - dimas.kurniawan@cakrwala.ac.id
 - Dharma Satriadi
