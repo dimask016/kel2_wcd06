@@ -97,12 +97,27 @@ header {
 /* --- Hero Section --- */
 .hero {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    height: 100vh;
+    min-height: 100vh;     /* Mengubah height menjadi min-height agar aman jika konten memanjang */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: 60px;
+    padding: 120px 0 60px 0; /* Menyesuaikan padding atas agar tidak tertutup navbar fixed */
+}
+
+.profile-img {
+    width: 160px;          /* Mengatur lebar foto */
+    height: 160px;         /* Mengatur tinggi foto (harus sama agar lingkaran sempurna) */
+    border-radius: 50%;    /* Membuat foto berbentuk lingkaran */
+    object-fit: cover;     /* Menjaga foto tidak gepeng/distorsi */
+    margin-bottom: 20px;   /* Memberikan jarak antara foto dan nama */
+    border: 4px solid #ffffff; /* Memberikan bingkai putih elegan di luar foto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Memberikan efek bayangan lembut */
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05); /* Efek sedikit membesar saat kursor diarahkan ke foto */
 }
 
 .hero-content h1 {
