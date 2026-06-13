@@ -36,7 +36,7 @@ Website portofolio personal yang menampilkan profil, keahlian, pengalaman, proye
 | Gempur Mahya Reksa | Pengembangan UI/UX | reksamahya@gmail.com |
 | Fajar Muhammad Ramadhan | Implementasi Three.js dan animasi | — |
 | Dimas Kurniawan | Konten, sertifikasi, dan pengalaman | dimas.kurniawan@cakrwala.ac.id |
-| Dharma Satriadi | Dokumentasi dan deployment | — |
+| Dharma Satriadi | Dokumentasi dan deployment | dharma.satriadi@cakrawala.ac.id |
 
 ---
 
