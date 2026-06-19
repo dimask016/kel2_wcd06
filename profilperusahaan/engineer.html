@@ -11,7 +11,6 @@
         body { font-family:'Space Grotesk',sans-serif; overflow-x:hidden; color:#fff; }
         #canvas-container { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
         
-        /* PERBAIKAN CSS: Mengurangi kepekatan overlay hitam (dari 0.3-0.7 menjadi 0.1-0.3) agar warna transisi Three.js di belakang terlihat jelas */
         .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%); z-index:1; pointer-events:none; }
         
         .content { position:relative; z-index:2; min-height:100vh; padding-top:6rem; }
@@ -24,7 +23,6 @@
         .lang-btn { background:rgba(255,255,255,0.15); border:none; border-radius:30px; padding:0.3rem 0.8rem; font-size:0.8rem; font-weight:600; cursor:pointer; transition:0.2s; color:white; }
         .lang-btn.active { background:#4285F4; box-shadow:0 0 8px #4285F4; }
         
-        /* PERBAIKAN CSS: Menambahkan bayangan teks global agar konten putih tetap terbaca tajam saat background berganti ke fase terang */
         section { max-width:1200px; margin:0 auto; padding:2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
         
         .section-title { text-align:center; margin-bottom:2rem; font-size:2.8rem; font-weight:700; background:linear-gradient(135deg,#fff,#4285F4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
@@ -40,8 +38,8 @@
         .eng-card:hover { transform:translateY(-5px); border-color:rgba(66,133,244,0.3); box-shadow:0 15px 35px rgba(66,133,244,0.15); }
         .eng-card:hover::before { transform:translateX(100%); }
         
-        .avatar-wrapper { position:relative; width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #4285F4, #34A853); padding:3px; margin-bottom:0.5rem; transition:0.3s; }
-        .avatar-placeholder { width:100%; height:100%; border-radius:50%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:#fff; }
+        .avatar-wrapper { position:relative; width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg, #4285F4, #34A853); padding:3px; margin-bottom:0.5rem; transition:0.3s; overflow:hidden; }
+        .avatar-wrapper img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
         .eng-card:hover .avatar-wrapper { transform:scale(1.05); }
         
         .eng-card h3 { font-size:1.4rem; font-weight:600; color:#fff; }
@@ -98,9 +96,10 @@
         </div>
         
         <div class="engineer-grid">
+            <!-- Dimas Kurniawan -->
             <div class="eng-card" data-specialty="infra">
                 <div class="avatar-wrapper">
-                    <div class="avatar-placeholder"><i class="fas fa-server"></i></div>
+                    <img src="../asssets/img/dimas.jpeg" alt="Dimas Kurniawan">
                 </div>
                 <h3>Dimas Kurniawan</h3>
                 <span class="eng-role"><a href="https://dimask016.github.io/kel2_wcd06/portofolioDimasKurniawan/home.html" target="_blank">Lead Data Center Engineer</a></span>
@@ -108,9 +107,10 @@
                 <span class="eng-badge">Google Cloud Certified</span>
             </div>
             
+            <!-- Deva Agriani -->
             <div class="eng-card" data-specialty="cyber">
                 <div class="avatar-wrapper" style="background:linear-gradient(135deg, #EA4335, #FBBC05);">
-                    <div class="avatar-placeholder"><i class="fas fa-user-shield"></i></div>
+                    <img src="../asssets/img/devaagriani.jpg" alt="Deva Agriani">
                 </div>
                 <h3>Deva Agriani</h3>
                 <span class="eng-role"><a href="https://dimask016.github.io/kel2_wcd06/portofolioDevaAgriani/index.html" target="_blank">Senior Cyber Security Analyst</a></span>
@@ -118,9 +118,10 @@
                 <span class="eng-badge" style="color:#EA4335; background:rgba(234,67,53,0.15); border-color:rgba(234,67,53,0.3)">CEH Master</span>
             </div>
             
+            <!-- Gempur Mahya Reksa -->
             <div class="eng-card" data-specialty="devsec">
                 <div class="avatar-wrapper" style="background:linear-gradient(135deg, #4285F4, #FBBC05);">
-                    <div class="avatar-placeholder"><i class="fas fa-code-branch"></i></div>
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80" alt="Gempur Mahya Reksa">
                 </div>
                 <h3>Gempur Mahya Reksa</h3>
                 <span class="eng-role">DevSecOps Cloud Architect</span>
@@ -138,18 +139,16 @@
     import * as THREE from 'three';
     const scene = new THREE.Scene();
     
-    // Inisialisasi awal penampung objek warna dinamis background fajar, siang, sore, aurora
     const currentBgColor = new THREE.Color(0x1a2a6c);
     scene.background = currentBgColor;
     scene.fog = new THREE.FogExp2(currentBgColor, 0.002);
     
-    // JAVASCRIPT PERBAIKAN: Array palet warna transisi otomatis representasi rotasi rotasi jam bumi
     const targetColors = [
-        new THREE.Color(0x1a2a6c), // Fajar / Malam Menjelang Pagi
-        new THREE.Color(0x2d68c4), // Siang Hari (Biru Langit Cerah)
-        new THREE.Color(0xb03a2e), // Sore / Senja Terbenam
-        new THREE.Color(0xd35400), // Jingga Mentari Terbit
-        new THREE.Color(0x6c3483)  // Ungu Aurora Kosmik
+        new THREE.Color(0x1a2a6c),
+        new THREE.Color(0x2d68c4),
+        new THREE.Color(0xb03a2e),
+        new THREE.Color(0xd35400),
+        new THREE.Color(0x6c3483)
     ];
     let currentColorIndex = 0;
     let nextColorIndex = 1;
@@ -162,7 +161,6 @@
     renderer.shadowMap.enabled = true;
     document.getElementById('canvas-container').appendChild(renderer.domElement);
     
-    // Menaikkan intensitas cahaya ambien dari 0x404060 ke 0x505070 agar seimbang
     const ambient = new THREE.AmbientLight(0x505070);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -234,7 +232,6 @@
         requestAnimationFrame(animate);
         time += 0.01;
         
-        // JAVASCRIPT PERBAIKAN: Interpolasi halus pergerakan warna (.lerp()) secara berkala tanpa intervensi klik
         colorProgress += 0.002; 
         if (colorProgress >= 1) {
             colorProgress = 0;
@@ -272,7 +269,7 @@
 </script>
 
 <script>
-    // Logic filter kategori kartu engineer (menyesuaikan ID & class orisinal Anda)
+    // Logic filter kategori kartu engineer
     const filterSelect = document.getElementById('engineer-filter');
     const cards = document.querySelectorAll('.eng-card');
     filterSelect.addEventListener('change', (e) => {
