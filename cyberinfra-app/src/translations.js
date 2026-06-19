@@ -1,0 +1,209 @@
+export const translations = {
+  id: {
+    // Nav
+    nav_home: "Home",
+    nav_about: "Tentang",
+    nav_skills: "Layanan",
+    nav_exp: "Pengalaman",
+    nav_projects: "Proyek",
+    nav_certs: "Sertifikasi",
+    nav_contact: "Kontak",
+    nav_engineer: "Engineer",
+
+    // Hero
+    hero_name: "CyberInfra Solutions",
+    hero_title: "Penyedia Jasa Infrastruktur IT Berkelanjutan & Proteksi Cybersecurity Mutakhir",
+    hero_btn: "Pelajari Solusi Kami →",
+
+    // About
+    about_title: "Tentang Perusahaan",
+    about_text1: "CyberInfra Solutions didirikan untuk menjawab tantangan transformasi digital global. Kami adalah penyedia terpercaya yang berfokus pada integrasi infrastruktur TIK tangguh dan perlindungan cybersecurity menyeluruh bagi sektor enterprise, pemerintahan, serta UMKM.",
+    about_text2: "Visi kami adalah mewujudkan ekosistem digital yang kokoh, adaptif, dan bebas dari ancaman siber, guna mendukung keberlanjutan bisnis tanpa mengorbankan keamanan data.",
+
+    // Skills (Keahlian) - 6 item
+    skills_title: "Solusi & Layanan Kami",
+    skills_subtitle: "Geser kiri/kanan untuk memutar | Klik kartu untuk detail solusi",
+    skill1_title: "Infrastruktur TI",
+    skill1_desc: "Desain Data Center, Virtualisasi & Cloud Architecture enterprise.",
+    skill2_title: "Sistem Proteksi EDR/SIEM",
+    skill2_desc: "Pemantauan ancaman real-time, mitigasi serangan, & manajemen insiden siber.",
+    skill3_title: "Jaringan Aman & SD-WAN",
+    skill3_desc: "Instalasi firewall Next-Gen, arsitektur Zero-Trust, & konektivitas multi-cabang.",
+    skill4_title: "Manajemen Akses (PAM/IAM)",
+    skill4_desc: "Kontrol hak akses ketat, proteksi kredensial, & tata kelola identitas user.",
+    skill5_title: "Audit & Kepatuhan Keamanan",
+    skill5_desc: "Penetration Testing, penilaian kerentanan, & pemenuhan standar regulasi.",
+    skill6_title: "Backup & Disaster Recovery",
+    skill6_desc: "Perlindungan data dari ransomware, failover otomatis, & kontinuitas bisnis.",
+
+    // Experience (diperbarui dari pengalaman.html)
+    exp_title: "Pengalaman & Rekam Jejak",
+    exp_subtitle: "Linimasa implementasi infrastruktur IT riil dan penanganan arsitektur keamanan siber tingkat tinggi.",
+    job1_year: "2024 - Sekarang",
+    job1_title: "Ekspansi Solusi Cloud & SecOps",
+    job1_comp: "Sektor Finansial & E-Commerce",
+    job1_desc: "Mengintegrasikan arsitektur hybrid-cloud yang tangguh diiringi implementasi Security Operations Center (SOC) 24/7 guna mengamankan lebih dari 10 juta transaksi harian dari ancaman siber eksternal.",
+    job2_year: "2022 - 2024",
+    job2_title: "Modernisasi Core Infrastructure",
+    job2_comp: "Instansi Pemerintahan & BUMN",
+    job2_desc: "Meremajakan infrastruktur jaringan pusat data nasional, mengadopsi teknologi Next-Generation Firewall (NGFW), serta menerapkan sistem deteksi ancaman berbasis AI untuk mencegah kebocoran data strategis.",
+    job3_year: "2020 - 2022",
+    job3_title: "Penyusunan Keamanan Zero-Trust",
+    job3_comp: "Sektor Manufaktur & Logistik",
+    job3_desc: "Merancang ulang jaringan interkoneksi multi-cabang menggunakan SD-WAN aman berlandaskan kerangka kerja Zero-Trust, berhasil menurunkan risiko peretasan lateral hingga 94%.",
+
+    // Projects
+    projects_title: "Proyek Unggulan",
+projects_subtitle: "Bukti nyata implementasi infrastruktur skala besar dan pertahanan siber tingkat tinggi.",
+proj1_title: "SecOps Hardening & SIEM Deployment",
+proj1_desc: "Membangun Security Operations Center (SOC) komprehensif terintegrasi dengan kustomisasi sistem SIEM berbasis AI untuk mendeteksi, menganalisis, dan memitigasi intrusi berbahaya dalam hitungan milidetik.",
+proj2_title: "Next-Gen Enterprise Data Center",
+proj2_desc: "Merancang cetak biru dan mengeksekusi migrasi infrastruktur fisik ke arsitektur Software-Defined Data Center (SDDC) hemat energi dengan jaminan tingkat ketersediaan layanan 99.99% (Tier IV compliant).",
+proj3_title: "Zero-Trust Hybrid Cloud Architecture",
+proj3_desc: "Mengonfigurasi interkoneksi aman multi-cloud yang dilindungi kebijakan hak akses minimal (Least Privilege access) yang ketat melalui enkripsi end-to-end pada lapisan jaringan inti perusahaan.",
+
+    // Certifications
+    certs_title: "Kepatuhan & Sertifikasi Perusahaan",
+    certs_subtitle: "Akreditasi resmi berskala internasional bukti standar operasional dan jaminan mutu siber tertinggi.",
+    cert1_title: "ISO/IEC 27001:2022",
+    cert1_desc: "Sistem Manajemen Keamanan Informasi (ISMS) berstandar global untuk perlindungan data aset.",
+    cert2_title: "ISO 22301:2019",
+    cert2_desc: "Sistem Manajemen Kelangsungan Bisnis (BCMS) guna menjamin infrastruktur pulih cepat pasca bencana.",
+    cert3_title: "ISO 9001:2015",
+    cert3_desc: "Sistem Manajemen Mutu Terintegrasi yang memastikan konsistensi performa delivery layanan konsultasi IT.",
+    cert4_title: "AWS Select Tier Partner",
+    cert4_desc: "Kemitraan resmi AWS Cloud dalam merancang arsitektur cloud aman berlandaskan kerangka kerja Well-Architected Framework.",
+    cert5_title: "Cisco Premier Certified",
+    cert5_desc: "Akreditasi keahlian core networking tingkat lanjut untuk optimasi jalur interkoneksi backbone enterprise.",
+    cert6_title: "Certified Cloud Security",
+    cert6_desc: "Sertifikasi kompetensi standar keamanan lingkungan komputasi awan hibrida korporat.",
+
+    // Contact
+    contact_title: "Hubungi Kami",
+    label_email: "Email Korporat",
+    label_phone: "Telepon / WhatsApp",
+    label_address: "Kantor Pusat",
+    val_address: "CyberInfra Tower Lt. 12, Jl. Jend. Sudirman No.Kav 21, Jakarta Selatan, DKI Jakarta 12920",
+    form_name: "Nama Lengkap / Organisasi Perusahaan",
+    form_email: "Alamat Email Bisnis",
+    form_subject: "Subjek Pertanyaan Layanan",
+    form_msg: "Pesan / Kebutuhan Infrastruktur IT Anda",
+    btn_send: "Kirim Permintaan Solusi",
+
+    // Engineer (data baru sesuai engineer.html)
+    eng_title: "Tim Engineer Ahli",
+    eng_subtitle: "Spesialis berdedikasi tinggi di balik ketangguhan infrastruktur dan benteng pertahanan siber mitra kami.",
+    eng_filter: "Pilih Bidang Keahlian:",
+    opt_all: "Semua Tim Ahli (All)",
+    opt_infra: "Infrastruktur Data Center",
+    opt_cyber: "Hardening Cybersecurity",
+    opt_devsec: "Cloud & DevSecOps Engineering",
+    eng1_desc: "Ahli dalam manajemen ketersediaan infrastruktur core, virtualisasi tingkat lanjut, operasi redundansi, dan arsitektur kelangsungan bisnis (DRP).",
+    eng2_desc: "Fokus pada penetration testing, audit manajemen kerentanan sistem siber, tata kelola kepatuhan ISO 27001, serta mitigasi insiden siber secara proaktif.",
+    eng3_desc: "Spesialisasi otomatisasi CI/CD terenkripsi, orkestrasi klaster Kubernetes skala enterprise, dan integrasi kebijakan arsitektur Zero-Trust ke dalam kode."
+  },
+
+  en: {
+    // Nav
+    nav_home: "Home",
+    nav_about: "About",
+    nav_skills: "Services",
+    nav_exp: "Experience",
+    nav_projects: "Projects",
+    nav_certs: "Certifications",
+    nav_contact: "Contact",
+    nav_engineer: "Engineer",
+
+    // Hero
+    hero_name: "CyberInfra Solutions",
+    hero_title: "Sustainable IT Infrastructure & Enterprise-Grade Cybersecurity Services",
+    hero_btn: "Explore Our Solutions →",
+
+    // About
+    about_title: "About Corporate",
+    about_text1: "CyberInfra Solutions was established to address global digital transformation challenges. We are a trusted partner focusing on resilient ICT infrastructure integration and end-to-end cybersecurity protection for corporate enterprise, government, and SMB sectors.",
+    about_text2: "Our vision is to build a robust, adaptive, and cyber threat-free digital ecosystem to ensure business continuity without compromising data security.",
+
+    // Skills (Keahlian) - 6 item
+    skills_title: "Our Services & Solutions",
+    skills_subtitle: "Swipe left/right to rotate | Click card for solution details",
+    skill1_title: "IT Infrastructure",
+    skill1_desc: "Enterprise Data Center design, Virtualization, & Cloud Architecture Solutions.",
+    skill2_title: "EDR & SIEM Protection",
+    skill2_desc: "Real-time threat monitoring, cyber incident response, & advanced mitigation.",
+    skill3_title: "Secure Network & SD-WAN",
+    skill3_desc: "Next-Gen Firewall deployments, Zero-Trust architecture, & branch connectivity.",
+    skill4_title: "Access Management (PAM/IAM)",
+    skill4_desc: "Privileged access controls, credential security, & user identity governance.",
+    skill5_title: "Security Audits & Compliance",
+    skill5_desc: "Penetration testing, vulnerability assessments, & compliance reporting.",
+    skill6_title: "Backup & Disaster Recovery",
+    skill6_desc: "Ransomware data protection, automated failover, & business continuity.",
+
+    // Experience (diperbarui dari pengalaman.html)
+    exp_title: "Track Record & Experience",
+    exp_subtitle: "Historical linear timeline highlighting enterprise-scale deployment and active cyber defense deployments.",
+    job1_year: "2024 - Present",
+    job1_title: "Cloud & SecOps Scaling Solutions",
+    job1_comp: "Financial & E-Commerce Sectors",
+    job1_desc: "Integrated highly resilient hybrid-cloud architectures alongside 24/7 Security Operations Center (SOC) deployment to safeguard 10M+ daily transactions from advanced external threats.",
+    job2_year: "2022 - 2024",
+    job2_title: "Core Infrastructure Modernization",
+    job2_comp: "Government Agencies & SOEs",
+    job2_desc: "Overhauled national data center network infrastructure, deployed Next-Generation Firewalls (NGFW), and established AI-driven threat intelligence systems to eliminate strategic data breaches.",
+    job3_year: "2020 - 2022",
+    job3_title: "Zero-Trust Security Architecture",
+    job3_comp: "Manufacturing & Logistics Verticals",
+    job3_desc: "Redesigned multi-branch network fabrics into secure SD-WAN infrastructure powered by Zero-Trust principles, reducing lateral movement attack vectors by up to 94%.",
+
+    // Projects
+    projects_title: "Featured Projects",
+projects_subtitle: "Tangible core evidence of high-scale industrial infrastructure and high-tier cyber defenses.",
+proj1_title: "SecOps Hardening & SIEM Deployment",
+proj1_desc: "Established full-scale Security Operations Centers integrated with AI-driven SIEM engineering to actively detect, triage, and eradicate malicious cyber threats in milliseconds.",
+proj2_title: "Next-Gen Enterprise Data Center",
+proj2_desc: "Engineered blueprint frameworks and successfully migrated physical environments to Software-Defined Data Centers (SDDC) maximizing power efficiency under strict 99.99% Tier IV compliance.",
+proj3_title: "Zero-Trust Hybrid Cloud Architecture",
+proj3_desc: "Configured secure multi-cloud networking solutions enforced with airtight Least Privilege access controls, embedding continuous micro-segmentation and high-use and peripheral stream security.",
+
+    // Certifications
+    certs_title: "Compliance & Corporate Certifications",
+    certs_subtitle: "Official international accreditations demonstrating state-of-the-art operational standards and top-tier cybersecurity assurance.",
+    cert1_title: "ISO/IEC 27001:2022",
+    cert1_desc: "Global Standard Information Security Management System (ISMS) certifying elite protection over mission-critical enterprise data assets.",
+    cert2_title: "ISO 22301:2019",
+    cert2_desc: "Business Continuity Management System (BCMS) protocols validating immediate data infrastructure recovery under contingency states.",
+    cert3_title: "ISO 9001:2015",
+    cert3_desc: "Unified Quality Management System ensuring consistent and precise delivery metrics throughout IT service life-cycles.",
+    cert4_title: "AWS Select Tier Partner",
+    cert4_desc: "Authorized AWS Cloud ecosystem partnership focusing on secure multi-tenant infrastructure using Well-Architected frameworks.",
+    cert5_title: "Cisco Premier Certified",
+    cert5_desc: "Advanced core tier networking authorization validating optimized enterprise backbone routing and active payload delivery routing.",
+    cert6_title: "Certified Cloud Security",
+    cert6_desc: "Certified Standard Competencies in Cloud Networking Security.",
+
+    // Contact
+    contact_title: "Contact Us",
+    label_email: "Corporate Email",
+    label_phone: "Phone / WhatsApp",
+    label_address: "Headquarters",
+    val_address: "CyberInfra Tower 12th Floor, Jl. Jend. Sudirman No.Kav 21, South Jakarta, DKI Jakarta 12920",
+    form_name: "Full Name / Enterprise Organization",
+    form_email: "Business Email",
+    form_subject: "Service Inquiry Subject",
+    form_msg: "Message / Infrastructure Requirements",
+    btn_send: "Send Solution Request",
+
+    // Engineer (data baru sesuai engineer.html)
+    eng_title: "Expert Engineering Team",
+    eng_subtitle: "Dedicated professionals delivering infrastructure availability and enterprise-grade cyber defenses.",
+    eng_filter: "Select Specialty:",
+    opt_all: "All Expert Teams (All)",
+    opt_infra: "Data Center Infrastructure",
+    opt_cyber: "Cybersecurity Hardening",
+    opt_devsec: "Cloud & DevSecOps Engineering",
+    eng1_desc: "Expert in core infrastructure availability, advanced virtualization stack, redundancy operations, and business continuity architecture (DRP).",
+    eng2_desc: "Focuses on penetration testing, cyber system vulnerability management audits, ISO 27001 compliance governance, and proactive cyber incident mitigation.",
+    eng3_desc: "Specialized in encrypted CI/CD automation, enterprise-scale Kubernetes cluster orchestration, and zero-trust architecture policy integration into code."
+  }
+};
