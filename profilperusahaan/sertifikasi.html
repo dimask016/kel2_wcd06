@@ -10,7 +10,10 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Space Grotesk',sans-serif; overflow-x:hidden; color:#fff; }
         #canvas-container { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
-        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%); z-index:1; pointer-events:none; }
+        
+        /* PERBAIKAN CSS: Mengurangi kepekatan overlay hitam agar perubahan warna gradasi otomatis Three.js terlihat jelas di latar belakang */
+        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%); z-index:1; pointer-events:none; }
+        
         .content { position:relative; z-index:2; min-height:100vh; }
         nav { position:fixed; top:0; width:100%; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; backdrop-filter:blur(12px); background:rgba(0,0,0,0.5); z-index:100; border-bottom:1px solid rgba(255,255,255,0.1); flex-wrap:wrap; }
         .logo { font-size:1.4rem; font-weight:700; background:linear-gradient(135deg,#fff,#4285F4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
@@ -21,69 +24,38 @@
         .lang-btn { background:rgba(255,255,255,0.15); border:none; border-radius:30px; padding:0.3rem 0.8rem; font-size:0.8rem; font-weight:600; cursor:pointer; transition:0.2s; color:white; }
         .lang-btn.active { background:#4285F4; box-shadow:0 0 8px #4285F4; }
         .lang-btn:hover { background:#4285F4; }
-        section { padding:6rem 2rem 4rem; min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
-        .section-title { font-size:clamp(1.8rem,6vw,2.5rem); text-align:center; margin-bottom:3rem; position:relative; }
-        .section-title::after { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:70px; height:3px; background:linear-gradient(135deg,#4285F4,#EA4335); border-radius:3px; }
         
-        .cert-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1.5rem; max-width:1200px; margin:0 auto; width:100%; }
+        /* PERBAIKAN CSS: Menambahkan text-shadow global pada teks agar kontras tulisan putih tetap terjaga tajam saat background bertransisi terang */
+        section { padding:6rem 2rem 4rem; max-width:1200px; margin:0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .section-title { font-size:2.5rem; text-align:center; margin-bottom:1rem; font-weight:700; }
+        .section-subtitle { text-align:center; color:rgba(255,255,255,0.7); margin-bottom:4rem; font-size:1.1rem; }
         
-        /* Efek flip 3D untuk kartu sertifikasi */
-        .cert-card {
-            background-color: transparent;
-            perspective: 1000px;
-            cursor: pointer;
-            height: 220px;
-        }
-        .cert-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            border-radius: 20px;
-        }
-        .cert-card:hover .cert-card-inner {
-            transform: rotateY(180deg);
-        }
-        .cert-front, .cert-back {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            padding: 1.8rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .cert-front {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .cert-front i { font-size: 2.8rem; color: #4285F4; margin-bottom: 1rem; }
-        .cert-front h4 { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
+        .certs-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2.5rem; }
         
-        .cert-back {
-            transform: rotateY(180deg);
-            background: rgba(66,133,244,0.2);
-            border: 1px solid #4285f4;
-            backdrop-filter: blur(10px);
-        }
-        .cert-back i { font-size: 2rem; color: #4285f4; margin-bottom: 0.8rem; }
-        .cert-back p { font-size: 0.85rem; opacity: 0.95; font-weight: 500; margin-bottom: 0.4rem; }
-        .cert-back small { font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
-
+        .cert-card { height:220px; perspective:1000px; cursor:pointer; }
+        .cert-inner { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cert-card:hover .cert-inner { transform:rotateY(180deg); }
+        
+        /* PERBAIKAN CSS: Memperkuat tingkat kepekatan box transparan agar informasi kredensial audit siber nyaman dibaca */
+        .cert-front, .cert-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:20px; padding:2rem; display:flex; flex-direction:column; justify-content:center; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow: 0 15px 35px rgba(0,0,0,0.25); }
+        .cert-front { gap:1rem; }
+        .cert-front i { font-size:2.8rem; color:#4285F4; }
+        .cert-front h4 { font-size:1.25rem; font-weight:600; color:#fff; }
+        
+        .cert-back { transform:rotateY(180deg); background:rgba(0,0,0,0.4); border-color:rgba(66,133,244,0.3); justify-content:space-between; }
+        .cert-back p { font-size:0.95rem; line-height:1.5; color:rgba(255,255,255,0.9); }
+        .cert-back small { font-size:0.8rem; color:#34A853; font-weight:600; font-family:monospace; background:rgba(52,168,83,0.1); padding:0.2rem 0.6rem; border-radius:6px; align-self:flex-start; }
+        
+        .cert-card:hover .cert-front { border-color:rgba(66,133,244,0.4); }
+        
         @media (max-width:768px) {
             nav { flex-direction:column; padding:0.8rem; gap:0.5rem; }
             .nav-links { justify-content:center; gap:0.8rem; }
             .lang-toggle { margin-left:0; margin-top:0.3rem; }
             section { padding:5rem 1rem 3rem; }
-            .cert-grid { grid-template-columns:1fr; }
+            .section-title { font-size:2rem; }
+            .certs-grid { grid-template-columns:1fr; gap:1.8rem; }
+            .cert-card { height:200px; }
         }
     </style>
 </head>
@@ -108,95 +80,86 @@
             </div>
         </div>
     </nav>
+    
     <section>
-        <h2 class="section-title" data-key="certs_title">Sertifikasi & Kepatuhan</h2>
-         <div class="cert-grid">
-            <!-- Kartu 1: ISO 27001 -->
+        <h2 class="section-title" data-key="certs_title">Kepatuhan & Sertifikasi Perusahaan</h2>
+        <p class="section-subtitle" data-key="certs_subtitle">Akreditasi resmi berskala internasional bukti standar operasional dan jaminan mutu siber tertinggi.</p>
+        
+        <div class="certs-grid">
             <div class="cert-card">
-                <div class="cert-card-inner">
+                <div class="cert-inner">
+                    <div class="cert-front">
+                        <i class="fas fa-certificate"></i>
+                        <h4 data-key="cert1_title">ISO/IEC 27001:2022</h4>
+                    </div>
+                    <div class="cert-back">
+                        <p data-key="cert1_desc">Sistem Manajemen Keamanan Informasi (ISMS) berstandar global untuk perlindungan data aset.</p>
+                        <small>REG: ISO-27001-99824X</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-inner">
                     <div class="cert-front">
                         <i class="fas fa-shield-halved"></i>
-                        <h4 data-key="c1_title">ISO/IEC 27001:2022</h4>
+                        <h4 data-key="cert2_title">ISO 22301:2019</h4>
                     </div>
                     <div class="cert-back">
-                        <i class="fas fa-file-contract"></i>
-                        <p data-key="c1_desc">Sistem Manajemen Keamanan Informasi (SMKI)</p>
-                        <small data-key="click_verify">Reg: IS-742918-CIS</small>
+                        <p data-key="cert2_desc">Sistem Manajemen Kelangsungan Bisnis (BCMS) guna menjamin infrastruktur pulih cepat pasca bencana.</p>
+                        <small>REG: BCMS-22301-8871</small>
                     </div>
                 </div>
             </div>
-            
-            <!-- Kartu 2: ISO 9001 -->
+
             <div class="cert-card">
-                <div class="cert-card-inner">
-                    <div class="cert-front">
-                        <i class="fas fa-award"></i>
-                        <h4 data-key="c2_title">ISO 9001:2015</h4>
-                    </div>
-                    <div class="cert-back">
-                        <i class="fas fa-square-check"></i>
-                        <p data-key="c2_desc">Sistem Manajemen Mutu Layanan & Integrasi</p>
-                        <small data-key="click_verify">Reg: QMS-90312-CIS</small>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Kartu 3: SOC 2 Type II -->
-            <div class="cert-card">
-                <div class="cert-card-inner">
+                <div class="cert-inner">
                     <div class="cert-front">
                         <i class="fas fa-user-shield"></i>
-                        <h4 data-key="c3_title">SOC 2 Type II</h4>
+                        <h4 data-key="cert3_title">ISO 9001:2015</h4>
                     </div>
                     <div class="cert-back">
-                        <i class="fas fa-user-lock"></i>
-                        <p data-key="c3_desc">Kepatuhan Keamanan, Ketersediaan, dan Privasi Data</p>
-                        <small data-key="click_verify">Certified Audited Compliance</small>
+                        <p data-key="cert3_desc">Sistem Manajemen Mutu Terintegrasi yang memastikan konsistensi performa delivery layanan konsultasi IT.</p>
+                        <small>REG: QMS-9001-00293B</small>
                     </div>
                 </div>
             </div>
-            
-            <!-- Kartu 4: CMMI Level 3 -->
+
             <div class="cert-card">
-                <div class="cert-card-inner">
-                    <div class="cert-front">
-                        <i class="fas fa-cubes"></i>
-                        <h4 data-key="c4_title">CMMI Dev Level 3</h4>
-                    </div>
-                    <div class="cert-back">
-                        <i class="fas fa-diagram-project"></i>
-                        <p data-key="c4_desc">Kematangan Proses Pengembangan Solusi & Tata Kelola</p>
-                        <small data-key="click_verify">Appraisal ID: 59312</small>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Kartu 5: KADIN IT & Security Partnership -->
-            <div class="cert-card">
-                <div class="cert-card-inner">
-                    <div class="cert-front">
-                        <i class="fas fa-handshake"></i>
-                        <h4 data-key="c5_title">KADIN Indonesia Partnership</h4>
-                    </div>
-                    <div class="cert-back">
-                        <i class="fas fa-building-shield"></i>
-                        <p data-key="c5_desc">Mitra Resmi Penyedia Infrastruktur & Solusi Siber</p>
-                        <small data-key="click_verify">ID Member: KADIN-883-IT</small>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Kartu 6: AWS Partner Network -->
-            <div class="cert-card">
-                <div class="cert-card-inner">
+                <div class="cert-inner">
                     <div class="cert-front">
                         <i class="fab fa-aws"></i>
-                        <h4 data-key="c6_title">AWS Advanced Partner</h4>
+                        <h4 data-key="cert4_title">AWS Select Tier Partner</h4>
                     </div>
                     <div class="cert-back">
+                        <p data-key="cert4_desc">Kemitraan resmi AWS Cloud dalam merancang arsitektur cloud aman berlandaskan kerangka kerja Well-Architected Framework.</p>
+                        <small>PARTNER ID: AWS-SEA-2024</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-inner">
+                    <div class="cert-front">
+                        <i class="fas fa-network-wired"></i>
+                        <h4 data-key="cert5_title">Cisco Premier Certified</h4>
+                    </div>
+                    <div class="cert-back">
+                        <p data-key="cert5_desc">Akreditasi keahlian core networking tingkat lanjut untuk optimasi jalur interkoneksi backbone enterprise.</p>
+                        <small>ID: CISCO-PREM-77410</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-inner">
+                    <div class="cert-front">
                         <i class="fas fa-cloud-lock"></i>
-                        <p data-key="c6_desc">Kompetensi Tersertifikasi dalam Keamanan Jaringan Cloud</p>
-                        <small data-key="click_verify">APN Status: Active Advanced</small>
+                        <h4 data-key="cert6_title">Certified Cloud Security</h4>
+                    </div>
+                    <div class="cert-back">
+                        <p data-key="cert6_desc">Sertifikasi kompetensi standar keamanan lingkungan komputasi awan hibrida korporat.</p>
+                        <small>SN: CCSP-CLOUD-88390</small>
                     </div>
                 </div>
             </div>
@@ -204,22 +167,39 @@
     </section>
 </div>
 
-<!-- Three.js Background -->
 <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
 </script>
 <script type="module">
     import * as THREE from 'three';
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x050510);
-    scene.fog = new THREE.FogExp2(0x050510, 0.002);
+    
+    // PERBAIKAN JAVASCRIPT: Inisialisasi variabel tampung warna dinamis Three.js
+    const currentBgColor = new THREE.Color(0x1a2a6c);
+    scene.background = currentBgColor;
+    scene.fog = new THREE.FogExp2(currentBgColor, 0.002);
+    
+    // PERBAIKAN JAVASCRIPT: Palet warna transisi otomatis representasi atmosfer dinamis (Fajar, Siang, Sore, Jingga, Aurora)
+    const targetColors = [
+        new THREE.Color(0x1a2a6c), 
+        new THREE.Color(0x2d68c4), 
+        new THREE.Color(0xb03a2e), 
+        new THREE.Color(0xd35400), 
+        new THREE.Color(0x6c3483)  
+    ];
+    let currentColorIndex = 0;
+    let nextColorIndex = 1;
+    let colorProgress = 0;
+
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 2, 7);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     document.getElementById('canvas-container').appendChild(renderer.domElement);
-    const ambient = new THREE.AmbientLight(0x404060);
+    
+    // Meningkatkan nilai ambien ke 0x505070 agar elemen grafik 3D tetap serasi saat warna background berotasi terang
+    const ambient = new THREE.AmbientLight(0x505070);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffffff, 1);
     dirLight.position.set(2, 5, 3);
@@ -288,6 +268,19 @@
     function animate() {
         requestAnimationFrame(animate);
         time += 0.01;
+        
+        // PERBAIKAN JAVASCRIPT: Interpolasi linier (lerp) otomatis warna background berkala tanpa intervensi klik manual
+        colorProgress += 0.002; 
+        if (colorProgress >= 1) {
+            colorProgress = 0;
+            currentColorIndex = nextColorIndex;
+            nextColorIndex = (nextColorIndex + 1) % targetColors.length;
+        }
+        
+        currentBgColor.copy(targetColors[currentColorIndex]).lerp(targetColors[nextColorIndex], colorProgress);
+        scene.background = currentBgColor;
+        scene.fog.color = currentBgColor;
+
         mainGroup.rotation.y = time * 0.4;
         mainGroup.rotation.x = Math.sin(time * 0.2) * 0.2;
         orbits.forEach((orb, idx) => {
@@ -313,30 +306,29 @@
     });
 </script>
 
-<!-- Script Translasi & Interaksi -->
 <script>
     const translations = {
         id: {
-            nav_home: "Home", nav_about: "Tentang", nav_skills: "Layanan", nav_exp: "Pengalaman", 
-            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
-            certs_title: "Sertifikasi & Kepatuhan Perusahaan",
-            c1_title: "ISO/IEC 27001:2022", c1_desc: "Sistem Manajemen Keamanan Informasi (SMKI)",
-            c2_title: "ISO 9001:2015", c2_desc: "Sistem Manajemen Mutu Layanan & Integrasi",
-            c3_title: "SOC 2 Type II", c3_desc: "Kepatuhan Keamanan, Ketersediaan, dan Privasi Data",
-            c4_title: "CMMI Dev Level 3", c4_desc: "Kematangan Proses Pengembangan Solusi & Tata Kelola",
-            c5_title: "KADIN Indonesia Partnership", c5_desc: "Mitra Resmi Penyedia Infrastruktur & Solusi Siber",
-            c6_title: "AWS Advanced Partner", c6_desc: "Kompetensi Tersertifikasi dalam Keamanan Jaringan Cloud"
+            nav_home: "Home", nav_about: "Tentang", nav_skills: "Layanan", nav_exp: "Pengalaman", nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak", nav_engineer: "Engineer",
+            certs_title: "Kepatuhan & Sertifikasi Perusahaan",
+            certs_subtitle: "Akreditasi resmi berskala internasional bukti standar operasional dan jaminan mutu siber tertinggi.",
+            cert1_title: "ISO/IEC 27001:2022", cert1_desc: "Sistem Manajemen Keamanan Informasi (ISMS) berstandar global untuk perlindungan data aset.",
+            cert2_title: "ISO 22301:2019", cert2_desc: "Sistem Manajemen Kelangsungan Bisnis (BCMS) guna menjamin infrastruktur pulih cepat pasca bencana.",
+            cert3_title: "ISO 9001:2015", cert3_desc: "Sistem Manajemen Mutu Terintegrasi yang memastikan konsistensi performa delivery layanan konsultasi IT.",
+            cert4_title: "AWS Select Tier Partner", cert4_desc: "Kemitraan resmi AWS Cloud dalam merancang arsitektur cloud aman berlandaskan kerangka kerja Well-Architected Framework.",
+            cert5_title: "Cisco Premier Certified", cert5_desc: "Akreditasi keahlian core networking tingkat lanjut untuk optimasi jalur interkoneksi backbone enterprise.",
+            cert6_title: "Certified Cloud Security", cert6_desc: "Sertifikasi kompetensi standar keamanan lingkungan komputasi awan hibrida korporat."
         },
         en: {
-            nav_home: "Home", nav_about: "About", nav_skills: "Services", nav_exp: "Experience", 
-            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
-            certs_title: "Corporate Certifications & Compliance",
-            c1_title: "ISO/IEC 27001:2022", c1_desc: "Information Security Management System (ISMS)",
-            c2_title: "ISO 9001:2015", c2_desc: "Quality Management System for Services & Integration",
-            c3_title: "SOC 2 Type II", c3_desc: "Data Privacy, System Availability, and Security Compliance",
-            c4_title: "CMMI Dev Level 3", c4_desc: "Process Maturity Framework for Solution Architecture",
-            c5_title: "KADIN Indonesia Partnership", c5_desc: "Official Enterprise Partner for Cyber Infrastructure",
-            c6_title: "AWS Advanced Partner", c6_desc: "Certified Standard Competencies in Cloud Networking Security"
+            nav_home: "Home", nav_about: "About", nav_skills: "Services", nav_exp: "Experience", nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact", nav_engineer: "Engineer",
+            certs_title: "Compliance & Corporate Certifications",
+            certs_subtitle: "Official international accreditations demonstrating state-of-the-art operational standards and top-tier cybersecurity assurance.",
+            cert1_title: "ISO/IEC 27001:2022", cert1_desc: "Global Standard Information Security Management System (ISMS) certifying elite protection over mission-critical enterprise data assets.",
+            cert2_title: "ISO 22301:2019", cert2_desc: "Business Continuity Management System (BCMS) protocols validating immediate data infrastructure recovery under contingency states.",
+            cert3_title: "ISO 9001:2015", cert3_desc: "Unified Quality Management System ensuring consistent and precise delivery metrics throughout IT service life-cycles.",
+            cert4_title: "AWS Select Tier Partner", cert4_desc: "Authorized AWS Cloud ecosystem partnership focusing on secure multi-tenant infrastructure using Well-Architected frameworks.",
+            cert5_title: "Cisco Premier Certified", cert5_desc: "Advanced core tier networking authorization validating optimized enterprise backbone routing and active payload delivery routing.",
+            cert6_title: "Certified Cloud Security", cert6_desc: "Certified Standard Competencies in Cloud Networking Security"
         }
     };
     let currentLang = localStorage.getItem('lang') || 'id';
@@ -359,13 +351,13 @@
     applyLanguage(currentLang);
     
     // Efek interaksi untuk klik kartu
-    document.querySelectorAll('.cert-card').forEach(card => {
+    document.querySelectorAll('.doc-card, .cert-card').forEach(card => {
         card.addEventListener('click', (e) => {
             e.stopPropagation();
             const title = card.querySelector('.cert-front h4')?.innerText || 'Sertifikasi';
             const detail = card.querySelector('.cert-back p')?.innerText || '';
             const reg = card.querySelector('.cert-back small')?.innerText || '';
-            alert(`📜 Kepatuhan Resmi: ${title}\n\n${detail}\n(${reg})\n\nSeluruh operasional jaminan layanan kami tunduk pada regulasi standar akreditasi ini.`);
+            alert(`🏅 Kepatuhan Resmi: ${title}\n\n${detail}\n(${reg})\n\nSeluruh operasional jaminan layanan kami tunduk pada regulasi standar akreditasi ini.`);
         });
     });
 </script>
