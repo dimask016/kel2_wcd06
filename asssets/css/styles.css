@@ -1,0 +1,289 @@
+/* --- Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    color: #333;
+    line-height: 1.6;
+    background-color: #fff;
+}
+
+/* --- Layout Helpers --- */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.bg-light {
+    background-color: #f9f9f9;
+}
+
+.bg-dark {
+    background-color: #1f2937;
+    color: #fff;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.underline {
+    width: 60px;
+    height: 4px;
+    background-color: #3b82f6;
+    margin: 0 auto 40px auto;
+    border-radius: 2px;
+}
+
+/* --- Navigation --- */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #3b82f6;
+}
+
+/* --- Hero Section --- */
+.hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    min-height: 100vh;     /* Mengubah height menjadi min-height agar aman jika konten memanjang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 0 60px 0; /* Menyesuaikan padding atas agar tidak tertutup navbar fixed */
+}
+
+.profile-img {
+    width: 160px;          /* Mengatur lebar foto */
+    height: 160px;         /* Mengatur tinggi foto (harus sama agar lingkaran sempurna) */
+    border-radius: 50%;    /* Membuat foto berbentuk lingkaran */
+    object-fit: cover;     /* Menjaga foto tidak gepeng/distorsi */
+    margin-bottom: 20px;   /* Memberikan jarak antara foto dan nama */
+    border: 4px solid #ffffff; /* Memberikan bingkai putih elegan di luar foto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Memberikan efek bayangan lembut */
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05); /* Efek sedikit membesar saat kursor diarahkan ke foto */
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.highlight {
+    color: #3b82f6;
+}
+
+.tagline {
+    font-size: 1.25rem;
+    color: #4b5563;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #2563eb;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    margin: 10px;
+}
+
+.btn-outline:hover {
+    background-color: #fff;
+    color: #1f2937;
+}
+
+/* --- Timeline (Experience) --- */
+.timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    border-left: 3px solid #3b82f6;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+    left: -28px;
+    top: 8px;
+}
+
+.timeline-item h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+}
+
+.timeline-item h4 {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.date {
+    font-style: italic;
+}
+
+/* --- Skills Grid (Modern & Interactive) --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    padding: 10px 0;
+}
+
+.skill-card {
+    background: #ffffff;
+    color: #1f2937;
+    padding: 25px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.skill-card:hover::before {
+    opacity: 1;
+}
+
+/* --- Contact & Footer --- */
+#contact {
+    text-align: center;
+}
+
+#contact p {
+    margin-bottom: 25px;
+    color: #d1d5db;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer {
+    background-color: #111827;
+    color: #9ca3af;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9rem;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+    .nav-links {
+        margin-top: 15px;
+    }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+}
