@@ -10,7 +10,10 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Space Grotesk',sans-serif; overflow-x:hidden; color:#fff; }
         #canvas-container { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
-        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%); z-index:1; pointer-events:none; }
+        
+        /* PERBAIKAN CSS: Mengurangi kepekatan overlay hitam (dari 0.3-0.7 menjadi 0.1-0.3) agar gradasi terang warna Three.js terlihat menembus ke depan */
+        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%); z-index:1; pointer-events:none; }
+        
         .content { position:relative; z-index:2; min-height:100vh; }
         nav { position:fixed; top:0; width:100%; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; backdrop-filter:blur(12px); background:rgba(0,0,0,0.5); z-index:100; border-bottom:1px solid rgba(255,255,255,0.1); flex-wrap:wrap; }
         .logo { font-size:1.4rem; font-weight:700; background:linear-gradient(135deg,#fff,#4285F4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
@@ -21,7 +24,10 @@
         .lang-btn { background:rgba(255,255,255,0.15); border:none; border-radius:30px; padding:0.3rem 0.8rem; font-size:0.8rem; font-weight:600; cursor:pointer; transition:0.2s; color:white; }
         .lang-btn.active { background:#4285F4; box-shadow:0 0 8px #4285F4; }
         .lang-btn:hover { background:#4285F4; }
-        section { padding:6rem 2rem 4rem; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+        
+        /* PERBAIKAN CSS: Memberikan text-shadow global agar teks putih dan judul tetap tajam serta mudah dibaca saat background berubah terang */
+        section { padding:6rem 2rem 4rem; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        
         .section-title { font-size:clamp(1.8rem,6vw,2.5rem); text-align:center; margin-bottom:2rem; position:relative; }
         .section-title::after { content:''; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); width:70px; height:3px; background:linear-gradient(135deg,#4285F4,#EA4335); border-radius:3px; }
         
@@ -194,8 +200,7 @@
         
         <div class="carousel-container">
             <div class="carousel-3d" id="carousel3d">
-                <!-- Kartu solusi bisnis akan di-generate oleh JavaScript -->
-            </div>
+                </div>
         </div>
         
         <div class="carousel-indicators" id="indicators"></div>
@@ -205,22 +210,39 @@
     </section>
 </div>
 
-<!-- Three.js Background -->
 <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js" } }
 </script>
 <script type="module">
     import * as THREE from 'three';
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x050510);
-    scene.fog = new THREE.FogExp2(0x050510, 0.002);
+    
+    // PERBAIKAN JAVASCRIPT: Inisialisasi awal penampung objek warna dinamis background fajar, siang, sore, aurora
+    const currentBgColor = new THREE.Color(0x1a2a6c);
+    scene.background = currentBgColor;
+    scene.fog = new THREE.FogExp2(currentBgColor, 0.002);
+    
+    // PERBAIKAN JAVASCRIPT: Array palet warna transisi otomatis representasi rotasi waktu jam bumi
+    const targetColors = [
+        new THREE.Color(0x1a2a6c), // Fajar / Malam Menjelang Pagi
+        new THREE.Color(0x2d68c4), // Siang Hari (Biru Langit Cerah)
+        new THREE.Color(0xb03a2e), // Sore / Senja Terbenam
+        new THREE.Color(0xd35400), // Jingga Mentari Terbit
+        new THREE.Color(0x6c3483)  // Ungu Aurora Kosmik
+    ];
+    let currentColorIndex = 0;
+    let nextColorIndex = 1;
+    let colorProgress = 0;
+
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 2, 7);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     document.getElementById('canvas-container').appendChild(renderer.domElement);
-    const ambient = new THREE.AmbientLight(0x404060);
+    
+    // Menaikkan intensitas cahaya ambien dari 0x404060 ke 0x505070 agar seimbang saat background menjadi terang
+    const ambient = new THREE.AmbientLight(0x505070);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffffff, 1);
     dirLight.position.set(2, 5, 3);
@@ -289,6 +311,19 @@
     function animate() {
         requestAnimationFrame(animate);
         time += 0.01;
+        
+        // PERBAIKAN JAVASCRIPT: Interpolasi halus pergerakan warna (.lerp()) secara berkala tanpa intervensi klik
+        colorProgress += 0.002; 
+        if (colorProgress >= 1) {
+            colorProgress = 0;
+            currentColorIndex = nextColorIndex;
+            nextColorIndex = (nextColorIndex + 1) % targetColors.length;
+        }
+        
+        currentBgColor.copy(targetColors[currentColorIndex]).lerp(targetColors[nextColorIndex], colorProgress);
+        scene.background = currentBgColor;
+        scene.fog.color = currentBgColor;
+
         mainGroup.rotation.y = time * 0.4;
         mainGroup.rotation.x = Math.sin(time * 0.2) * 0.2;
         orbits.forEach((orb, idx) => {
@@ -447,7 +482,7 @@
             const title = activeCard.querySelector('h3')?.innerText || '';
             const infoDiv = document.getElementById('activeInfo');
             if (infoDiv) {
-                infoDiv.innerHTML = `<i class="fas fa-star"></i> Solusi Aktif: ${title} | Geser kiri/kanan untuk memutar | Klik kartu untuk detail`;
+                infoDiv.innerHTML = `<i class="fas fa-star"></i> Solusi Hack: ${title} | Geser kiri/kanan untuk memutar | Klik kartu untuk detail`;
             }
         }
     }
@@ -557,7 +592,7 @@
     const translations = {
         id: {
             nav_home: "Home", nav_about: "Tentang", nav_skills: "Layanan", nav_exp: "Pengalaman", 
-            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak",
+            nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak", nav_engineer: "Engineer",
             skills_title: "Solusi & Layanan Kami",
             skill1_title: "Infrastruktur TI", skill1_desc: "Desain Data Center, Virtualisasi & Cloud Architecture enterprise.",
             skill2_title: "Sistem Proteksi EDR/SIEM", skill2_desc: "Pemantauan ancaman real-time, mitigasi serangan, & manajemen insiden siber.",
@@ -568,7 +603,7 @@
         },
         en: {
             nav_home: "Home", nav_about: "About", nav_skills: "Services", nav_exp: "Experience", 
-            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact",
+            nav_projects: "Projects", nav_certs: "Certifications", nav_contact: "Contact", nav_engineer: "Engineer",
             skills_title: "Our Services & Solutions",
             skill1_title: "IT Infrastructure", skill1_desc: "Enterprise Data Center design, Virtualization, & Cloud Architecture Solutions.",
             skill2_title: "EDR & SIEM Protection", skill2_desc: "Real-time threat monitoring, cyber incident response, & advanced mitigation.",
