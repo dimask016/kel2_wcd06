@@ -685,7 +685,8 @@ section {
     font-size: 0.95rem;
     margin-bottom: 2.5rem;
   }
-  /* ========== ACCESSIBILITY FOCUS ========== */
+}
+/* ========== ACCESSIBILITY FOCUS ========== */
 *:focus-visible {
   outline: 2px solid #4285F4;
   outline-offset: 2px;
@@ -711,4 +712,42 @@ textarea:focus-visible {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ===== PERBAIKAN NAVBAR MOBILE ===== */
+/* Memastikan tombol hamburger terlihat di semua halaman termasuk Keahlian */
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  z-index: 1050 !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Pastikan navbar tetap di atas konten lain */
+.navbar {
+  z-index: 1030 !important;
+}
+
+/* Hindari carousel menutupi tombol */
+.carousel-container,
+.carousel-3d {
+  position: relative;
+  z-index: 1 !important;
+}
+
+/* Perbaikan untuk tampilan mobile: pastikan tombol tidak terpotong */
+@media (max-width: 991.98px) {
+  .navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+  }
+  .navbar-toggler-icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
 }
