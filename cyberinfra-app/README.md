@@ -20,25 +20,37 @@ Website portofolio personal yang menampilkan profil, keahlian, pengalaman, proye
 | Dimas Kurniawan | Konten, sertifikasi, dan pengalaman | dimas.kurniawan@cakrwala.ac.id |
 | Dharma Satriadi | Dokumentasi dan deployment | dharma.satriadi@cakrawala.ac.id |
 📁 Struktur Folder
-text
+cyberinfra-app/
+├── .env
+├── public/
+│   └── _redirects
 src/
-├── assets/               # Gambar & logo (dimas.jpeg, devaagriani.jpg, cisco-logo.svg)
+├── assets/              | # Gambar & logo (dimas.jpeg, devaagriani.jpg, cisco-logo.svg)
 ├── components/
-│   ├── Layout.jsx        # Layout utama (navbar + background Three.js)
-│   └── ThreeBackground.jsx # Komponen latar Three.js (animasi 3D)
+│   ├── Layout.jsx       | # Layout utama (navbar + background Three.js)
+│   └── ThreeBackground.jsx |# Komponen latar Three.js (animasi 3D)
+│   ├── ApiData.jsx
+│   ├── ErrorBoundary.jsx  
+│   ├── Footer.jsx
+│   ├── Navbar.jsx
 ├── pages/
-│   ├── Home.jsx          # Halaman beranda
-│   ├── Tentang.jsx       # Halaman tentang perusahaan
-│   ├── Keahlian.jsx      # Halaman layanan (carousel 3D)
-│   ├── Pengalaman.jsx    # Halaman timeline pengalaman
-│   ├── Proyek.jsx        # Halaman proyek unggulan
-│   ├── Sertifikasi.jsx   # Halaman sertifikasi (flip card)
-│   ├── Kontak.jsx        # Halaman kontak + Google Maps
-│   └── Engineer.jsx      # Halaman tim engineer
-├── translations.js       # Data multi‑bahasa (ID & EN)
-├── App.jsx               # Routing utama
-├── index.css             # Global styles
-└── main.jsx              # Entry point
+│   ├── Home.jsx             | # Halaman beranda
+│   ├── Tentang.jsx          | # Halaman tentang perusahaan
+│   ├── Keahlian.jsx     | # Halaman layanan (carousel 3D)
+│   ├── Pengalaman.jsx   | # Halaman timeline pengalaman
+│   ├── Proyek.jsx       | # Halaman proyek unggulan
+│   ├── Sertifikasi.jsx  | # Halaman sertifikasi (flip card)
+│   ├── Kontak.jsx       | # Halaman kontak + Google Maps
+│   └── Engineer.jsx     | # Halaman tim engineer
+├── translations.js      | # Data multi‑bahasa (ID & EN)
+├── App.jsx              | # Routing utama
+├── index.css            | # Global styles
+└── main.jsx             | # Entry point
+├── package.json
+└── vite.config.js (opsional)
+
+
+
 🧩 Penjelasan Masing‑masing File JSX
 1. App.jsx
 Mengelola state bahasa (lang) yang disimpan di localStorage.
