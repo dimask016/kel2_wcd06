@@ -5,14 +5,9 @@ const ThreeBackground = () => {
   const mountRef = useRef(null);
 
   useEffect(() => {
-    // Pastikan mountRef.current ada
     const container = mountRef.current;
-    if (!container) {
-      console.error('Container not found');
-      return;
-    }
+    if (!container) return;
 
-    // ===== KODE THREE.JS SAMA PERSIS DENGAN home.html =====
     const scene = new THREE.Scene();
     const currentBgColor = new THREE.Color(0x1a2a6c);
     scene.background = currentBgColor;
@@ -23,17 +18,18 @@ const ThreeBackground = () => {
       new THREE.Color(0x2d68c4),
       new THREE.Color(0xb03a2e),
       new THREE.Color(0xd35400),
-      new THREE.Color(0x6c3483)
+      new THREE.Color(0x6c3483),
     ];
-    let currentColorIndex = 0;
-    let nextColorIndex = 1;
-    let colorProgress = 0;
+    let currentColorIndex = 0,
+      nextColorIndex = 1,
+      colorProgress = 0;
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 2, 7);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // batasi pixel ratio
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
@@ -64,7 +60,11 @@ const ThreeBackground = () => {
     ctx.textBaseline = 'middle';
     ctx.fillText('G', canvas.width / 2, canvas.height / 2);
     const texture = new THREE.CanvasTexture(canvas);
-    const centerMat = new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, emissive: 0x2244aa });
+    const centerMat = new THREE.MeshStandardMaterial({
+      map: texture,
+      color: 0xffffff,
+      emissive: 0x2244aa,
+    });
     const centerSphere = new THREE.Mesh(centerGeo, centerMat);
     mainGroup.add(centerSphere);
 
@@ -72,7 +72,11 @@ const ThreeBackground = () => {
     const orbits = [];
     const orbGeo = new THREE.SphereGeometry(0.45, 48, 48);
     for (let i = 0; i < 4; i++) {
-      const orbMat = new THREE.MeshStandardMaterial({ color: colors[i], emissive: colors[i], emissiveIntensity: 0.3 });
+      const orbMat = new THREE.MeshStandardMaterial({
+        color: colors[i],
+        emissive: colors[i],
+        emissiveIntensity: 0.3,
+      });
       const orb = new THREE.Mesh(orbGeo, orbMat);
       mainGroup.add(orb);
       orbits.push(orb);
@@ -83,7 +87,8 @@ const ThreeBackground = () => {
     const ring = new THREE.Mesh(ringGeo, ringMat);
     mainGroup.add(ring);
 
-    const particleCount = 1200;
+    // Kurangi partikel dari 1200 ke 600
+    const particleCount = 600;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
@@ -92,11 +97,16 @@ const ThreeBackground = () => {
       positions[i * 3 + 2] = (Math.random() - 0.5) * 60 - 30;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMat = new THREE.PointsMaterial({ color: 0x88aaff, size: 0.06, transparent: true, blending: THREE.AdditiveBlending });
+    const particleMat = new THREE.PointsMaterial({
+      color: 0x88aaff,
+      size: 0.06,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+    });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    const starCount = 800;
+    const starCount = 500; // kurangi
     const starGeo = new THREE.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
@@ -105,7 +115,10 @@ const ThreeBackground = () => {
       starPos[i * 3 + 2] = (Math.random() - 0.5) * 100 - 50;
     }
     starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-    const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.04, transparent: true }));
+    const stars = new THREE.Points(
+      starGeo,
+      new THREE.PointsMaterial({ color: 0xffffff, size: 0.04, transparent: true })
+    );
     scene.add(stars);
 
     let time = 0,
@@ -164,7 +177,6 @@ const ThreeBackground = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // ===== CLEANUP =====
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -172,7 +184,8 @@ const ThreeBackground = () => {
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }
-      // Dispose objects untuk menghindari memory leak (opsional)
+      // Dispose (opsional, untuk memory)
+      renderer.dispose();
     };
   }, []);
 

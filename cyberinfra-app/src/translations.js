@@ -100,7 +100,24 @@ proj3_desc: "Mengonfigurasi interkoneksi aman multi-cloud yang dilindungi kebija
     opt_devsec: "Cloud & DevSecOps Engineering",
     eng1_desc: "Ahli dalam manajemen ketersediaan infrastruktur core, virtualisasi tingkat lanjut, operasi redundansi, dan arsitektur kelangsungan bisnis (DRP).",
     eng2_desc: "Fokus pada penetration testing, audit manajemen kerentanan sistem siber, tata kelola kepatuhan ISO 27001, serta mitigasi insiden siber secara proaktif.",
-    eng3_desc: "Spesialisasi otomatisasi CI/CD terenkripsi, orkestrasi klaster Kubernetes skala enterprise, dan integrasi kebijakan arsitektur Zero-Trust ke dalam kode."
+    eng3_desc: "Spesialisasi otomatisasi CI/CD terenkripsi, orkestrasi klaster Kubernetes skala enterprise, dan integrasi kebijakan arsitektur Zero-Trust ke dalam kode.",
+ 
+ // ===== Di bagian ID ===== (setelah engineer)
+api_title: "💰 Harga Pasar Terkini",
+api_dollar: "💵 Dollar AS (USD/IDR)",
+api_gold: "🥇 Harga Emas (per gram)",
+api_gold_from: "Data real-time dari GoldAPI.io (per gram)",
+api_exchange_from: "Data real-time dari ExchangeRate-API",
+api_gold_missing: "Token API tidak dikonfigurasi",
+api_gold_error: "Gagal mengambil data emas",
+api_news_title: "📰 Berita Teknologi Global Terkini",
+api_news_fallback: "⚠️ Menggunakan Hacker News sebagai sumber berita (API key NewsData tidak dikonfigurasi atau tidak valid).",
+api_news_error: "Gagal memuat berita dari semua sumber. Silakan refresh.",
+api_news_empty: "Tidak ada berita tersedia.",
+api_news_loading: "⏳ Memuat data...",
+api_news_readmore: "Baca Selengkapnya",
+api_news_click: "Klik untuk baca selengkapnya...",
+api_gold_link: "Lihat Harga di GoldAPI.io →",
   },
 
   en: {
@@ -204,6 +221,24 @@ proj3_desc: "Configured secure multi-cloud networking solutions enforced with ai
     opt_devsec: "Cloud & DevSecOps Engineering",
     eng1_desc: "Expert in core infrastructure availability, advanced virtualization stack, redundancy operations, and business continuity architecture (DRP).",
     eng2_desc: "Focuses on penetration testing, cyber system vulnerability management audits, ISO 27001 compliance governance, and proactive cyber incident mitigation.",
-    eng3_desc: "Specialized in encrypted CI/CD automation, enterprise-scale Kubernetes cluster orchestration, and zero-trust architecture policy integration into code."
+    eng3_desc: "Specialized in encrypted CI/CD automation, enterprise-scale Kubernetes cluster orchestration, and zero-trust architecture policy integration into code.",
+ 
+ // ===== Di bagian EN =====
+api_title: "💰 Current Market Prices",
+api_dollar: "💵 US Dollar (USD/IDR)",
+api_gold: "🥇 Gold Price (per gram)",
+api_gold_from: "Real-time data from GoldAPI.io (per gram)",
+api_exchange_from: "Real-time data from ExchangeRate-API",
+api_gold_missing: "API token not configured",
+api_gold_error: "Failed to fetch gold price",
+api_news_title: "📰 Latest Global Tech News",
+api_news_fallback: "⚠️ Using Hacker News as news source (NewsData API key not configured or invalid).",
+api_news_error: "Failed to load news from all sources. Please refresh.",
+api_news_empty: "No news available.",
+api_news_loading: "⏳ Loading data...",
+api_news_readmore: "Read More",
+api_news_click: "Click to read more...",
+api_gold_link: "View Price on GoldAPI.io →",
+ 
   }
 };

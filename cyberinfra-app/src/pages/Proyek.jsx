@@ -27,30 +27,27 @@ const Proyek = ({ t }) => {
   };
 
   return (
-    <section>
+    <section className="container py-5">
       <h2 className="section-title">{t.projects_title}</h2>
       <p className="section-subtitle">{t.projects_subtitle}</p>
-
-      <div className="projects-grid">
+      <div className="row g-4">
         {projectsData.map((proj, idx) => (
-          <div
-            key={idx}
-            className="project-card"
-            onClick={() => handleCardClick(t[proj.titleKey])}
-          >
-            <div className="project-icon-wrapper">
-              <i className={`fas ${proj.icon} main-icon`}></i>
-              <a href="#" className="project-link" onClick={(e) => e.stopPropagation()}>
-                <i className="fas fa-external-link-alt"></i>
-              </a>
-            </div>
-            <div className="project-info">
-              <h3>{t[proj.titleKey]}</h3>
-              <p>{t[proj.descKey]}</p>
-              <div className="tags">
-                {proj.tags.map((tag, i) => (
-                  <span key={i} className="tag">{tag}</span>
-                ))}
+          <div className="col-md-4" key={idx}>
+            <div className="project-card h-100" onClick={() => handleCardClick(t[proj.titleKey])}>
+              <div className="project-icon-wrapper">
+                <i className={`fas ${proj.icon} main-icon`}></i>
+                <a href="#" className="project-link" onClick={(e) => e.stopPropagation()}>
+                  <i className="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+              <div className="project-info">
+                <h3>{t[proj.titleKey]}</h3>
+                <p>{t[proj.descKey]}</p>
+                <div className="tags">
+                  {proj.tags.map((tag, i) => (
+                    <span key={i} className="tag">{tag}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

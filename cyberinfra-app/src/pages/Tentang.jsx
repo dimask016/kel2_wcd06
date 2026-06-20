@@ -2,14 +2,17 @@ import React from 'react';
 
 const Tentang = ({ t }) => {
   return (
-    <section style={{ minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'center' }}>
-      <h2 className="section-title" style={{ fontSize:'clamp(1.8rem,6vw,2.5rem)', textAlign:'center', marginBottom:'3rem', position:'relative' }}>
-        {t.about_title}
-        <span style={{ content:'""', position:'absolute', bottom:'-10px', left:'50%', transform:'translateX(-50%)', width:'70px', height:'3px', background:'linear-gradient(135deg,#4285F4,#EA4335)', borderRadius:'3px' }} />
-      </h2>
-      <div className="about-content" style={{ maxWidth:'850px', margin:'0 auto', textAlign:'center', fontSize:'1rem', lineHeight:1.7, background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', padding:'2.5rem', borderRadius:'20px', boxShadow:'0 15px 35px rgba(0,0,0,0.25)' }}>
-        <p>{t.about_text1}</p>
-        <p style={{ marginTop: '1rem' }}>{t.about_text2}</p>
+    <section className="min-vh-100 d-flex flex-column justify-content-center">
+      <div className="container">
+        <h2 className="text-center display-5 fw-bold mb-4">{t.about_title}</h2>
+        <div className="row justify-content-center">
+          <div className="col-lg-8 col-md-10">
+            <div className="p-4 p-md-5 bg-dark bg-opacity-25 rounded-4 border border-light border-opacity-10" style={{ backdropFilter: 'blur(16px)' }}>
+              <p className="text-white-50">{t.about_text1}</p>
+              <p className="text-white-50 mt-3">{t.about_text2}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

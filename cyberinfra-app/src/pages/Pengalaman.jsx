@@ -13,7 +13,6 @@ const Pengalaman = ({ t }) => {
     alert(`🛡️ Hub Solusi: ${title}\n📍 Mitra: ${company}\n\nSolusi infrastruktur & siber ini dirancang kustom untuk keandalan jangka panjang korporasi.`);
   };
 
-  // Scroll reveal effect (sama persis seperti pengalaman.html)
   useEffect(() => {
     const checkVisibility = () => {
       itemRefs.current.forEach((item) => {
@@ -26,12 +25,9 @@ const Pengalaman = ({ t }) => {
       });
     };
 
-    // Initial check
     checkVisibility();
-
     window.addEventListener('scroll', checkVisibility);
     window.addEventListener('resize', checkVisibility);
-
     return () => {
       window.removeEventListener('scroll', checkVisibility);
       window.removeEventListener('resize', checkVisibility);
@@ -39,7 +35,7 @@ const Pengalaman = ({ t }) => {
   }, []);
 
   return (
-    <section>
+    <section className="container py-5">
       <h2 className="section-title">{t.exp_title}</h2>
       <div className="timeline">
         {expData.map((exp, idx) => (

@@ -685,4 +685,30 @@ section {
     font-size: 0.95rem;
     margin-bottom: 2.5rem;
   }
+  /* ========== ACCESSIBILITY FOCUS ========== */
+*:focus-visible {
+  outline: 2px solid #4285F4;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.carousel-card:focus-visible,
+.cert-card:focus-visible,
+.project-card:focus-visible,
+.timeline-content:focus-visible {
+  outline: 2px solid #4285F4;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+/* ========== KEYBOARD NAVIGATION ========== */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #4285F4;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 }

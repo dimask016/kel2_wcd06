@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 const Keahlian = ({ t }) => {
-  // Data skill (6 item) dari translations
   const skillsData = [
     { icon: "fa-server", titleKey: "skill1_title", descKey: "skill1_desc" },
     { icon: "fa-shield-alt", titleKey: "skill2_title", descKey: "skill2_desc" },
@@ -24,7 +23,6 @@ const Keahlian = ({ t }) => {
   const animFrameRef = useRef(null);
   const autoRotateTimerRef = useRef(null);
 
-  // Fungsi update rotasi
   const updateRotation = useCallback(() => {
     if (!carouselRef.current) return;
     const cards = carouselRef.current.children;
@@ -47,7 +45,6 @@ const Keahlian = ({ t }) => {
     setActiveIndex(activeIdx);
   }, [rotationY, cardCount, radius]);
 
-  // Animasi rotasi halus
   useEffect(() => {
     const animateRotation = () => {
       const diff = targetRotationY - rotationY;
@@ -60,12 +57,10 @@ const Keahlian = ({ t }) => {
     return () => cancelAnimationFrame(animFrameRef.current);
   }, [targetRotationY, rotationY]);
 
-  // Update posisi kartu setiap kali rotationY berubah
   useEffect(() => {
     updateRotation();
   }, [updateRotation]);
 
-  // Event drag
   useEffect(() => {
     const handleMouseDown = (e) => {
       setIsDragging(true);
@@ -90,7 +85,6 @@ const Keahlian = ({ t }) => {
       if (isDragging) {
         setIsDragging(false);
         if (carouselRef.current) carouselRef.current.style.cursor = 'grab';
-        // Mulai auto-rotate setelah 3 detik idle
         autoRotateTimerRef.current = setTimeout(() => {
           setAutoRotate(true);
         }, 3000);
@@ -115,7 +109,6 @@ const Keahlian = ({ t }) => {
     };
   }, [isDragging, lastX]);
 
-  // Auto rotate
   useEffect(() => {
     if (autoRotate && !isDragging) {
       const interval = setInterval(() => {
@@ -125,21 +118,18 @@ const Keahlian = ({ t }) => {
     }
   }, [autoRotate, isDragging]);
 
-  // Klik kartu
   const handleCardClick = (index) => {
     const title = t[skillsData[index].titleKey];
     const desc = t[skillsData[index].descKey];
     alert(`💼 Solusi: ${title}\n\n${desc}\n\nDidukung oleh ahli bersertifikasi internasional untuk performa bisnis yang aman dan stabil.`);
   };
 
-  // Klik indikator dot
   const handleDotClick = (index) => {
     const delta = index - activeIndex;
     const angleStep = (Math.PI * 2) / cardCount;
     setTargetRotationY(prev => prev + delta * angleStep);
   };
 
-  // Render kartu
   const renderCards = () => {
     return skillsData.map((skill, index) => {
       return (
@@ -157,9 +147,9 @@ const Keahlian = ({ t }) => {
   };
 
   return (
-    <section>
+    <section className="container py-5">
       <h2 className="section-title">{t.skills_title}</h2>
-      <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', marginBottom: '2rem' }}>
+      <p className="text-center text-white-50 mb-4">
         {t.skills_subtitle || 'Geser kiri/kanan untuk memutar | Klik kartu untuk detail solusi'}
       </p>
 

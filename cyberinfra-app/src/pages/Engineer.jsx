@@ -37,48 +37,57 @@ const Engineer = ({ t }) => {
 
   const filteredEngineers = filter === 'all' ? engineers : engineers.filter(e => e.category === filter);
 
-  if (!t) return <div style={{ padding: '6rem 2rem', textAlign: 'center' }}>Loading translations...</div>;
+  if (!t) return <div className="text-center py-5">Loading translations...</div>;
 
   return (
-    <section>
-      <h2 style={{ fontSize:'2.5rem', textAlign:'center', marginBottom:'1rem', fontWeight:700 }}>{t.eng_title}</h2>
-      <p style={{ textAlign:'center', color:'rgba(255,255,255,0.7)', marginBottom:'3rem', fontSize:'1.1rem' }}>{t.eng_subtitle}</p>
+    <section className="container py-5">
+      <h2 className="text-center display-5 fw-bold mb-2">{t.eng_title}</h2>
+      <p className="text-center text-white-50 mb-4">{t.eng_subtitle}</p>
 
-      <div style={{ display:'flex', justifyContent:'center', alignItems:'center', gap:'1rem', marginBottom:'4rem', flexWrap:'wrap' }}>
-        <label style={{ fontSize:'1rem', color:'rgba(255,255,255,0.8)', fontWeight:500 }}>{t.eng_filter}</label>
-        <select value={filter} onChange={(e) => setFilter(e.target.value)} style={{ background:'rgba(255,255,255,0.1)', border:'1px solid rgba(255,255,255,0.2)', padding:'0.5rem 1.5rem', borderRadius:'30px', color:'#fff', fontSize:'0.9rem', outline:'none', cursor:'pointer' }}>
-          <option value="all" style={{ background:'#111' }}>{t.opt_all}</option>
-          <option value="infra" style={{ background:'#111' }}>{t.opt_infra}</option>
-          <option value="cyber" style={{ background:'#111' }}>{t.opt_cyber}</option>
-          <option value="devsec" style={{ background:'#111' }}>{t.opt_devsec}</option>
+      <div className="d-flex justify-content-center align-items-center gap-3 mb-5 flex-wrap">
+        <label className="text-white-50 fw-semibold">{t.eng_filter}</label>
+        <select value={filter} onChange={(e) => setFilter(e.target.value)} className="form-select w-auto bg-dark text-white border-light border-opacity-25 rounded-pill">
+          <option value="all" className="bg-dark">{t.opt_all}</option>
+          <option value="infra" className="bg-dark">{t.opt_infra}</option>
+          <option value="cyber" className="bg-dark">{t.opt_cyber}</option>
+          <option value="devsec" className="bg-dark">{t.opt_devsec}</option>
         </select>
       </div>
 
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:'3rem' }}>
+      <div className="row g-4">
         {filteredEngineers.map((eng, idx) => (
-          <div key={idx} style={{ background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:'24px', overflow:'hidden', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', boxShadow:'0 15px 35px rgba(0,0,0,0.2)' }}>
-            <div style={{ width:'100%', height:'280px', overflow:'hidden', position:'relative' }}>
-              <img src={eng.img} alt={eng.name} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'grayscale(30%)' }} />
-              <div style={{ position:'absolute', bottom:0, left:0, width:'100%', padding:'1.5rem', background:'linear-gradient(to top, rgba(0,0,0,0.9), transparent)' }}>
-                <h3 style={{ fontSize:'1.3rem', fontWeight:600, color:'#fff' }}>{eng.name}</h3>
-                <p style={{ color:'#4285F4', fontSize:'0.9rem', fontWeight:500, marginTop:'0.2rem' }}>
-                  {eng.link && eng.link !== '#' ? (
-                    <a href={eng.link} target="_blank" rel="noopener noreferrer" style={{ color:'#8ab4f8', textDecoration:'none' }}>
-                      {eng.role}
-                    </a>
-                  ) : (
-                    eng.role
-                  )}
-                </p>
+          <div className="col-md-4" key={idx}>
+            <div className="bg-dark bg-opacity-25 border border-light border-opacity-10 rounded-4 overflow-hidden h-100" style={{ backdropFilter: 'blur(16px)', boxShadow: '0 15px 35px rgba(0,0,0,0.2)' }}>
+              <div className="position-relative" style={{ height: '280px' }}>
+                <img
+                  src={eng.img}
+                  alt={eng.name}
+                  className="w-100 h-100 object-fit-cover"
+                  style={{ filter: 'grayscale(30%)' }}
+                  onError={(e) => {
+                    e.target.onerror = null; // Hindari infinite loop jika placeholder juga error
+                    e.target.src = 'https://via.placeholder.com/400x280/1a2a6c/ffffff?text=Engineer';
+                  }}
+                />
+                <div className="position-absolute bottom-0 start-0 w-100 p-3" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)' }}>
+                  <h3 className="text-white fw-semibold fs-5">{eng.name}</h3>
+                  <p className="text-primary fw-medium">
+                    {eng.link && eng.link !== '#' ? (
+                      <a href={eng.link} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-primary">{eng.role}</a>
+                    ) : (
+                      eng.role
+                    )}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div style={{ padding:'1.5rem' }}>
-              <p style={{ fontSize:'0.95rem', color:'rgba(255,255,255,0.75)', lineHeight:1.6 }}>{t[eng.descKey]}</p>
-              {eng.badge && (
-                <span style={{ display:'inline-block', marginTop:'1rem', fontSize:'0.75rem', fontWeight:600, padding:'0.3rem 0.8rem', borderRadius:'12px', background:'rgba(66,133,244,0.15)', color:'#8ab4f8', border:'1px solid rgba(66,133,244,0.3)', textTransform:'uppercase', letterSpacing:'0.5px' }}>
-                  {eng.badge}
-                </span>
-              )}
+              <div className="p-3">
+                <p className="text-white-50 small">{t[eng.descKey]}</p>
+                {eng.badge && (
+                  <span className="badge bg-primary bg-opacity-15 text-primary border border-primary border-opacity-25 rounded-pill px-3 py-1 text-uppercase fs-7" style={{ letterSpacing: '0.5px' }}>
+                    {eng.badge}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         ))}
