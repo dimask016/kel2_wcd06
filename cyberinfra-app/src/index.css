@@ -814,4 +814,89 @@ textarea:focus-visible {
   .carousel-card p {
     font-size: 0.6rem !important;
   }
+  /* ============================================================
+   PERBAIKAN CAROUSEL 3D UNTUK MOBILE
+   ============================================================ */
+
+/* Container carousel tidak boleh overflow */
+.carousel-container {
+  overflow: hidden; /* mencegah scroll horizontal */
+  padding: 0 10px; /* beri ruang di tepi */
+  max-width: 100%;
+}
+
+/* Pada layar kecil, perkecil ukuran carousel */
+@media (max-width: 768px) {
+  .carousel-container {
+    height: 350px !important; /* kurangi tinggi agar tidak terlalu besar */
+  }
+  .carousel-3d {
+    transform: scale(0.85); /* perkecil seluruh carousel */
+    transform-origin: center center;
+  }
+  .carousel-card {
+    width: 150px !important;
+    height: 190px !important;
+    margin-left: -75px !important;
+    margin-top: -95px !important;
+  }
+  .carousel-card i {
+    font-size: 2.2rem !important;
+  }
+  .carousel-card h3 {
+    font-size: 0.85rem !important;
+  }
+  .carousel-card p {
+    font-size: 0.6rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-container {
+    height: 280px !important;
+    padding: 0 5px;
+  }
+  .carousel-3d {
+    transform: scale(0.7);
+  }
+  .carousel-card {
+    width: 120px !important;
+    height: 160px !important;
+    margin-left: -60px !important;
+    margin-top: -80px !important;
+  }
+  .carousel-card i {
+    font-size: 1.8rem !important;
+  }
+  .carousel-card h3 {
+    font-size: 0.7rem !important;
+  }
+  .carousel-card p {
+    font-size: 0.5rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .carousel-container {
+    height: 240px !important;
+  }
+  .carousel-3d {
+    transform: scale(0.6);
+  }
+  .carousel-card {
+    width: 100px !important;
+    height: 140px !important;
+    margin-left: -50px !important;
+    margin-top: -70px !important;
+  }
+  .carousel-card i {
+    font-size: 1.5rem !important;
+  }
+  .carousel-card h3 {
+    font-size: 0.6rem !important;
+  }
+  .carousel-card p {
+    font-size: 0.45rem !important;
+  }
+}
 }
