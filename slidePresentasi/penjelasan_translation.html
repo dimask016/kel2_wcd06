@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Kode - translations.js</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0b0f1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 2rem 1rem;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, #1a2a4a, #0b0f1a 70%);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 60% 40%, rgba(66, 133, 244, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(52, 168, 83, 0.08), transparent 40%);
+            animation: rotateBg 30s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #4285F4 40%, #34A853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem 1.5rem 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header i {
+            font-size: 2rem;
+            color: #4285F4;
+            background: rgba(66, 133, 244, 0.15);
+            padding: 0.8rem;
+            border-radius: 16px;
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .card-header .badge {
+            margin-left: auto;
+            background: rgba(52, 168, 83, 0.2);
+            color: #34A853;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(52, 168, 83, 0.2);
+        }
+
+        .table-wrapper {
+            max-height: 520px;
+            overflow-y: auto;
+            border-radius: 16px;
+            scroll-behavior: smooth;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #4285F4;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        thead th {
+            background: rgba(10, 14, 26, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4285F4;
+            border-bottom: 2px solid rgba(66, 133, 244, 0.3);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        thead th:first-child {
+            width: 60px;
+            text-align: center;
+        }
+
+        thead th:nth-child(2) {
+            width: 25%;
+        }
+
+        thead th:nth-child(3) {
+            width: 40%;
+        }
+
+        thead th:nth-child(4) {
+            width: 20%;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease, transform 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        tbody tr:hover {
+            background: rgba(66, 133, 244, 0.08);
+            transform: scale(1.002);
+        }
+
+        tbody td {
+            padding: 0.8rem 1.2rem;
+            vertical-align: top;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        tbody td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: #4285F4;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        tbody td:nth-child(2) {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: #e6e6e6;
+            word-break: break-word;
+        }
+
+        tbody td:nth-child(3) {
+            font-size: 0.9rem;
+        }
+
+        tbody td:nth-child(4) {
+            font-size: 0.85rem;
+            color: #34A853;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #34A853;
+            font-weight: 500;
+        }
+
+        .highlight-blue {
+            color: #4285F4;
+            font-weight: 500;
+        }
+
+        .row-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            opacity: 0.4;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .glow-pulse {
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(66, 133, 244, 0.1); }
+            100% { box-shadow: 0 0 30px rgba(66, 133, 244, 0.25); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            .card {
+                padding: 1rem 0.8rem 1.5rem;
+            }
+            .card-header h2 {
+                font-size: 1.2rem;
+            }
+            .card-header i {
+                font-size: 1.4rem;
+                padding: 0.5rem;
+            }
+            .table-wrapper {
+                max-height: 400px;
+            }
+            thead th {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            tbody td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.75rem;
+            }
+            thead th:nth-child(2) {
+                width: 20%;
+            }
+            thead th:nth-child(3) {
+                width: 35%;
+            }
+            thead th:nth-child(4) {
+                width: 25%;
+            }
+            tbody td:nth-child(2) {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            thead th {
+                font-size: 0.6rem;
+                padding: 0.4rem 0.5rem;
+            }
+            tbody td {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.65rem;
+            }
+            .card-header .badge {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <div class="container">
+
+        <header class="header">
+            <h1><i class="fas fa-language" style="font-size:0.8em; margin-right:0.3rem; background: none; -webkit-text-fill-color: #4285F4;"></i> Analisis Kode <span style="background: linear-gradient(135deg,#4285F4,#34A853); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">translations.js</span></h1>
+            <p>Penjelasan per blok kode objek terjemahan <strong>dua bahasa (ID/EN)</strong> dan implementasinya di setiap halaman</p>
+        </header>
+
+        <!-- Single Card -->
+        <div class="card glow-pulse">
+            <div class="card-header">
+                <i class="fas fa-globe"></i>
+                <h2>translations.js</h2>
+                <span class="badge"><i class="fas fa-code"></i> 200+ baris</span>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Blok Kode</th>
+                            <th>Penjelasan & Fungsi</th>
+                            <th>Halaman / Menu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trans-body">
+                        <!-- Data akan diisi oleh JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-arrow-up" style="margin-right:6px;"></i> Scroll tabel untuk melihat semua blok &bull; Hover baris untuk efek interaktif
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA PENJELASAN TRANSLATIONS.JS =====
+
+        const transData = [
+            {
+                no: '1',
+                code: 'export const translations = { id: { ... }, en: { ... } };',
+                desc: 'Mendefinisikan dan mengekspor objek <span class="highlight">translations</span> yang berisi dua properti utama: <span class="highlight-blue">id</span> (Bahasa Indonesia) dan <span class="highlight-blue">en</span> (Bahasa Inggris). Setiap properti berisi objek dengan key-value pair untuk semua teks antarmuka.',
+                halaman: '🌐 Global (digunakan di App.jsx)'
+            },
+            {
+                no: '2–8',
+                code: '// Nav\nnav_home: "Home", nav_about: "Tentang", nav_skills: "Layanan", nav_exp: "Pengalaman", nav_projects: "Proyek", nav_certs: "Sertifikasi", nav_contact: "Kontak", nav_engineer: "Engineer"',
+                desc: 'Bagian <span class="highlight">Navigasi</span>: menyediakan label untuk semua tautan di navbar. Properti ini digunakan di komponen <span class="highlight-blue">Layout</span> untuk menampilkan menu navigasi.',
+                halaman: '🌐 Global (Navbar)'
+            },
+            {
+                no: '10–12',
+                code: '// Hero\nhero_name: "CyberInfra Solutions", hero_title: "Penyedia Jasa Infrastruktur IT...", hero_btn: "Pelajari Solusi Kami →"',
+                desc: 'Bagian <span class="highlight">Hero (Halaman Home)</span>: berisi nama perusahaan, judul utama, dan teks tombol CTA. Digunakan di halaman <span class="highlight-blue">Home</span> untuk menyambut pengunjung.',
+                halaman: '🏠 Home'
+            },
+            {
+                no: '14–17',
+                code: '// About\nabout_title: "Tentang Perusahaan", about_text1: "...", about_text2: "..."',
+                desc: 'Bagian <span class="highlight">Tentang</span>: menyediakan judul dan dua paragraf deskripsi perusahaan. Diimplementasikan di halaman <span class="highlight-blue">Tentang</span> untuk menjelaskan visi dan misi.',
+                halaman: '📄 Tentang'
+            },
+            {
+                no: '19–32',
+                code: '// Skills\nskills_title: "Solusi & Layanan Kami", skills_subtitle: "...", skill1_title: "Infrastruktur TI", skill1_desc: "...", ..., skill6_desc: "..."',
+                desc: 'Bagian <span class="highlight">Keahlian / Layanan</span>: berisi judul, subjudul, dan 6 pasang <span class="highlight-blue">skillX_title</span> + <span class="highlight-blue">skillX_desc</span> untuk setiap kartu di carousel 3D. Digunakan di halaman <span class="highlight-blue">Keahlian</span>.',
+                halaman: '🛠️ Keahlian'
+            },
+            {
+                no: '34–48',
+                code: '// Experience\nexp_title: "Pengalaman & Rekam Jejak", exp_subtitle: "...", job1_year: "2024 - Sekarang", job1_title: "...", job1_comp: "...", job1_desc: "...", ..., job3_desc: "..."',
+                desc: 'Bagian <span class="highlight">Pengalaman</span>: menyediakan judul, subjudul, dan 3 item pengalaman (year, title, company, description). Diimplementasikan di halaman <span class="highlight-blue">Pengalaman</span> dalam bentuk timeline.',
+                halaman: '💼 Pengalaman'
+            },
+            {
+                no: '50–60',
+                code: '// Projects\nprojects_title: "Proyek Unggulan", projects_subtitle: "...", proj1_title: "SecOps Hardening...", proj1_desc: "...", ..., proj3_desc: "..."',
+                desc: 'Bagian <span class="highlight">Proyek</span>: berisi judul, subjudul, dan 3 proyek dengan title + description. Digunakan di halaman <span class="highlight-blue">Proyek</span> untuk menampilkan portofolio pekerjaan.',
+                halaman: '📁 Proyek'
+            },
+            {
+                no: '62–76',
+                code: '// Certifications\ncerts_title: "Kepatuhan & Sertifikasi Perusahaan", certs_subtitle: "...", cert1_title: "ISO/IEC 27001:2022", cert1_desc: "...", ..., cert6_desc: "..."',
+                desc: 'Bagian <span class="highlight">Sertifikasi</span>: menyediakan judul, subjudul, dan 6 sertifikasi dengan title + description. Diimplementasikan di halaman <span class="highlight-blue">Sertifikasi</span> dalam bentuk flip card.',
+                halaman: '📜 Sertifikasi'
+            },
+            {
+                no: '78–90',
+                code: '// Contact\ncontact_title: "Hubungi Kami", label_email: "Email Korporat", label_phone: "Telepon / WhatsApp", label_address: "Kantor Pusat", val_address: "...", form_name: "Nama Lengkap / Organisasi Perusahaan", form_email: "...", form_subject: "...", form_msg: "...", btn_send: "Kirim Permintaan Solusi"',
+                desc: 'Bagian <span class="highlight">Kontak</span>: berisi judul, label untuk email/telepon/alamat, nilai alamat, dan label/placeholder untuk form serta tombol kirim. Digunakan di halaman <span class="highlight-blue">Kontak</span>.',
+                halaman: '📞 Kontak'
+            },
+            {
+                no: '92–102',
+                code: '// Engineer\neng_title: "Tim Engineer Ahli", eng_subtitle: "...", eng_filter: "Pilih Bidang Keahlian:", opt_all: "Semua Tim Ahli (All)", opt_infra: "Infrastruktur Data Center", opt_cyber: "Hardening Cybersecurity", opt_devsec: "Cloud & DevSecOps Engineering", eng1_desc: "...", eng2_desc: "...", eng3_desc: "..."',
+                desc: 'Bagian <span class="highlight">Engineer</span>: menyediakan judul, subjudul, label filter, opsi filter (3 bidang), dan deskripsi untuk 3 engineer. Diimplementasikan di halaman <span class="highlight-blue">Engineer</span> dengan fitur filter.',
+                halaman: '👨‍💻 Engineer'
+            },
+            {
+                no: '104–118',
+                code: '// API\napi_title: "💰 Harga Pasar Terkini", api_dollar: "💵 Dollar AS (USD/IDR)", api_gold: "🥇 Harga Emas (per gram)", api_gold_from: "...", api_exchange_from: "...", api_gold_missing: "...", api_gold_error: "...", api_news_title: "📰 Berita Teknologi Global Terkini", api_news_fallback: "...", api_news_error: "...", api_news_empty: "...", api_news_loading: "...", api_news_readmore: "...", api_news_click: "...", api_gold_link: "..."',
+                desc: 'Bagian <span class="highlight">API & Data Real-time</span>: berisi label untuk harga dollar, emas, dan berita teknologi, serta pesan error/loading/fallback. Digunakan di komponen <span class="highlight-blue">ApiDisplay</span> (mungkin di halaman Home atau footer) untuk menampilkan data pasar dan berita.',
+                halaman: '📊 API (Home / Global)'
+            },
+            {
+                no: '120–218',
+                code: '// en (English version) – semua properti yang sama dengan id tetapi dalam bahasa Inggris',
+                desc: 'Bagian <span class="highlight">en</span> adalah terjemahan lengkap dari semua properti di atas ke dalam <span class="highlight">Bahasa Inggris</span>. Struktur dan jumlah properti identik dengan bagian <span class="highlight-blue">id</span>, hanya nilai-nilainya yang diterjemahkan. Digunakan saat pengguna memilih bahasa Inggris melalui tombol switch di navbar.',
+                halaman: '🌐 Global (switch bahasa)'
+            }
+        ];
+
+        // ===== RENDER TABEL =====
+
+        function renderTable(data, targetId) {
+            const tbody = document.getElementById(targetId);
+            if (!tbody) return;
+            let html = '';
+            data.forEach((row, index) => {
+                const delay = index * 30;
+                html += `<tr class="row-fade" style="animation-delay:${delay}ms">
+                            <td>${row.no}</td>
+                            <td><code>${row.code}</code></td>
+                            <td>${row.desc}</td>
+                            <td>${row.halaman}</td>
+                        </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        renderTable(transData, 'trans-body');
+
+        // ===== TRIGGER ANIMATION AWAL =====
+        setTimeout(() => {
+            const rows = document.querySelectorAll('#trans-body .row-fade');
+            rows.forEach((row, i) => {
+                row.style.animation = `fadeUp 0.5s forwards`;
+                row.style.animationDelay = `${i * 30}ms`;
+            });
+        }, 100);
+    </script>
+
+</body>
+</html>

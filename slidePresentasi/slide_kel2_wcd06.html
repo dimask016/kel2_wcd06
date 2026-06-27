@@ -3,785 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Presentasi: Web CV Portofolio Interaktif | Kelompok 2 WCD06</title>
+    <title>Presentasi: Web Company Portofolio Interaktif | Kelompok 2 WCD06</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
-            color: #333;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .presentation-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .presentation-header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-            padding: 20px;
-            background: rgba(44, 62, 80, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .presentation-header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .presentation-header .author-info {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .slides-container {
-            position: relative;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            min-height: 700px;
-        }
-        
-        .slide {
-            display: none;
-            padding: 40px;
-            height: 100%;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .slide.active {
-            display: block;
-        }
-        
-        .slide-header {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--secondary-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .slide-header h2 {
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .slide-header h2 i {
-            color: var(--secondary-color);
-        }
-        
-        .slide-content {
-            line-height: 1.6;
-            font-size: 1.1rem;
-        }
-        
-        .slide-content ul, .slide-content ol {
-            padding-left: 20px;
-            margin: 15px 0;
-        }
-        
-        .slide-content li {
-            margin-bottom: 8px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95rem;
-        }
-        
-        table th {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        table td {
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-        }
-        
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .highlight {
-            background-color: rgba(52, 152, 219, 0.1);
-            padding: 15px;
-            border-left: 4px solid var(--secondary-color);
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .tech-badge {
-            display: inline-block;
-            background: #2c3e50;
-            color: white;
-            border-radius: 20px;
-            padding: 5px 12px;
-            margin: 4px;
-            font-size: 0.85rem;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .feature-card {
-            background: #f8f9fa;
-            padding: 18px;
-            border-radius: 12px;
-            transition: 0.2s;
-            border-left: 3px solid var(--secondary-color);
-        }
-        
-        .btn-link {
-            display: inline-block;
-            background: var(--secondary-color);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 30px;
-            text-decoration: none;
-            margin: 5px 0;
-            transition: 0.2s;
-        }
-        
-        .btn-link:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(44, 62, 80, 0.9);
-            border-radius: 10px;
-            color: white;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .btn:disabled {
-            background: #7f8c8d;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .slide-indicator {
-            font-size: 1.1rem;
-        }
-        
-        .slide-nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .slide-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            flex-grow: 1;
-        }
-        
-        .progress-bar {
-            height: 5px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: var(--secondary-color);
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--secondary-color);
-        }
-        
-        .signature {
-            margin-top: 10px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-        
-        /* Animasi Judul */
-        .animated-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #2c3e50, #3498db, #2c3e50);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: fadeInUp 0.8s ease-out, gradientShift 4s ease infinite;
-            display: inline-block;
-        }
-        
-        .animated-subtitle {
-            font-size: 1.2rem;
-            color: #2c3e50;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            opacity: 0;
-        }
-        
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .animated-title:hover {
-            animation: gradientShift 1s ease infinite, pulse 0.5s ease;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Galeri Screenshot */
-        .screenshot-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .gallery-item {
-            background: #f8f9fa;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .gallery-item .caption {
-            padding: 8px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            background: white;
-            color: var(--primary-color);
-        }
-        
-        /* Modal Lightbox */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            cursor: pointer;
-        }
-        
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 90%;
-            margin-top: 5%;
-            animation: zoomIn 0.3s;
-        }
-        
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        
-        .modal-caption {
-            margin: 15px auto;
-            text-align: center;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        
-        .close-modal:hover {
-            color: #bbb;
-        }
-        
-        /* ========== STYLE KHUSUS UNTUK 3D CAROUSEL ========== */
-        .carousel-container {
-            perspective: 1200px;
-            width: 100%;
-            margin: 20px 0 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 480px;
-        }
-        
-        .carousel-3d {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            transform-style: preserve-3d;
-            transition: transform 0.1s linear;
-            cursor: grab;
-        }
-        
-        .carousel-3d:active {
-            cursor: grabbing;
-        }
-        
-        .carousel-card {
-            position: absolute;
-            width: 220px;
-            height: 280px;
-            left: 50%;
-            top: 50%;
-            margin-left: -110px;
-            margin-top: -140px;
-            border-radius: 20px;
-            background: linear-gradient(145deg, #ffffff, #f0f2f5);
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.5);
-            font-size: 1rem;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            will-change: transform;
-        }
-        
-        .carousel-card.active-card {
-            box-shadow: 0 0 0 4px #3498db, 0 25px 40px -10px black;
-            border: 2px solid #ffffff;
-            background: linear-gradient(145deg, #ffffff, #eef2ff);
-            transform: scale(1.02);
-        }
-        
-        .carousel-card i {
-            font-size: 3.2rem;
-            margin-bottom: 15px;
-            color: #3498db;
-        }
-        
-        .carousel-card h4 {
-            font-size: 1.3rem;
-            margin: 10px 0;
-        }
-        
-        .carousel-card p {
-            font-size: 0.85rem;
-            color: #555;
-            margin-top: 8px;
-        }
-        
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: #bbb;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        
-        .dot.active-dot {
-            background-color: #3498db;
-            transform: scale(1.3);
-            box-shadow: 0 0 5px #3498db;
-        }
-        
-        .carousel-info {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #2c3e50;
-            background: #eef2ff;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 30px;
-        }
-        
-        /* ========== STYLE TIMELINE ZIG-ZAG ========== */
-        .timeline-demo-container {
-            position: relative;
-            max-width: 100%;
-            margin: 30px 0;
-            padding: 20px 0;
-            background: linear-gradient(to bottom, #f8fafc, #eef2f7);
-            border-radius: 24px;
-            overflow-x: hidden;
-        }
-        
-        .timeline-zigzag {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-        
-        /* Garis tengah */
-        .timeline-zigzag::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, #3498db, #2c3e50, #3498db);
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(52,152,219,0.4);
-        }
-        
-        /* Container tiap item */
-        .timeline-item {
-            position: relative;
-            margin-bottom: 60px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        
-        /* Kartu content */
-        .timeline-card {
-            position: relative;
-            width: 42%;
-            padding: 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease, border 0.2s, transform 0.2s;
-        }
-        
-        .timeline-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .timeline-card:hover {
-            transform: translateY(-8px);
-            border-color: #3498db;
-            box-shadow: 0 20px 35px -10px rgba(52,152,219,0.3);
-        }
-        
-        /* Posisi kiri dan kanan */
-        .timeline-item.left .timeline-card {
-            margin-right: auto;
-            margin-left: 0;
-        }
-        
-        .timeline-item.right .timeline-card {
-            margin-left: auto;
-            margin-right: 0;
-        }
-        
-        /* Panah penghubung ke garis tengah */
-        .timeline-card::before {
-            content: '';
-            position: absolute;
-            top: 30px;
-            width: 30px;
-            height: 3px;
-            background: linear-gradient(90deg, #3498db, #2c3e50);
-            border-radius: 3px;
-        }
-        
-        .timeline-item.left .timeline-card::before {
-            right: -30px;
-        }
-        
-        .timeline-item.right .timeline-card::before {
-            left: -30px;
-        }
-        
-        /* Indikator dot pada garis tengah */
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #3498db;
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px #3498db;
-            z-index: 10;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .timeline-dot:hover {
-            transform: translateX(-50%) scale(1.3);
-            box-shadow: 0 0 0 4px #3498db;
-        }
-        
-        /* Warna berbeda tiap dot */
+        /* ===== CSS SAMA SEPERTI SEBELUMNYA ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --primary-color: #2c3e50; --secondary-color: #3498db; --accent-color: #e74c3c; --light-color: #ecf0f1; --dark-color: #2c3e50; --success-color: #27ae60; --warning-color: #f39c12; }
+        body { background: linear-gradient(135deg, #1a2980, #26d0ce); color: #333; min-height: 100vh; overflow-x: hidden; }
+        .presentation-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .presentation-header { text-align: center; margin-bottom: 30px; color: white; padding: 20px; background: rgba(44, 62, 80, 0.9); border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+        .presentation-header h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .presentation-header .author-info { font-size: 1.1rem; opacity: 0.9; }
+        .slides-container { position: relative; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); overflow: hidden; min-height: 700px; }
+        .slide { display: none; padding: 40px; height: 100%; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide.active { display: block; }
+        .slide-header { color: var(--primary-color); border-bottom: 3px solid var(--secondary-color); padding-bottom: 15px; margin-bottom: 25px; }
+        .slide-header h2 { font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
+        .slide-header h2 i { color: var(--secondary-color); }
+        .slide-content { line-height: 1.6; font-size: 1.1rem; }
+        .slide-content ul, .slide-content ol { padding-left: 20px; margin: 15px 0; }
+        .slide-content li { margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        table th { background-color: var(--primary-color); color: white; padding: 12px; text-align: left; }
+        table td { padding: 10px 12px; border: 1px solid #ddd; }
+        table tr:nth-child(even) { background-color: #f9f9f9; }
+        .highlight { background-color: rgba(52, 152, 219, 0.1); padding: 15px; border-left: 4px solid var(--secondary-color); margin: 15px 0; border-radius: 0 5px 5px 0; }
+        .tech-badge { display: inline-block; background: #2c3e50; color: white; border-radius: 20px; padding: 5px 12px; margin: 4px; font-size: 0.85rem; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin: 20px 0; }
+        .feature-card { background: #f8f9fa; padding: 18px; border-radius: 12px; transition: 0.2s; border-left: 3px solid var(--secondary-color); }
+        .btn-link { display: inline-block; background: var(--secondary-color); color: white; padding: 10px 18px; border-radius: 30px; text-decoration: none; margin: 5px 0; transition: 0.2s; }
+        .btn-link:hover { background: #2980b9; transform: translateY(-2px); }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding: 15px; background: rgba(44, 62, 80, 0.9); border-radius: 10px; color: white; }
+        .btn { padding: 10px 20px; background: var(--secondary-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn:hover { background: #2980b9; transform: translateY(-2px); }
+        .btn:disabled { background: #7f8c8d; cursor: not-allowed; transform: none; }
+        .slide-indicator { font-size: 1.1rem; }
+        .slide-nav { display: flex; gap: 10px; }
+        .slide-title { font-size: 1.1rem; font-weight: bold; text-align: center; flex-grow: 1; }
+        .progress-bar { height: 5px; background: rgba(255, 255, 255, 0.3); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+        .progress { height: 100%; background: var(--secondary-color); width: 0%; transition: width 0.3s; }
+        .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .logo-icon { font-size: 2rem; color: var(--secondary-color); }
+        .signature { margin-top: 10px; font-size: 0.8rem; text-align: center; }
+        .animated-title { font-size: 2.5rem; font-weight: bold; background: linear-gradient(135deg, #2c3e50, #3498db, #2c3e50); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: fadeInUp 0.8s ease-out, gradientShift 4s ease infinite; display: inline-block; }
+        .animated-subtitle { font-size: 1.2rem; color: #2c3e50; animation: fadeInUp 0.8s ease-out 0.2s both; opacity: 0; }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .animated-title:hover { animation: gradientShift 1s ease infinite, pulse 0.5s ease; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .screenshot-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin: 25px 0; }
+        .gallery-item { background: #f8f9fa; border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .gallery-item img { width: 100%; height: 100px; object-fit: cover; display: block; }
+        .gallery-item .caption { padding: 8px; text-align: center; font-size: 0.8rem; font-weight: bold; background: white; color: var(--primary-color); }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); cursor: pointer; }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 5%; animation: zoomIn 0.3s; }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-caption { margin: 15px auto; text-align: center; color: white; font-size: 1.1rem; font-weight: bold; }
+        .close-modal { position: absolute; top: 20px; right: 35px; color: white; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .close-modal:hover { color: #bbb; }
+
+        /* CAROUSEL 3D */
+        .carousel-container { perspective: 1200px; width: 100%; margin: 20px 0 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 480px; }
+        .carousel-3d { position: relative; width: 100%; height: 400px; transform-style: preserve-3d; transition: transform 0.1s linear; cursor: grab; }
+        .carousel-3d:active { cursor: grabbing; }
+        .carousel-card { position: absolute; width: 220px; height: 280px; left: 50%; top: 50%; margin-left: -110px; margin-top: -140px; border-radius: 20px; background: linear-gradient(145deg, #ffffff, #f0f2f5); box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3); transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.5); font-size: 1rem; font-weight: bold; color: #2c3e50; cursor: pointer; will-change: transform; }
+        .carousel-card.active-card { box-shadow: 0 0 0 4px #3498db, 0 25px 40px -10px black; border: 2px solid #ffffff; background: linear-gradient(145deg, #ffffff, #eef2ff); transform: scale(1.02); }
+        .carousel-card i { font-size: 3.2rem; margin-bottom: 15px; color: #3498db; }
+        .carousel-card h4 { font-size: 1.3rem; margin: 10px 0; }
+        .carousel-card p { font-size: 0.85rem; color: #555; margin-top: 8px; }
+        .carousel-indicators { display: flex; justify-content: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+        .dot { width: 12px; height: 12px; background-color: #bbb; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .dot.active-dot { background-color: #3498db; transform: scale(1.3); box-shadow: 0 0 5px #3498db; }
+        .carousel-info { text-align: center; margin-top: 15px; font-size: 0.9rem; color: #2c3e50; background: #eef2ff; display: inline-block; padding: 5px 15px; border-radius: 30px; }
+
+        /* TIMELINE */
+        .timeline-demo-container { position: relative; max-width: 100%; margin: 30px 0; padding: 20px 0; background: linear-gradient(to bottom, #f8fafc, #eef2f7); border-radius: 24px; overflow-x: hidden; }
+        .timeline-zigzag { position: relative; max-width: 1000px; margin: 0 auto; padding: 20px 0; }
+        .timeline-zigzag::before { content: ''; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 4px; height: 100%; background: linear-gradient(to bottom, #3498db, #2c3e50, #3498db); border-radius: 4px; box-shadow: 0 0 8px rgba(52,152,219,0.4); }
+        .timeline-item { position: relative; margin-bottom: 60px; width: 100%; display: flex; justify-content: center; }
+        .timeline-card { position: relative; width: 42%; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease, border 0.2s, transform 0.2s; }
+        .timeline-card.visible { opacity: 1; transform: translateY(0); }
+        .timeline-card:hover { transform: translateY(-8px); border-color: #3498db; box-shadow: 0 20px 35px -10px rgba(52,152,219,0.3); }
+        .timeline-item.left .timeline-card { margin-right: auto; margin-left: 0; }
+        .timeline-item.right .timeline-card { margin-left: auto; margin-right: 0; }
+        .timeline-card::before { content: ''; position: absolute; top: 30px; width: 30px; height: 3px; background: linear-gradient(90deg, #3498db, #2c3e50); border-radius: 3px; }
+        .timeline-item.left .timeline-card::before { right: -30px; }
+        .timeline-item.right .timeline-card::before { left: -30px; }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; background: #3498db; border: 3px solid white; box-shadow: 0 0 0 2px #3498db; z-index: 10; transition: all 0.3s; cursor: pointer; }
+        .timeline-dot:hover { transform: translateX(-50%) scale(1.3); box-shadow: 0 0 0 4px #3498db; }
         .timeline-dot[data-color="1"] { background: #e74c3c; box-shadow: 0 0 0 2px #e74c3c; }
         .timeline-dot[data-color="2"] { background: #27ae60; box-shadow: 0 0 0 2px #27ae60; }
         .timeline-dot[data-color="3"] { background: #f39c12; box-shadow: 0 0 0 2px #f39c12; }
         .timeline-dot[data-color="4"] { background: #9b59b6; box-shadow: 0 0 0 2px #9b59b6; }
-        
-        /* Warna header kartu sesuai dot */
-        .timeline-card .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ecf0f1;
+        .timeline-card .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #ecf0f1; }
+        .timeline-card .card-icon { width: 45px; height: 45px; background: #eef2ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .timeline-card .card-year { font-weight: bold; color: #3498db; font-size: 0.9rem; }
+        .timeline-card h4 { font-size: 1.2rem; margin-bottom: 8px; }
+
+        /* ===== PERBAIKAN FONT BOLD PADA SLIDE 6-13 ===== */
+        .slide-content,
+        .slide-content p,
+        .slide-content li,
+        .slide-content td,
+        .slide-content div:not(.highlight):not(.feature-card):not(.btn-link):not(.tech-badge),
+        .slide-content span:not(.tech-badge) {
+            font-weight: normal;
         }
-        
-        .timeline-card .card-icon {
-            width: 45px;
-            height: 45px;
-            background: #eef2ff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .timeline-card .card-year {
+        /* Pastikan elemen yang memang perlu bold tetap bold */
+        .slide-content h1, .slide-content h2, .slide-content h3, .slide-content h4,
+        .slide-content strong, .slide-content b,
+        .slide-content th,
+        .feature-card strong,
+        .highlight strong,
+        .btn-link,
+        .tech-badge,
+        .slide-title,
+        .animated-title,
+        .carousel-card h4 {
             font-weight: bold;
-            color: #3498db;
-            font-size: 0.9rem;
         }
-        
-        .timeline-card h4 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
+        /* Khusus untuk feature-grid agar teks di dalamnya normal, kecuali yang pakai strong */
+        .feature-grid .feature-card {
+            font-weight: normal;
         }
-        
-        /* Responsif mobile - berubah jadi vertikal biasa */
+        .feature-grid .feature-card strong {
+            font-weight: bold;
+        }
+        /* Perbaiki tampilan tabel */
+        table td {
+            font-weight: normal;
+        }
+        table th {
+            font-weight: bold;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .timeline-zigzag::before {
-                left: 20px;
-            }
-            
-            .timeline-item {
-                justify-content: flex-start;
-                padding-left: 45px;
-            }
-            
-            .timeline-card {
-                width: calc(100% - 30px);
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }
-            
-            .timeline-card::before {
-                display: none;
-            }
-            
-            .timeline-item.left .timeline-card,
-            .timeline-item.right .timeline-card {
-                margin-left: 0;
-            }
-            
-            .timeline-dot {
-                left: 20px;
-                transform: translateX(-50%);
-            }
+            .timeline-zigzag::before { left: 20px; }
+            .timeline-item { justify-content: flex-start; padding-left: 45px; }
+            .timeline-card { width: calc(100% - 30px); margin-left: 0 !important; margin-right: 0 !important; }
+            .timeline-card::before { display: none; }
+            .timeline-item.left .timeline-card, .timeline-item.right .timeline-card { margin-left: 0; }
+            .timeline-dot { left: 20px; transform: translateX(-50%); }
+            .carousel-card { width: 170px; height: 230px; margin-left: -85px; margin-top: -115px; padding: 12px; }
+            .carousel-card i { font-size: 2.2rem; }
+            .carousel-card h4 { font-size: 1rem; }
+            .carousel-3d { height: 320px; }
+            .carousel-container { min-height: 420px; }
+            .presentation-container { padding: 10px; }
+            .slide { padding: 20px; }
+            .slide-header h2 { font-size: 1.5rem; }
+            .controls { flex-direction: column; gap: 15px; }
+            .slide-nav { order: 1; }
+            .slide-title { order: 2; }
+            .slide-indicator { order: 3; }
+            .screenshot-gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .gallery-item img { height: 70px; }
+            .animated-title { font-size: 1.8rem; }
+            .animated-subtitle { font-size: 1rem; }
         }
-        
-        @media (max-width: 768px) {
-            .carousel-card {
-                width: 170px;
-                height: 230px;
-                margin-left: -85px;
-                margin-top: -115px;
-                padding: 12px;
-            }
-            .carousel-card i {
-                font-size: 2.2rem;
-            }
-            .carousel-card h4 {
-                font-size: 1rem;
-            }
-            .carousel-3d {
-                height: 320px;
-            }
-            .carousel-container {
-                min-height: 420px;
-            }
-        }
-        
         @media (max-width: 600px) {
-            .carousel-card {
-                width: 150px;
-                height: 210px;
-                margin-left: -75px;
-                margin-top: -105px;
-            }
+            .carousel-card { width: 150px; height: 210px; margin-left: -75px; margin-top: -105px; }
         }
-        
         @media (max-width: 480px) {
-            .carousel-card {
-                width: 130px;
-                height: 190px;
-                margin-left: -65px;
-                margin-top: -95px;
-            }
-            .carousel-card i {
-                font-size: 1.8rem;
-            }
-            .carousel-card h4 {
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* Responsive umum */
-        @media (max-width: 768px) {
-            .presentation-container {
-                padding: 10px;
-            }
-            .slide {
-                padding: 20px;
-            }
-            .slide-header h2 {
-                font-size: 1.5rem;
-            }
-            .controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .slide-nav {
-                order: 1;
-            }
-            .slide-title {
-                order: 2;
-            }
-            .slide-indicator {
-                order: 3;
-            }
-            .screenshot-gallery {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-            .gallery-item img {
-                height: 70px;
-            }
-            .animated-title {
-                font-size: 1.8rem;
-            }
-            .animated-subtitle {
-                font-size: 1rem;
-            }
+            .carousel-card { width: 130px; height: 190px; margin-left: -65px; margin-top: -95px; }
+            .carousel-card i { font-size: 1.8rem; }
+            .carousel-card h4 { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -801,7 +190,7 @@
                 </h2>
             </div>
             <div>
-                <h1>🚀 Web CV Portofolio Interaktif</h1>
+                <h1>🚀 Web Company Portofolio Interaktif</h1>
                 <div class="author-info">
                     <p>Kelompok 2 – Web Client Development (WCD06) | Teknologi Informasi</p>
                     <p>Dosen Pengajar: Reza Fahmi Alviandy | 2026</p>
@@ -811,13 +200,11 @@
     </header>
 
     <div class="slides-container">
-        <!-- Slide 1: Cover -->
+        <!-- SLIDE 1: COVER -->
         <div class="slide active" id="slide1">
-            <div class="slide-header">
-                <h2><i class="fas fa-home"></i> Halaman Judul</h2>
-            </div>
+            <div class="slide-header"><h2><i class="fas fa-home"></i> Halaman Judul</h2></div>
             <div class="slide-content" style="text-align: center; padding-top: 60px;">
-                <h1 class="animated-title" style="margin-bottom: 20px;">🚀 Web CV Portofolio Interaktif</h1>
+                <h1 class="animated-title" style="margin-bottom: 20px;">🚀 Web Company Portofolio Interaktif</h1>
                 <div class="animated-subtitle" style="font-size: 1.2rem; margin-bottom: 30px;">
                     <p>Portfolio 3D dengan dukungan dua bahasa (ID/EN) dan latar belakang Three.js</p>
                 </div>
@@ -830,23 +217,19 @@
                     <p><strong>Dharma Satriadi</strong></p>
                     <hr style="margin: 20px 0;">
                     <p><i class="fas fa-calendar-alt"></i> Web Client Development - 2026</p>
-                    <p><i class="fas fa-globe"></i> Live Demo: <a href="https://dimask016.github.io/kel2_wcd06/portofolio_dimas_kurniawan/home.html" target="_blank">Web CV Portofolio Interaktif</a></p>
+                    <p><i class="fas fa-globe"></i> Live Demo: <a href="https://chipper-valkyrie-d623d1.netlify.app/" target="_blank">Web Company Portofolio Interaktif</a></p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 2: Konsep & Teknologi -->
+        <!-- SLIDE 2: KONSEP & TEKNOLOGI RINGKASAN -->
         <div class="slide" id="slide2">
-            <div class="slide-header">
-                <h2><i class="fas fa-info-circle"></i> Konsep & Teknologi</h2>
-            </div>
+            <div class="slide-header"><h2><i class="fas fa-info-circle"></i> Konsep & Teknologi</h2></div>
             <div class="slide-content">
                 <h3>Deskripsi Proyek</h3>
-                <p>Website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari profesional IT. Dilengkapi latar 3D interaktif (Three.js), responsif, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.</p>
-                <div class="highlight">
-                    <i class="fas fa-bullhorn"></i> <strong>Nilai tambah:</strong> Background 3D interaktif, bilingual (localStorage persistensi), copy kontak satu klik.
-                </div>
-                <h3>Teknologi yang Digunakan</h3>
+                <p>Website portofolio perusahaan yang menampilkan profil, layanan, pengalaman, proyek, sertifikasi, dan kontak dari profesional IT. Dilengkapi latar 3D interaktif (Three.js), responsif, dan mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.</p>
+                <div class="highlight"><i class="fas fa-bullhorn"></i> <strong>Nilai tambah:</strong> Background 3D interaktif, bilingual (localStorage persistensi), copy kontak satu klik.</div>
+                <h3>Ringkasan Teknologi</h3>
                 <div style="margin: 15px 0;">
                     <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span>
                     <span class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3 (Grid/Flex, Glassmorphism)</span>
@@ -854,78 +237,135 @@
                     <span class="tech-badge"><i class="fas fa-cube"></i> Three.js</span>
                     <span class="tech-badge"><i class="fab fa-font-awesome"></i> Font Awesome</span>
                     <span class="tech-badge"><i class="fab fa-google"></i> Google Fonts</span>
+                    <span class="tech-badge"><i class="fab fa-react"></i> React 18</span>
+                    <span class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap 5</span>
+                    <span class="tech-badge"><i class="fas fa-envelope"></i> EmailJS</span>
                 </div>
-                <p><strong>Struktur file:</strong> 7 halaman HTML (home, tentang, keahlian, pengalaman, proyek, sertifikasi, kontak) dengan sistem terjemahan terintegrasi.</p>
-                
-                <div class="screenshot-gallery">
-                    <div class="gallery-item" data-img="../screenshots/home.png">
-                        <img src="../screenshots/home.png" alt="Home Page" onerror="this.src='https://placehold.co/200x100?text=Home'">
-                        <div class="caption">🏠 Home</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/tentang.png">
-                        <img src="../screenshots/tentang.png" alt="Tentang Page" onerror="this.src='https://placehold.co/200x100?text=Tentang'">
-                        <div class="caption">👤 Tentang</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/keahlian.png">
-                        <img src="../screenshots/keahlian.png" alt="Keahlian Page" onerror="this.src='https://placehold.co/200x100?text=Keahlian'">
-                        <div class="caption">⚙️ Keahlian</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/pengalaman.png">
-                        <img src="../screenshots/pengalaman.png" alt="Pengalaman Page" onerror="this.src='https://placehold.co/200x100?text=Pengalaman'">
-                        <div class="caption">💼 Pengalaman</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/proyek.png">
-                        <img src="../screenshots/proyek.png" alt="Proyek Page" onerror="this.src='https://placehold.co/200x100?text=Proyek'">
-                        <div class="caption">🚀 Proyek</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/sertifikasi.png">
-                        <img src="../screenshots/sertifikasi.png" alt="Sertifikasi Page" onerror="this.src='https://placehold.co/200x100?text=Sertifikasi'">
-                        <div class="caption">📜 Sertifikasi</div>
-                    </div>
-                    <div class="gallery-item" data-img="../screenshots/kontak.png">
-                        <img src="../screenshots/kontak.png" alt="Kontak Page" onerror="this.src='https://placehold.co/200x100?text=Kontak'">
-                        <div class="caption">📞 Kontak</div>
-                    </div>
-                </div>
+                <p><strong>Struktur file:</strong> 7 halaman React (Home, Tentang, Keahlian, Pengalaman, Proyek, Sertifikasi, Kontak) dengan sistem terjemahan terintegrasi.</p>
+                <p><a href="#" onclick="goToSlide(3); return false;" class="btn-link" style="font-size:0.9rem;">Lihat detail teknologi →</a></p>
+                <div class="screenshot-gallery">...</div>
             </div>
         </div>
 
-        <!-- Slide 3: UI/UX Analysis -->
+        <!-- SLIDE 3: TEKNOLOGI & TOOLS DETAIL -->
         <div class="slide" id="slide3">
-            <div class="slide-header">
-                <h2><i class="fas fa-paintbrush"></i> Kelayakan UI/UX</h2>
-            </div>
+            <div class="slide-header"><h2><i class="fas fa-tools"></i> 🛠️ Teknologi & Tools Detail</h2></div>
             <div class="slide-content">
-                <h3>Kelebihan UI/UX</h3>
+                <h3>Frontend Framework & Library</h3>
                 <ul>
-                    <li><strong>Navigasi konsisten:</strong> Fixed navbar di semua halaman, memudahkan akses.</li>
-                    <li><strong>Responsif:</strong> Menggunakan clamp(), media query ≤768px, tampilan rapi di HP & desktop.</li>
-                    <li><strong>Background 3D interaktif:</strong> Gerakan mengikuti kursor dengan overlay gelap menjaga readability.</li>
-                    <li><strong>Glassmorphism & hover:</strong> Kartu dengan blur, border, efek naik saat hover.</li>
-                    <li><strong>Salin kontak satu klik:</strong> Klik alamat/telepon/email → copy ke clipboard.</li>
-                    <li><strong>Dukungan dua bahasa (ID/EN):</strong> Pilihan tersimpan di localStorage.</li>
+                    <li><strong>React 18.2.0</strong> – Library utama untuk membangun UI komponen dengan hooks (useState, useEffect, useRef, useCallback, lazy, Suspense)</li>
+                    <li><strong>React Router DOM 6.14.0</strong> – Routing SPA (BrowserRouter, Routes, Route, NavLink, useNavigate)</li>
+                    <li><strong>Bootstrap 5.3.8</strong> – Framework CSS untuk layout responsif, grid, navbar, form, alert, dan utility classes</li>
+                    <li><strong>Vite</strong> – Build tool modern dengan hot-reload, environment variables, dan code splitting</li>
                 </ul>
-                <h3>Saran perbaikan minor</h3>
+                <h3>Styling & UI</h3>
                 <ul>
-                    <li>Optimasi loading Three.js untuk perangkat lama (fallback warna).</li>
-                    <li>Menambahkan aria-label pada tombol interaktif untuk aksesibilitas.</li>
+                    <li><strong>CSS3</strong> – Custom styling dengan efek glassmorphism (backdrop-filter: blur), gradient text, animasi keyframes, flexbox, dan grid</li>
+                    <li><strong>Font Awesome 6.0</strong> – Ikon vektor (fas, fab, fa-*) untuk tombol, kartu, dan navigasi</li>
+                    <li><strong>Google Fonts (Space Grotesk)</strong> – Font utama yang memberikan kesan modern dan profesional</li>
                 </ul>
+                <h3>3D & Animasi</h3>
+                <ul>
+                    <li><strong>Three.js 0.152.0</strong> – Membuat latar belakang 3D interaktif dengan sphere, partikel, orbit, dan efek fog</li>
+                    <li><strong>CSS Animations</strong> – Animasi scroll reveal pada timeline, flip card pada sertifikasi, dan auto-rotate carousel</li>
+                    <li><strong>requestAnimationFrame</strong> – Digunakan untuk animasi smooth pada carousel 3D dan background Three.js</li>
+                </ul>
+                <h3>Layanan & API</h3>
+                <ul>
+                    <li><strong>EmailJS 3.11.0</strong> – Mengirim email dari form kontak langsung dari client-side tanpa server</li>
+                    <li><strong>NewsData.io API</strong> – (Opsional) Menampilkan berita teknologi global (fallback ke Hacker News jika key tidak tersedia)</li>
+                    <li><strong>Hacker News API</strong> – API gratis untuk fallback berita jika NewsData.io gagal</li>
+                    <li><strong>ExchangeRate-API</strong> – Menampilkan kurs USD/IDR real-time</li>
+                    <li><strong>GoldAPI.io</strong> – Menampilkan harga emas per gram real-time (membutuhkan token)</li>
+                    <li><strong>Google Maps Embed</strong> – Menampilkan lokasi kantor menggunakan iframe</li>
+                </ul>
+                <h3>Development Tools</h3>
+                <ul>
+                    <li><strong>ESLint</strong> – Linter untuk menjaga kualitas kode</li>
+                    <li><strong>React DevTools</strong> – Debugging komponen React</li>
+                    <li><strong>Netlify</strong> – Hosting dan deployment dengan continuous deployment dari GitHub</li>
+                </ul>
+                <div class="highlight"><i class="fas fa-folder-tree"></i> <strong>Struktur File & Arsitektur:</strong> Lihat slide berikutnya untuk detail.</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: STRUKTUR FILE & ARSITEKTUR -->
+        <div class="slide" id="slide4">
+            <div class="slide-header"><h2><i class="fas fa-folder-tree"></i> 📁 Struktur File & Arsitektur</h2></div>
+            <div class="slide-content">
+                <p>Berikut adalah struktur direktori dan file proyek React beserta penjelasan singkat setiap komponen:</p>
+                <pre style="background: #1e1e2f; color: #e0e0e0; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 0.85rem; overflow-x: auto; line-height: 1.8;">
+cyberinfra-app/
+├── src/
+│   ├── components/
+│   │   ├── Layout.jsx       → Layout utama dengan navbar, footer, background
+│   │   ├── Navbar.jsx       → Navbar dengan toggle bahasa
+│   │   ├── Footer.jsx       → Footer statis
+│   │   ├── ThreeBackground.jsx → Latar belakang 3D Three.js
+│   │   ├── ApiData.jsx      → Menampilkan harga pasar & berita
+│   │   └── ErrorBoundary.jsx → Penangkap error global
+│   ├── pages/
+│   │   ├── Home.jsx         → Halaman utama + ApiData
+│   │   ├── Tentang.jsx      → Tentang perusahaan
+│   │   ├── Keahlian.jsx     → Carousel 3D layanan
+│   │   ├── Pengalaman.jsx   → Timeline pengalaman (scroll reveal)
+│   │   ├── Proyek.jsx       → Grid proyek dengan tags
+│   │   ├── Sertifikasi.jsx  → Flip card sertifikasi (aksesibel)
+│   │   ├── Kontak.jsx       → Form kontak dengan EmailJS
+│   │   └── Engineer.jsx     → Tim engineer dengan filter
+│   ├── assets/
+│   │   ├── dimas.jpeg       → Foto engineer
+│   │   ├── devaagriani.jpg  → Foto engineer
+│   │   └── cisco-logo.svg   → Logo Cisco
+│   ├── App.jsx              → Lazy loading + routing
+│   ├── main.jsx             → Entry point dengan Bootstrap & ErrorBoundary
+│   ├── index.css            → Custom CSS + Bootstrap override
+│   └── translations.js      → Objek terjemahan ID/EN
+├── public/
+│   └── _redirects           → Netlify redirect untuk SPA
+├── .env                     → Environment variables (VITE_*)
+├── package.json             → Dependencies & scripts
+└── vite.config.js           → Konfigurasi Vite</pre>
                 <div class="highlight">
-                    <i class="fas fa-trophy"></i> <strong>Kesimpulan UI/UX:</strong> Layak, nyaman, desain modern, memudahkan klien/recruiter melihat profil & portofolio.
+                    <i class="fas fa-check-circle"></i> <strong>Keunggulan arsitektur:</strong> Pemisahan komponen yang rapi, lazy loading per halaman, konfigurasi environment terpisah, dan siap deploy ke Netlify.
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Kesiapan Infrastruktur -->
-        <div class="slide" id="slide4">
-            <div class="slide-header">
-                <h2><i class="fas fa-server"></i> Kesiapan Infrastruktur </h2>
+        <!-- SLIDE 5: UI/UX ANALYSIS -->
+        <div class="slide" id="slide5">
+            <div class="slide-header"><h2><i class="fas fa-paintbrush"></i> Kelayakan UI/UX</h2></div>
+            <div class="slide-content">
+                <h3>✅ Kelebihan UI/UX (Skor: 8.5/10)</h3>
+                <ul>
+                    <li><strong>Navigasi & Struktur:</strong> Fixed navbar dengan 8 menu utama, routing SPA yang mulus, serta active state pada link memudahkan orientasi pengguna.</li>
+                    <li><strong>Responsivitas & Desain Visual:</strong> Menggunakan clamp() untuk tipografi, media query ≤768px, grid auto-fit, serta efek <strong>glassmorphism</strong> (backdrop-filter: blur) yang memberikan kesan modern dan premium.</li>
+                    <li><strong>Interaktivitas 3D & Animasi:</strong> Background Three.js dengan partikel dan parallax, <strong>Carousel 3D</strong> dragable, <strong>Timeline Scroll Reveal</strong>, serta <strong>Flip Card</strong> sertifikasi yang membuat pengalaman browsing menjadi engaging.</li>
+                    <li><strong>Pengalaman Pengguna:</strong> Dukungan <strong>dua bahasa (ID/EN)</strong> dengan persistensi localStorage, serta fitur <strong>copy kontak satu klik</strong> untuk meningkatkan konversi.</li>
+                </ul>
+                
+                <h3>⚠️ Saran Perbaikan (Prioritas)</h3>
+                <ul>
+                    <li><strong>Optimalisasi Performa (Tinggi):</strong> Beban rendering Three.js dengan 600 partikel + 500 bintang cukup berat untuk perangkat entry-level. Tambahkan opsi <strong>"Nonaktifkan Efek 3D"</strong> atau deteksi performa device secara otomatis.</li>
+                    <li><strong>Error Handling & Form (Sedang):</strong> Saat ini API gagal hanya menampilkan alert. Tambahkan <strong>retry mechanism</strong> dan integrasikan <strong>EmailJS</strong> dengan feedback visual (loading, sukses, error) yang lebih informatif untuk form kontak.</li>
+                    <li><strong>Aksesibilitas (Sedang):</strong> Meskipun sudah ada focus-visible dan keyboard event (Enter/Space), masih perlu dilengkapi <strong>aria-label</strong> pada tombol interaktif dan kartu untuk mendukung pembaca layar (screen reader).</li>
+                </ul>
+                
+                <div class="highlight">
+                    <i class="fas fa-trophy"></i> 
+                    <strong>Kesimpulan UI/UX:</strong> Desain modern, interaktivitas tinggi, dan responsivitas yang solid. Dengan perbaikan pada performa, error handling, dan aksesibilitas, website ini akan menjadi platform portofolio perusahaan IT yang sempurna. 🚀
+                </div>
             </div>
+        </div>
+
+        <!-- SLIDE 6: KESIAPAN INFRASTRUKTUR -->
+        <div class="slide" id="slide6">
+            <div class="slide-header"><h2><i class="fas fa-server"></i> Kesiapan Infrastruktur</h2></div>
             <div class="slide-content">
                 <p><strong>✅ Repository GitHub terstruktur rapi</strong></p>
                 <ul>
                     <li>7 file HTML utama dan dokumentasi lengkap (README.md).</li>
-                    <li>Deployed dengan <strong>GitHub Pages</strong>: <a href="https://dimask016.github.io/kel2_wcd06/portofolio_dimas_kurniawan/home.html" target="_blank">Web CV portofolio</a></li>
+                    <li>Deployed dengan <strong>GitHub Pages</strong>: <a href="https://dimask016.github.io/kel2_wcd06/profilperusahaan/home.html" target="_blank">Web Company portofolio</a></li>
                     <li>Workflow Git: clone → pull → add → commit → push, dilengkapi langkah mitigasi konflik.</li>
                     <li>Setiap halaman menggunakan Three.js yang sama dan sistem translasi terintegrasi.</li>
                 </ul>
@@ -934,37 +374,47 @@
                     <tbody>
                         <tr><td>Version Control</td><td>Git dengan branch main & dokumentasi kolaborasi</td></tr>
                         <tr><td>Hosting</td><td>GitHub Pages (auto deploy dari branch main)</td></tr>
-                        <tr><td>Dokumentasi</td><td>README.md lengkap dengan screenshot, cara clone, tautan demo</td></tr>
+                        <tr><td>Dokumentasi</td><td><a href="https://github.com/dimask016/kel2_wcd06/blob/main/cyberinfra-app/README.md" target="_blank">README.md lengkap dengan screenshot, cara clone, tautan demo</a></td></tr>
                     </tbody>
                 </table>
-               <div class="highlight">
-                    <i class="fab fa-github"></i> <strong>Repository:</strong> <a href="https://github.com/dimask016/kel2_wcd06" target="_blank">dimask016/kel2_wcd06</a>
-                </div>
+                <div class="highlight"><i class="fab fa-github"></i> <strong>Repository:</strong> <a href="https://github.com/dimask016/kel2_wcd06" target="_blank">Repository kel2_wcd06</a></div>
             </div>
         </div>
-
-        <!-- Slide 5: Komunikasi & Presentasi -->
-        <div class="slide" id="slide5">
-            <div class="slide-header">
-                <h2><i class="fas fa-chalkboard-user"></i> Komunikasi & Presentasi </h2>
-            </div>
+        <!-- SLIDE 7: KOMUNIKASI & PRESENTASI (DIPERBAHARUI) -->
+        <div class="slide" id="slide7">
+            <div class="slide-header"><h2><i class="fas fa-chalkboard-user"></i> Komunikasi & Presentasi</h2></div>
             <div class="slide-content">
-                <p><strong>alur aplikasi:</strong></p>
+                <p><strong>📁 Dokumentasi Kode React (CyberInfra Solutions)</strong></p>
+                <p style="margin-bottom: 20px;">Klik tautan di bawah untuk membuka halaman penjelasan kode per komponen React yang telah dianalisis:</p>
                 <div class="feature-grid">
-                    <div class="feature-card"><i class="fas fa-route"></i> <strong>Alur navigasi logis</strong><br>Menu tetap (Home, Tentang, Keahlian, Pengalaman, Proyek, Sertifikasi, Kontak) memudahkan eksplorasi.</div>
-                    <div class="feature-card"><i class="fas fa-cube"></i> <strong>Efek 3D elegan</strong><br>Bola orbit berwarna merepresentasikan stabilitas & konektivitas, gerakan mengikuti kursor.</div>
-                    <div class="feature-card"><i class="fas fa-language"></i> <strong>Bilingual & salin kontak</strong><br>ID/EN toggle, copy nomor telepon/email langsung, tombol sosial media.</div>
-                    <div class="feature-card"><i class="fas fa-mobile-alt"></i> <strong>Responsivitas sempurna</strong><br>Menu collapse di HP, kartu adaptif, tetap nyaman diakses semua perangkat.</div>
+                    <div class="feature-card">
+                        <i class="fab fa-react" style="font-size: 2rem; color: #4285F4;"></i>
+                        <h3 style="margin: 10px 0 5px;">App.jsx · index.css · main.jsx</h3>
+                        <p style="font-size: 0.9rem; color: #555;">Penjelasan struktur dan fungsi kode utama aplikasi React.</p>
+                        <a href="./coding_app_main_index_css.html" target="_blank" class="btn-link" style="margin-top: 10px;">Buka Analisis →</a>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-code" style="font-size: 2rem; color: #34A853;"></i>
+                        <h3 style="margin: 10px 0 5px;">Semua Halaman (Pages)</h3>
+                        <p style="font-size: 0.9rem; color: #555;">Penjelasan per baris kode untuk Home, Tentang, Keahlian, Pengalaman, Proyek, Sertifikasi, Kontak, Engineer.</p>
+                        <a href="./penjelasan_pages.html" target="_blank" class="btn-link" style="margin-top: 10px;">Buka Analisis →</a>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-language" style="font-size: 2rem; color: #FBBC05;"></i>
+                        <h3 style="margin: 10px 0 5px;">translations.js</h3>
+                        <p style="font-size: 0.9rem; color: #555;">Penjelasan objek terjemahan dua bahasa (ID/EN) dan implementasinya.</p>
+                        <a href="./penjelasan_translation.html" target="_blank" class="btn-link" style="margin-top: 10px;">Buka Analisis →</a>
+                    </div>
                 </div>
-                <p><strong>💡 Client pitch:</strong> "Portfolio interaktif yang mencerminkan profesionalisme di bidang IT, mudah di-maintenance, background Three.js dapat diganti tanpa merusak struktur konten."</p>
+                <div class="highlight" style="margin-top: 25px;">
+                    <i class="fas fa-info-circle"></i> <strong>Catatan:</strong> Semua file penjelasan kode berada dalam direktori yang sama dengan slide presentasi ini.
+                </div>
             </div>
         </div>
 
-        <!-- Slide 6: Fitur Unggulan Portofolio -->
-        <div class="slide" id="slide6">
-            <div class="slide-header">
-                <h2><i class="fas fa-star-of-life"></i> Fitur Unggulan</h2>
-            </div>
+        <!-- SLIDE 8: FITUR UNGGULAN -->
+        <div class="slide" id="slide8">
+            <div class="slide-header"><h2><i class="fas fa-star-of-life"></i> Fitur Unggulan</h2></div>
             <div class="slide-content">
                 <div class="feature-grid">
                     <div><i class="fas fa-check-circle" style="color: #27ae60;"></i> <strong>Background Three.js</strong><br>Bola warna, partikel, bintang, parallax effect.</div>
@@ -974,66 +424,46 @@
                     <div><i class="fas fa-check-circle" style="color: #27ae60;"></i> <strong>Glassmorphism & Hover</strong><br>Kartu modern dengan efek floating.</div>
                     <div><i class="fas fa-check-circle" style="color: #27ae60;"></i> <strong>Responsif & Mobile Friendly</strong><br>Media query, clamp(), flex-wrap.</div>
                 </div>
-                <div class="highlight">
-                    <i class="fas fa-image"></i> <strong>Screenshots:</strong> Tersedia folder <code>/screenshots</code> dengan preview setiap halaman.
-                </div>
+                <div class="highlight"><i class="fas fa-image"></i> <strong>Screenshots:</strong> Tersedia folder <code>/screenshots</code> dengan preview setiap halaman.</div>
             </div>
         </div>
 
-        <!-- SLIDE 7: FITUR 3D CAROUSEL KEAHLIAN -->
-        <div class="slide" id="slide7">
-            <div class="slide-header">
-                <h2><i class="fas fa-cube"></i> 🎯 Fitur 3D Carousel Keahlian</h2>
-            </div>
+        <!-- SLIDE 9: 3D CAROUSEL -->
+        <div class="slide" id="slide9">
+            <div class="slide-header"><h2><i class="fas fa-cube"></i> 🎯 Fitur 3D Carousel Keahlian</h2></div>
             <div class="slide-content">
                 <p><strong>✨ Implementasi Carousel 3D dari halaman <code>keahlian.html</code></strong> — Pengalaman interaktif menampilkan daftar keahlian dalam lingkaran 3D.</p>
                 <div class="carousel-container">
                     <div class="carousel-3d" id="carousel3d"></div>
                     <div class="carousel-indicators" id="carouselDots"></div>
-                    <div class="carousel-info">
-                        <i class="fas fa-mouse-pointer"></i> Drag kiri/kanan untuk memutar | Auto-rotate
-                    </div>
+                    <div class="carousel-info"><i class="fas fa-mouse-pointer"></i> Drag kiri/kanan untuk memutar | Auto-rotate</div>
                 </div>
-                <div class="highlight">
-                    <i class="fas fa-list-check"></i> <strong>Fitur:</strong> Layout melingkar 3D, drag dengan mouse, kartu aktif menyorot, indikator dot, auto-rotate halus, responsif.
-                </div>
+                <div class="highlight"><i class="fas fa-list-check"></i> <strong>Fitur:</strong> Layout melingkar 3D, drag dengan mouse, kartu aktif menyorot, indikator dot, auto-rotate halus, responsif.</div>
             </div>
         </div>
 
-        <!-- SLIDE 8: FITUR TIMELINE ZIG-ZAG PENGALAMAN (DITAMBAHKAN) -->
-        <div class="slide" id="slide8">
-            <div class="slide-header">
-                <h2><i class="fas fa-timeline"></i> 🎯 Fitur Timeline Zig-Zag Pengalaman</h2>
-            </div>
+        <!-- SLIDE 10: TIMELINE ZIG-ZAG -->
+        <div class="slide" id="slide10">
+            <div class="slide-header"><h2><i class="fas fa-timeline"></i> 🎯 Fitur Timeline Zig-Zag Pengalaman</h2></div>
             <div class="slide-content">
                 <p><strong>✨ Implementasi Timeline Zig-Zag dari halaman <code>pengalaman.html</code></strong> — Menampilkan riwayat pengalaman kerja dengan desain selang-seling kiri & kanan.</p>
-                
                 <div class="timeline-demo-container">
-                    <div class="timeline-zigzag" id="timelineZigzag">
-                        <!-- Data pengalaman akan di-generate JS -->
-                    </div>
+                    <div class="timeline-zigzag" id="timelineZigzag"></div>
                 </div>
-                
-                <div class="highlight">
-                    <i class="fas fa-list-check"></i> <strong>Fitur:</strong> Garis tengah vertikal, posisi kiri-kanan bergantian, panah penghubung, indikator dot berwarna, hover effect dengan border neon, scroll reveal animation, responsif mobile (berubah vertikal).
-                </div>
-                <p style="margin-top: 12px; font-size: 0.9rem; color: #555;">
-                    <i class="fas fa-mouse-pointer"></i> Scroll pada area slide untuk melihat animasi kemunculan kartu | Hover pada kartu untuk efek naik.
-                </p>
+                <div class="highlight"><i class="fas fa-list-check"></i> <strong>Fitur:</strong> Garis tengah vertikal, posisi kiri-kanan bergantian, panah penghubung, indikator dot berwarna, hover effect dengan border neon, scroll reveal animation, responsif mobile (berubah vertikal).</div>
+                <p style="margin-top: 12px; font-size: 0.9rem; color: #555;"><i class="fas fa-mouse-pointer"></i> Scroll pada area slide untuk melihat animasi kemunculan kartu | Hover pada kartu untuk efek naik.</p>
             </div>
         </div>
 
-        <!-- Slide 9: Live Demo & Tautan Penting -->
-        <div class="slide" id="slide9">
-            <div class="slide-header">
-                <h2><i class="fas fa-link"></i> Tautan & Live Demo</h2>
-            </div>
+        <!-- SLIDE 11: LIVE DEMO & TAUTAN -->
+        <div class="slide" id="slide11">
+            <div class="slide-header"><h2><i class="fas fa-link"></i> Tautan & Live Demo</h2></div>
             <div class="slide-content">
                 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
                     <div style="background: #f0f7ff; border-radius: 20px; padding: 20px; text-align: center; flex:1;">
                         <i class="fas fa-globe" style="font-size: 2rem; color: var(--secondary-color);"></i>
                         <h3>🌐 GitHub Pages</h3>
-                        <a href="https://dimask016.github.io/kel2_wcd06/portofolio_dimas_kurniawan/home.html" target="_blank" class="btn-link">Buka Portofolio →</a>
+                        <a href="https://dimask016.github.io/kel2_wcd06/profilperusahaan/home.html" target="_blank" class="btn-link">Buka Portofolio →</a>
                     </div>
                     <div style="background: #f0f7ff; border-radius: 20px; padding: 20px; text-align: center; flex:1;">
                         <i class="fab fa-figma" style="font-size: 2rem; color: var(--secondary-color);"></i>
@@ -1046,9 +476,7 @@
                         <a href="https://github.com/dimask016/kel2_wcd06" target="_blank" class="btn-link">GitHub Repo</a>
                     </div>
                 </div>
-                <div class="highlight" style="margin-top: 25px;">
-                    <i class="fas fa-info-circle"></i> <strong>Catatan:</strong> Semua halaman terhubung dengan sistem Three.js yang sama dan terjemahan terintegrasi.
-                </div>
+                <div class="highlight" style="margin-top: 25px;"><i class="fas fa-info-circle"></i> <strong>Catatan:</strong> Semua halaman terhubung dengan sistem Three.js yang sama dan terjemahan terintegrasi.</div>
                 <div style="margin-top: 30px;">
                     <h3 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fab fa-figma"></i> Wireframe Interaktif (Figma)</h3>
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
@@ -1060,11 +488,9 @@
             </div>
         </div>
 
-        <!-- Slide 10: Cara Menjalankan & Git Workflow -->
-        <div class="slide" id="slide10">
-            <div class="slide-header">
-                <h2><i class="fas fa-terminal"></i> Menjalankan Lokal & Git Flow</h2>
-            </div>
+        <!-- SLIDE 12: MENJALANKAN LOKAL & GIT FLOW -->
+        <div class="slide" id="slide12">
+            <div class="slide-header"><h2><i class="fas fa-terminal"></i> Menjalankan Lokal & Git Flow</h2></div>
             <div class="slide-content">
                 <h3>💻 Prasyarat & Clone</h3>
                 <ol>
@@ -1080,21 +506,15 @@
                     <li><code>git commit -m "deskripsi perubahan"</code></li>
                     <li><code>git push origin main</code> → upload ke GitHub</li>
                 </ul>
-                <div class="highlight">
-                    <i class="fas fa-exclamation-triangle"></i> <strong>Catatan:</strong> Pastikan koneksi internet aktif untuk Three.js CDN.
-                </div>
+                <div class="highlight"><i class="fas fa-exclamation-triangle"></i> <strong>Catatan:</strong> Pastikan koneksi internet aktif untuk Three.js CDN.</div>
             </div>
         </div>
 
-        <!-- Slide 11: Kesimpulan & Rekomendasi -->
-        <div class="slide" id="slide11">
-            <div class="slide-header">
-                <h2><i class="fas fa-clipboard-check"></i> Kesimpulan & Rekomendasi</h2>
-            </div>
+        <!-- SLIDE 13: KESIMPULAN & REKOMENDASI -->
+        <div class="slide" id="slide13">
+            <div class="slide-header"><h2><i class="fas fa-clipboard-check"></i> Kesimpulan & Rekomendasi</h2></div>
             <div class="slide-content">
-                <div class="highlight">
-                    <strong>✨ Keunggulan Proyek:</strong> Portofolio modern dengan 3D interactivity, bilingual, responsif, dan mudah di-maintain.
-                </div>
+                <div class="highlight"><strong>✨ Keunggulan Proyek:</strong> Portofolio modern dengan 3D interactivity, bilingual, responsif, dan mudah di-maintain.</div>
                 <h3>📌 Rekomendasi Pengembangan Lanjutan</h3>
                 <ul>
                     <li>Lazy loading untuk Three.js agar performa lebih baik di perangkat rendah.</li>
@@ -1105,7 +525,7 @@
                 <div style="text-align: center; margin-top: 30px;">
                     <p><i class="fas fa-certificate"></i> Proyek ini merupakan solusi portofolio profesional yang mencerminkan keahlian dalam Web Client Development & Infrastruktur IT.</p>
                     <hr style="margin: 20px 0;">
-                    <p><strong>Terima kasih – Web CV Portofolio Interaktif siap digunakan!</strong></p>
+                    <p><strong>Terima kasih – Web Company Portofolio Interaktif siap digunakan!</strong></p>
                     <p style="font-size: 0.9rem;">📧 Kontak tim: Kelompok 02 - WCD06 | <i class="fab fa-github"></i> dimask016/kel2_wcd06</p>
                 </div>
             </div>
@@ -1118,7 +538,7 @@
             <button class="btn" id="nextBtn">Selanjutnya <i class="fas fa-chevron-right"></i></button>
         </div>
         <div class="slide-title" id="slideTitle">Halaman Judul</div>
-        <div class="slide-indicator"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+        <div class="slide-indicator"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></div>
         <div class="progress-bar"><div class="progress" id="progressBar"></div></div>
     </div>
 </div>
@@ -1139,7 +559,7 @@
         const jam = waktuWIB.getUTCHours().toString().padStart(2, '0');
         const menit = waktuWIB.getUTCMinutes().toString().padStart(2, '0');
         const signatureEl = document.getElementById('tanggal-signature');
-        if (signatureEl) signatureEl.textContent = `Jakarta, ${tanggal} ${namaBulan} ${tahun} ${jam}:${menit} WIB | Presentasi Web CV Portofolio Interaktif`;
+        if (signatureEl) signatureEl.textContent = `Jakarta, ${tanggal} ${namaBulan} ${tahun} ${jam}:${menit} WIB | Presentasi Web Company Portofolio Interaktif`;
     }
     document.addEventListener('DOMContentLoaded', tampilkanTanggal);
     setInterval(tampilkanTanggal, 60000);
@@ -1169,11 +589,17 @@
             progressBar.style.width = `${progress}px`;
             progressBar.style.width = `${progress}%`;
             
-            // Trigger scroll reveal saat slide timeline aktif
-            if (currentSlide === 7) { // index slide timeline (slide 8)
+            if (currentSlide === 9) {
                 setTimeout(initTimelineScrollReveal, 100);
             }
         }
+        
+        window.goToSlide = function(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateSlide();
+            }
+        };
         
         prevBtn.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; updateSlide(); } });
         nextBtn.addEventListener('click', () => { if (currentSlide < totalSlides - 1) { currentSlide++; updateSlide(); } });
@@ -1195,7 +621,7 @@
         });
         updateSlide();
         
-        // ========== LIGHTBOX ==========
+        // ===== LIGHTBOX =====
         if (!document.querySelector('.modal')) {
             const modalDiv = document.createElement('div');
             modalDiv.className = 'modal';
@@ -1219,7 +645,7 @@
         if(modal) modal.addEventListener('click', closeModalFunc);
         if(modalImg) modalImg.addEventListener('click', (e) => e.stopPropagation());
 
-        // ========== 3D CAROUSEL IMPLEMENTATION ==========
+        // ===== 3D CAROUSEL =====
         const skillsData = [
             { icon: "fab fa-html5", name: "HTML5", desc: "Semantik & Struktur" },
             { icon: "fab fa-css3-alt", name: "CSS3", desc: "Flexbox, Grid, Animasi" },
@@ -1281,16 +707,6 @@
                 if(i === activeIdx) dot.classList.add('active-dot');
                 else dot.classList.remove('active-dot');
             });
-        }
-        
-        function rotateCarousel(angleRad) {
-            cardElements.forEach(item => {
-                const newAngle = item.angle + angleRad;
-                const xPos = Math.sin(newAngle) * radius;
-                const zPos = Math.cos(newAngle) * radius;
-                item.card.style.transform = `translateX(${xPos}px) translateZ(${zPos}px) rotateY(0deg)`;
-            });
-            updateActiveCardCarousel();
         }
         
         function animateRotation() {
@@ -1382,7 +798,7 @@
             startAutoRotate();
         }
         
-        // ========== TIMELINE ZIG-ZAG IMPLEMENTATION ==========
+        // ===== TIMELINE ZIG-ZAG =====
         const experiences = [
             { year: "2022 - Sekarang", title: "Frontend Lead", company: "PT Digital Inovasi", desc: "Memimpin tim frontend, mengembangkan aplikasi React dengan TypeScript, implementasi desain sistem.", icon: "fab fa-react", color: "1" },
             { year: "2020 - 2022", title: "Web Developer", company: "Startup Edukasi", desc: "Membangun LMS interaktif, optimasi performa website, integrasi API pembelajaran.", icon: "fas fa-laptop-code", color: "2" },
@@ -1396,7 +812,7 @@
             container.innerHTML = '';
             
             experiences.forEach((exp, idx) => {
-                const isLeft = idx % 2 === 0; // genap di kanan, ganjil di kiri (alternating)
+                const isLeft = idx % 2 === 0;
                 const positionClass = isLeft ? 'right' : 'left';
                 
                 const itemDiv = document.createElement('div');
@@ -1425,7 +841,6 @@
                 container.appendChild(itemDiv);
             });
             
-            // Tambahkan dot pada garis tengah
             const timelineItems = document.querySelectorAll('.timeline-item');
             timelineItems.forEach((item, idx) => {
                 const dot = document.createElement('div');
@@ -1441,7 +856,6 @@
                 document.querySelector('.timeline-zigzag')?.appendChild(dot);
             });
             
-            // Update posisi dot setelah layout
             setTimeout(updateDotPositions, 100);
             window.addEventListener('resize', updateDotPositions);
         }
@@ -1470,23 +884,15 @@
                 card.classList.remove('visible');
                 observer.observe(card);
             });
-            
-            // Juga update posisi dot
             setTimeout(updateDotPositions, 200);
         }
         
         buildTimeline();
         
-        // Trigger saat slide timeline aktif
-        if(document.getElementById('slide8') && document.getElementById('slide8').classList.contains('active')) {
+        if(document.getElementById('slide9') && document.getElementById('slide9').classList.contains('active')) {
             setTimeout(initTimelineScrollReveal, 200);
         }
         
-        // Override updateSlide untuk menangani timeline scroll reveal
-        const originalUpdate = updateSlide;
-        window.updateSlide = updateSlide;
-        
-        // Resize handling untuk radius carousel
         window.addEventListener('resize', () => {
             radius = Math.min(window.innerWidth < 768 ? 180 : 280, window.innerWidth * 0.45);
             if(cardElements.length) {
