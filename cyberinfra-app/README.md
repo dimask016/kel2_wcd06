@@ -4,7 +4,7 @@ Proyek ini adalah website profil perusahaan CyberInfra Solutions yang dibangun m
 Website ini memiliki efek latar belakang Three.js interaktif, multi‑bahasa (ID/EN), dan animasi modern yang responsif.
 ## 1. Deskripsi Proyek
 
-**Nama Proyek:** Web CV Portofolio Interaktif
+**Nama Proyek:** Web Company Portofolio Interaktif
 
 Website portofolio personal yang menampilkan profil, keahlian, pengalaman, proyek, sertifikasi, dan kontak dari seorang profesional di bidang teknologi informasi. Halaman dibangun dengan latar belakang 3D interaktif (Three.js), responsif untuk semua perangkat, serta mendukung pergantian bahasa (Indonesia/Inggris) secara dinamis.
 
