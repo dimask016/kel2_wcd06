@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Komponen Halaman + Integrasi</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* CSS (tidak diubah) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Space Grotesk', sans-serif; background: #0b0f1a; color: #fff; min-height: 100vh; overflow-x: hidden; padding: 2rem 1rem; }
+        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 20% 30%, #1a2a4a, #0b0f1a 70%); overflow: hidden; }
+        .bg-animation::before { content: ''; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle at 60% 40%, rgba(66,133,244,0.1), transparent 50%), radial-gradient(circle at 80% 70%, rgba(52,168,83,0.08), transparent 40%); animation: rotateBg 30s linear infinite; }
+        @keyframes rotateBg { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.2); } 100% { transform: rotate(360deg) scale(1); } }
+        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+        .header { text-align: center; margin-bottom: 3rem; padding: 2rem 1rem; background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 30px; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .header h1 { font-size: clamp(2rem,5vw,3.5rem); font-weight: 700; background: linear-gradient(135deg,#fff,#4285F4 40%,#34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
+        .header p { font-size: 1.1rem; opacity: 0.7; margin-top: 0.5rem; font-weight: 300; letter-spacing: 0.3px; }
+        .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+        .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); padding: 0.6rem 1.2rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-family: inherit; display: flex; align-items: center; gap: 0.5rem; }
+        .tab-btn i { font-size: 1rem; }
+        .tab-btn:hover { background: rgba(66,133,244,0.15); color: #fff; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(66,133,244,0.15); }
+        .tab-btn.active { background: linear-gradient(135deg, rgba(66,133,244,0.25), rgba(52,168,83,0.15)); border-color: #4285F4; color: #fff; box-shadow: 0 0 30px rgba(66,133,244,0.2); }
+        .card { background: rgba(255,255,255,0.03); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem 1.5rem 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.4); transition: opacity 0.4s ease, transform 0.4s ease; margin-bottom: 2rem; overflow: hidden; }
+        .card-header { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem; }
+        .card-header i { font-size: 2rem; color: #4285F4; background: rgba(66,133,244,0.15); padding: 0.8rem; border-radius: 16px; }
+        .card-header h2 { font-size: 1.6rem; font-weight: 600; }
+        .card-header .badge { margin-left: auto; background: rgba(52,168,83,0.2); color: #34A853; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 500; border: 1px solid rgba(52,168,83,0.2); }
+        .table-wrapper { max-height: 520px; overflow-y: auto; border-radius: 16px; scroll-behavior: smooth; }
+        .table-wrapper::-webkit-scrollbar { width: 6px; }
+        .table-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: #4285F4; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        thead { position: sticky; top: 0; z-index: 10; }
+        thead th { background: rgba(10,14,26,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 0.8rem 0.8rem; text-align: left; font-weight: 600; color: #4285F4; border-bottom: 2px solid rgba(66,133,244,0.3); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3px; }
+        thead th:first-child { width: 50px; text-align: center; }
+        thead th:nth-child(2) { width: 28%; }
+        thead th:nth-child(3) { width: 38%; }
+        thead th:nth-child(4) { width: 24%; }
+        tbody tr { transition: background 0.2s ease, transform 0.2s ease; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        tbody tr:hover { background: rgba(66,133,244,0.08); transform: scale(1.002); }
+        tbody td { padding: 0.7rem 0.8rem; vertical-align: top; line-height: 1.5; color: rgba(255,255,255,0.85); }
+        tbody td:first-child { text-align: center; font-weight: 600; color: #4285F4; font-size: 0.8rem; opacity: 0.7; }
+        tbody td:nth-child(2) { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #e6e6e6; word-break: break-word; }
+        tbody td:nth-child(3) { font-size: 0.85rem; }
+        tbody td:nth-child(4) { font-size: 0.8rem; color: #34A853; font-weight: 500; }
+        .highlight { color: #34A853; font-weight: 500; }
+        .highlight-blue { color: #4285F4; font-weight: 500; }
+        .row-fade { opacity: 0; transform: translateY(20px); animation: fadeUp 0.5s forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .tab-content { display: none; animation: fadeSlide 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+        .footer { text-align: center; padding: 2rem 0 1rem; opacity: 0.4; font-size: 0.8rem; letter-spacing: 0.5px; }
+        .glow-pulse { animation: glowPulse 2s infinite alternate; }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 10px rgba(66,133,244,0.1); } 100% { box-shadow: 0 0 30px rgba(66,133,244,0.25); } }
+        @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .header { padding: 1.5rem 1rem; } .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; gap: 0.3rem; } .card { padding: 1rem 0.8rem 1.5rem; } .card-header h2 { font-size: 1.2rem; } .card-header i { font-size: 1.4rem; padding: 0.5rem; } .table-wrapper { max-height: 400px; } thead th { padding: 0.5rem 0.4rem; font-size: 0.6rem; } tbody td { padding: 0.5rem 0.4rem; font-size: 0.7rem; } tbody td:nth-child(2) { font-size: 0.65rem; } thead th:nth-child(2) { width: 22%; } thead th:nth-child(3) { width: 35%; } thead th:nth-child(4) { width: 25%; } }
+        @media (max-width: 480px) { .tabs { gap: 0.3rem; } .tab-btn { padding: 0.3rem 0.6rem; font-size: 0.65rem; } .tab-btn i { font-size: 0.7rem; } thead th { font-size: 0.5rem; padding: 0.3rem 0.3rem; } tbody td { padding: 0.3rem 0.3rem; font-size: 0.6rem; } .card-header .badge { font-size: 0.5rem; padding: 0.2rem 0.4rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <div class="container">
+
+        <header class="header">
+            <h1><i class="fas fa-link" style="font-size:0.8em; margin-right:0.3rem; background: none; -webkit-text-fill-color: #4285F4;"></i> Analisis Komponen + <span style="background: linear-gradient(135deg,#4285F4,#34A853); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Integrasi</span></h1>
+            <p>Penjelasan struktural, fungsi, dan korelasi antar halaman/komponen pada setiap file <strong>.jsx</strong></p>
+        </header>
+
+        <!-- Tab navigasi -->
+        <div class="tabs" id="tabNav"></div>
+
+        <!-- Konten -->
+        <div id="tabContentContainer"></div>
+
+        <div class="footer">
+            <i class="fas fa-arrow-up" style="margin-right:6px;"></i> Scroll tabel &bull; Hover baris untuk efek interaktif
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA KOMPONEN + INTEGRASI =====
+
+        const componentData = [{
+            id: 'home',
+            label: 'Home',
+            icon: 'fa-home',
+            badge: '48 baris',
+            data: [
+                { no: '1-2', code: 'import React from \'react\'; import { useNavigate } from \'react-router-dom\';', desc: 'Mengimpor <span class="highlight">React</span> dan hook <span class="highlight-blue">useNavigate</span> dari React Router.', integrasi: 'Router: navigasi ke halaman lain.' },
+                { no: '3', code: 'import ApiData from \'../components/ApiData\';', desc: 'Mengimpor komponen <span class="highlight-blue">ApiData</span> untuk menampilkan harga pasar & berita.', integrasi: 'Komponen <b>ApiData</b> digunakan di bawah hero.' },
+                { no: '5-6', code: 'const Home = ({ t }) => { const navigate = useNavigate();', desc: 'Komponen <span class="highlight">Home</span> menerima props <span class="highlight-blue">t</span> dan hook navigate.', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '7', code: 'return (', desc: 'Memulai JSX yang akan dirender.', integrasi: '-' },
+                { no: '8', code: '&lt;div className="d-flex flex-column justify-content-center align-items-center text-center" style={{ minHeight: "100vh", padding: "2rem", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}&gt;', desc: 'Container hero: <span class="highlight">flex column</span> dengan <span class="highlight-blue">min-height: 100vh</span> (full viewport), padding 2rem, dan bayangan teks untuk keterbacaan.', integrasi: 'Menggunakan <b>Bootstrap utility classes</b> (d-flex, flex-column, dll).' },
+                { no: '9', code: '&lt;h1 className="display-1 fw-bold" style={{ background: "linear-gradient(135deg, #fff, #4285F4 50%, #34A853)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}&gt;', desc: 'Judul utama: <span class="highlight">display-1</span> (Bootstrap), <span class="highlight-blue">gradien 3 warna</span> (putih→biru→hijau) dengan teknik <span class="highlight">background-clip: text</span> untuk membuat teks berwarna gradien.', integrasi: 'Mengambil nilai <b>{t.hero_name}</b> dari <b>translations.js</b>.' },
+                { no: '10', code: '&lt;p className="lead text-white-50" style={{ maxWidth: "600px" }}&gt;', desc: 'Deskripsi hero: <span class="highlight">lead</span> (Bootstrap untuk teks lebih besar), <span class="highlight-blue">text-white-50</span> (warna putih transparan), lebar maksimal 600px.', integrasi: 'Mengambil nilai <b>{t.hero_title}</b> dari <b>translations.js</b>.' },
+                { no: '11', code: '&lt;button onClick={() => navigate(\'/keahlian\')} className="btn btn-lg btn-primary" style={{ background: "linear-gradient(135deg, #4285F4, #34A853)", border: "none", boxShadow: "0 4px 15px rgba(0,0,0,0.3)" }}&gt;', desc: 'Tombol CTA: <span class="highlight">btn btn-lg btn-primary</span> (Bootstrap), gradien biru-hijau, tanpa border, dan bayangan. <span class="highlight-blue">onClick</span> memanggil <span class="highlight">navigate(\'/keahlian\')</span>.', integrasi: '<b>Navigasi</b> ke <b>Halaman Keahlian</b> (routing). Mengambil teks tombol dari <b>{t.hero_btn}</b>.' },
+                { no: '12', code: '&lt;/button&gt; &lt;/div&gt;', desc: 'Penutup tombol dan container.', integrasi: '-' },
+                { no: '25', code: '<ApiData t={t} />', desc: 'Menampilkan data pasar dan berita di bawah hero.', integrasi: 'Komponen <b>ApiData</b> (terpisah) menerima <b>t</b> untuk label.' },
+            ]
+        }, {
+            id: 'tentang',
+            label: 'Tentang',
+            icon: 'fa-info-circle',
+            badge: '20 baris',
+            data: [
+                { no: '1', code: 'import React from \'react\';', desc: 'Mengimpor <span class="highlight">React</span>.', integrasi: '-' },
+                { no: '3', code: 'const Tentang = ({ t }) => {', desc: 'Komponen <span class="highlight">Tentang</span> menerima props <span class="highlight-blue">t</span> (objek terjemahan).', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '4', code: 'return (', desc: 'Memulai JSX yang akan dirender.', integrasi: '-' },
+                { no: '5', code: '&lt;section className="min-vh-100 d-flex flex-column justify-content-center"&gt;', desc: 'Container section: <span class="highlight">min-vh-100</span> (minimal tinggi viewport), <span class="highlight-blue">d-flex flex-column justify-content-center</span> (Bootstrap) untuk menengahkan konten secara vertikal.', integrasi: 'Menggunakan <b>Bootstrap utility classes</b> untuk layout.' },
+                { no: '6', code: '&lt;div className="container"&gt;', desc: 'Container Bootstrap untuk membatasi lebar dan memberikan padding responsif.', integrasi: 'Menggunakan <b>Bootstrap container</b>.' },
+                { no: '7', code: '&lt;h2 className="text-center display-5 fw-bold mb-4"&gt;{t.about_title}&lt;/h2&gt;', desc: 'Judul halaman: <span class="highlight">text-center</span> (rata tengah), <span class="highlight-blue">display-5</span> (ukuran besar), <span class="highlight-blue">fw-bold</span> (tebal), <span class="highlight-blue">mb-4</span> (margin bawah). Mengambil nilai <span class="highlight-blue">t.about_title</span> dari terjemahan.', integrasi: 'Konten dari <b>translations.js</b> (about_title).' },
+                { no: '8', code: '&lt;div className="row justify-content-center"&gt;', desc: 'Baris Bootstrap dengan <span class="highlight">justify-content-center</span> untuk menengahkan kolom.', integrasi: 'Menggunakan <b>Bootstrap grid</b>.' },
+                { no: '9', code: '&lt;div className="col-lg-8 col-md-10"&gt;', desc: 'Kolom dengan lebar <span class="highlight">8 dari 12</span> pada layar besar (lg) dan <span class="highlight-blue">10 dari 12</span> pada layar sedang (md), memberikan batas lebar yang nyaman untuk teks.', integrasi: 'Menggunakan <b>Bootstrap grid</b> untuk responsif.' },
+                { no: '10', code: '&lt;div className="p-4 p-md-5 bg-dark bg-opacity-25 rounded-4 border border-light border-opacity-10" style={{ backdropFilter: \'blur(16px)\' }}&gt;', desc: 'Card dengan efek <span class="highlight">glassmorphism</span>: padding responsif (<span class="highlight-blue">p-4</span> di mobile, <span class="highlight-blue">p-md-5</span> di desktop), latar gelap transparan (<span class="highlight-blue">bg-dark bg-opacity-25</span>), sudut melengkung (<span class="highlight-blue">rounded-4</span>), border tipis transparan, dan <span class="highlight-blue">backdrop-filter: blur(16px)</span> untuk efek kaca buram.', integrasi: 'Efek visual <b>glassmorphism</b> menggunakan CSS.' },
+                { no: '11', code: '&lt;p className="text-white-50"&gt;{t.about_text1}&lt;/p&gt;', desc: 'Paragraf pertama dengan kelas <span class="highlight">text-white-50</span> (warna putih transparan) dan isi dari <span class="highlight-blue">t.about_text1</span>.', integrasi: 'Konten dari <b>translations.js</b> (about_text1).' },
+                { no: '12', code: '&lt;p className="text-white-50 mt-3"&gt;{t.about_text2}&lt;/p&gt;', desc: 'Paragraf kedua dengan kelas <span class="highlight">text-white-50</span> dan <span class="highlight-blue">mt-3</span> (margin top), isi dari <span class="highlight-blue">t.about_text2</span>.', integrasi: 'Konten dari <b>translations.js</b> (about_text2).' },
+                { no: '13', code: '&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt;', desc: 'Penutup tag div (card, col, row, container).', integrasi: '-' },
+                { no: '14', code: '&lt;/section&gt;', desc: 'Penutup tag section.', integrasi: '-' },
+                { no: '16', code: 'export default Tentang;', desc: 'Mengekspor komponen <span class="highlight">Tentang</span> agar dapat digunakan di App.jsx.', integrasi: 'Digunakan di <b>routing</b> App.jsx.' },
+            ]
+        }, {
+            id: 'keahlian',
+            label: 'Keahlian',
+            icon: 'fa-tools',
+            badge: '160 baris',
+            data: [
+                { no: '1', code: 'import React, { useState, useRef, useEffect, useCallback } from \'react\';', desc: 'Mengimpor <span class="highlight">React</span> dan hook-hook: <span class="highlight-blue">useState</span> untuk state, <span class="highlight-blue">useRef</span> untuk referensi DOM, <span class="highlight-blue">useEffect</span> untuk efek samping, <span class="highlight-blue">useCallback</span> untuk memoization fungsi.', integrasi: 'Hook untuk manajemen state, referensi, efek, dan optimasi performa.' },
+                { no: '3-10', code: 'const skillsData = [ { icon: "fa-server", titleKey: "skill1_title", descKey: "skill1_desc" }, ... ];', desc: 'Array 6 objek skill dengan properti <span class="highlight-blue">icon</span> (Font Awesome), <span class="highlight-blue">titleKey</span>, dan <span class="highlight-blue">descKey</span> yang merujuk ke objek terjemahan <b>t</b>.', integrasi: 'Data konten dari <b>translations.js</b> melalui key.' },
+                { no: '12-14', code: 'const cardCount = skillsData.length; const radius = 280;', desc: 'Menentukan <span class="highlight">jumlah kartu</span> (6) dan <span class="highlight-blue">radius</span> (280px) lingkaran carousel.', integrasi: 'Digunakan dalam perhitungan posisi 3D.' },
+                { no: '15-20', code: 'const [rotationY, setRotationY] = useState(0); const [targetRotationY, setTargetRotationY] = useState(0); const [isDragging, setIsDragging] = useState(false); const [startX, setStartX] = useState(0); const [lastX, setLastX] = useState(0); const [autoRotate, setAutoRotate] = useState(true); const [activeIndex, setActiveIndex] = useState(0);', desc: 'State untuk: <span class="highlight">rotationY</span> (rotasi aktual), <span class="highlight-blue">targetRotationY</span> (target animasi), <span class="highlight-blue">isDragging</span> (status drag), <span class="highlight-blue">startX</span> & <span class="highlight-blue">lastX</span> (posisi mouse), <span class="highlight-blue">autoRotate</span> (auto-rotate aktif), dan <span class="highlight-blue">activeIndex</span> (indeks kartu terdepan).', integrasi: 'Mengatur interaksi dan animasi carousel.' },
+                { no: '21-22', code: 'const carouselRef = useRef(null); const animFrameRef = useRef(null); const autoRotateTimerRef = useRef(null);', desc: 'Ref untuk: <span class="highlight">carouselRef</span> (elemen DOM carousel), <span class="highlight-blue">animFrameRef</span> (animasi frame), dan <span class="highlight-blue">autoRotateTimerRef</span> (timer auto-rotate).', integrasi: 'Menyimpan referensi untuk manipulasi DOM dan timer.' },
+                { no: '24-37', code: 'const updateRotation = useCallback(() => { ... }, [rotationY, cardCount, radius]);', desc: 'Fungsi <span class="highlight">updateRotation</span> (dimemoized) menghitung posisi 3D setiap kartu berdasarkan sudut rotasi, menerapkan transformasi <span class="highlight-blue">translateX</span> dan <span class="highlight-blue">translateZ</span>, serta menentukan kartu aktif (nilai Z terbesar).', integrasi: 'Mengupdate tampilan carousel dan menentukan <b>activeIndex</b> untuk indikator & info.' },
+                { no: '39-47', code: 'useEffect(() => { const animateRotation = () => { ... }; ... }, [targetRotationY, rotationY]);', desc: 'Efek <span class="highlight">animasi rotasi smooth</span> menggunakan <span class="highlight-blue">requestAnimationFrame</span>. RotationY mendekati targetRotationY secara bertahap (interpolasi 0.1).', integrasi: 'Memberikan efek animasi halus pada carousel.' },
+                { no: '49-51', code: 'useEffect(() => { updateRotation(); }, [updateRotation]);', desc: 'Efek yang memanggil <span class="highlight">updateRotation</span> setiap kali dependensi berubah, memastikan posisi kartu sinkron.', integrasi: 'Menjaga konsistensi tampilan carousel.' },
+                { no: '53-86', code: 'useEffect(() => { ... mouse events ... }, [isDragging, lastX]);', desc: 'Efek untuk menangani <span class="highlight">drag mouse</span>: mousedown, mousemove, mouseup. Mengupdate targetRotationY dan mengatur auto-rotate.', integrasi: 'Interaksi <b>user</b> untuk memutar carousel secara manual.' },
+                { no: '88-95', code: 'useEffect(() => { if (autoRotate && !isDragging) { ... } }, [autoRotate, isDragging]);', desc: 'Efek <span class="highlight">auto-rotate</span> yang menambahkan rotasi 0.02 rad setiap 50ms ketika autoRotate true dan tidak sedang drag.', integrasi: 'User experience <b>otomatis</b> agar carousel selalu bergerak.' },
+                { no: '97-100', code: 'const handleCardClick = (index) => { alert(...); };', desc: 'Fungsi <span class="highlight">handleCardClick</span> menampilkan alert dengan judul dan deskripsi skill yang diklik.', integrasi: 'Feedback <b>UX</b> (tidak navigasi).' },
+                { no: '102-105', code: 'const handleDotClick = (index) => { ... };', desc: 'Fungsi <span class="highlight">handleDotClick</span> untuk navigasi cepat ke kartu tertentu melalui indikator dot.', integrasi: 'Kontrol <b>navigasi carousel</b> via indikator.' },
+                { no: '107-122', code: 'const renderCards = () => { ... };', desc: 'Fungsi <span class="highlight">renderCards</span> menghasilkan elemen kartu dengan ikon, judul, dan deskripsi dari <span class="highlight-blue">t</span>.', integrasi: 'Data dari <b>skillsData</b> dan <b>translations.js</b>.' },
+                { no: '124-146', code: 'return ( ... JSX ... )', desc: 'Render carousel 3D dengan judul, subjudul, container carousel, indikator dot, dan info aktif.', integrasi: 'Semua teks dari <b>translations.js</b>.' },
+            ]
+        }, {
+            // ===== TAB PENGALAMAN - PENJELASAN PER BARIS =====
+            id: 'pengalaman',
+            label: 'Pengalaman',
+            icon: 'fa-briefcase',
+            badge: '60 baris',
+            data: [
+                // BARIS 1
+                { no: '1', code: 'import React, { useEffect, useRef } from \'react\';', desc: 'Mengimpor <span class="highlight">React</span> dan dua hook bawaan: <span class="highlight-blue">useEffect</span> untuk menangani efek samping (deteksi scroll), dan <span class="highlight-blue">useRef</span> untuk membuat referensi ke elemen DOM (timeline items) agar dapat diakses dan dimanipulasi.', integrasi: 'Hook untuk efek (scroll detection) dan referensi DOM.' },
+                // BARIS 3-6
+                { no: '3-6', code: 'const expData = [ { yearKey: "job1_year", titleKey: "job1_title", companyKey: "job1_comp", descKey: "job1_desc", position: "left" }, ... ];', desc: 'Array <span class="highlight">expData</span> berisi 3 objek pengalaman. Setiap objek memiliki properti: <span class="highlight-blue">yearKey</span> (tahun), <span class="highlight-blue">titleKey</span> (judul posisi), <span class="highlight-blue">companyKey</span> (nama perusahaan), <span class="highlight-blue">descKey</span> (deskripsi) — semua merujuk ke key di <b>translations.js</b> — dan <span class="highlight-blue">position</span> ("left" atau "right") untuk menentukan sisi tampilan di timeline.', integrasi: 'Data konten dari <b>translations.js</b> melalui key, posisi menentukan tata letak di kiri/kanan garis timeline.' },
+                // BARIS 8
+                { no: '8', code: 'const itemRefs = useRef([]);', desc: 'Membuat <span class="highlight">ref</span> berupa array kosong (<span class="highlight-blue">useRef([])</span>) untuk menyimpan referensi ke setiap elemen <span class="highlight-blue">.timeline-item</span>. Ini memungkinkan akses langsung ke elemen DOM untuk deteksi visibilitas saat scroll.', integrasi: 'Digunakan dalam <b>useEffect</b> untuk mendeteksi apakah elemen muncul di viewport.' },
+                // BARIS 10-12
+                { no: '10-12', code: 'const handleCardClick = (title, company) => { alert(`🛡️ Hub Solusi: ${title}\n📍 Mitra: ${company}\n\nSolusi infrastruktur & siber ini dirancang kustom untuk keandalan jangka panjang korporasi.`); };', desc: 'Fungsi <span class="highlight">handleCardClick</span> menerima <span class="highlight-blue">title</span> dan <span class="highlight-blue">company</span>, lalu menampilkan <span class="highlight-blue">alert</span> dengan informasi solusi dan mitra. Memberikan feedback interaktif kepada pengguna saat mengklik kartu timeline.', integrasi: 'Feedback <b>UX</b> (tidak navigasi, hanya alert).' },
+                // BARIS 14-28
+                { no: '14-28', code: 'useEffect(() => { const checkVisibility = () => { itemRefs.current.forEach((item) => { if (!item) return; const rect = item.getBoundingClientRect(); const isVisible = rect.top < window.innerHeight - 100; if (isVisible && !item.classList.contains(\'visible\')) { item.classList.add(\'visible\'); } }); }; checkVisibility(); window.addEventListener(\'scroll\', checkVisibility); window.addEventListener(\'resize\', checkVisibility); return () => { window.removeEventListener(\'scroll\', checkVisibility); window.removeEventListener(\'resize\', checkVisibility); }; }, []);', desc: 'Efek <span class="highlight">useEffect</span> untuk <span class="highlight-blue">scroll reveal</span>. Fungsi <span class="highlight-blue">checkVisibility</span> dijalankan saat komponen mount dan setiap kali scroll/resize. <br/>- Menggunakan <span class="highlight-blue">getBoundingClientRect()</span> untuk mendapatkan posisi elemen. <br/>- Jika <span class="highlight-blue">rect.top < window.innerHeight - 100</span> (elemen masuk viewport dengan offset 100px), tambahkan kelas <span class="highlight-blue">"visible"</span> untuk memicu animasi CSS. <br/>- Event listeners dibersihkan saat unmount untuk mencegah memory leak.', integrasi: 'Memberikan animasi <b>masuk</b> (fade-in + slide-up) saat elemen timeline muncul di layar.' },
+                // BARIS 30
+                { no: '30', code: 'return (', desc: 'Memulai <span class="highlight">JSX</span> yang akan dirender ke DOM.', integrasi: '-' },
+                // BARIS 31
+                { no: '31', code: '&lt;section className="container py-5"&gt;', desc: 'Membuka <span class="highlight">section</span> dengan kelas Bootstrap <span class="highlight-blue">container</span> (membatasi lebar dan padding responsif) dan <span class="highlight-blue">py-5</span> (padding vertikal 3rem / 48px).', integrasi: 'Menggunakan <b>Bootstrap container</b>.' },
+                // BARIS 32
+                { no: '32', code: '&lt;h2 className="section-title"&gt;{t.exp_title}&lt;/h2&gt;', desc: 'Judul halaman menggunakan kelas <span class="highlight">section-title</span> (CSS kustom dengan garis dekoratif) dan mengambil nilai <span class="highlight-blue">t.exp_title</span> dari objek terjemahan.', integrasi: 'Konten dari <b>translations.js</b> (exp_title).' },
+                // BARIS 33
+                { no: '33', code: '&lt;div className="timeline"&gt;', desc: 'Container utama timeline dengan kelas <span class="highlight">timeline</span>. CSS akan membuat garis vertikal di tengah menggunakan pseudo-element <span class="highlight-blue">::after</span>.', integrasi: 'CSS kustom untuk garis timeline vertikal.' },
+                // BARIS 34-44
+                { no: '34-44', code: '{expData.map((exp, idx) => ( &lt;div key={idx} className={`timeline-item ${exp.position}`} ref={(el) => (itemRefs.current[idx] = el)}&gt; &lt;div className="timeline-content" onClick={() => handleCardClick(t[exp.titleKey], t[exp.companyKey])}&gt; &lt;span className="date"&gt;{t[exp.yearKey]}&lt;/span&gt; &lt;h3&gt;{t[exp.titleKey]}&lt;/h3&gt; &lt;span className="company"&gt;{t[exp.companyKey]}&lt;/span&gt; &lt;p&gt;{t[exp.descKey]}&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; ))}', desc: 'Mapping data <span class="highlight">expData</span> menjadi elemen timeline. Setiap item: <br/>- <span class="highlight-blue">key={idx}</span> untuk identifikasi unik. <br/>- <span class="highlight-blue">className={`timeline-item ${exp.position}`}</span> menentukan posisi left/right. <br/>- <span class="highlight-blue">ref={(el) => (itemRefs.current[idx] = el)}</span> menyimpan referensi elemen ke array <span class="highlight-blue">itemRefs.current</span> untuk deteksi visibilitas. <br/>- <span class="highlight-blue">onClick</span> pada <span class="highlight-blue">.timeline-content</span> memanggil <span class="highlight-blue">handleCardClick</span> dengan judul dan perusahaan dari terjemahan. <br/>- Menampilkan <span class="highlight-blue">tahun</span> (date), <span class="highlight-blue">judul</span> (h3), <span class="highlight-blue">perusahaan</span> (company), dan <span class="highlight-blue">deskripsi</span> (p) dari objek terjemahan.', integrasi: 'Semua teks dari <b>translations.js</b>, interaksi klik, dan ref untuk animasi scroll reveal.' },
+                // BARIS 45
+                { no: '45', code: '&lt;/div&gt; &lt;/section&gt;', desc: 'Penutup tag <span class="highlight">div.timeline</span> dan <span class="highlight-blue">section</span>.', integrasi: '-' },
+                // BARIS 47
+                { no: '47', code: 'export default Pengalaman;', desc: 'Mengekspor komponen <span class="highlight">Pengalaman</span> sebagai default export agar dapat diimpor dan digunakan di <span class="highlight-blue">App.jsx</span> untuk routing.', integrasi: 'Digunakan di <b>routing</b> App.jsx.' },
+            ]
+        }, {
+            id: 'proyek',
+            label: 'Proyek',
+            icon: 'fa-project-diagram',
+            badge: '55 baris',
+            data: [
+                { no: '1', code: 'import React from \'react\';', desc: 'Mengimpor <span class="highlight">React</span>.', integrasi: '-' },
+                { no: '3', code: 'const Proyek = ({ t }) => {', desc: 'Komponen <span class="highlight">Proyek</span> menerima props <span class="highlight-blue">t</span> (objek terjemahan).', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '4-18', code: 'const projectsData = [ ... ];', desc: 'Array 3 objek proyek dengan properti: <span class="highlight-blue">icon</span> (Font Awesome), <span class="highlight-blue">titleKey</span> dan <span class="highlight-blue">descKey</span> (merujuk ke objek terjemahan), dan <span class="highlight-blue">tags</span> (array string statis untuk label teknologi).', integrasi: 'Data konten dari <b>translations.js</b> melalui key, tags bersifat statis.' },
+                { no: '20-22', code: 'const handleCardClick = (title) => { alert(...); };', desc: 'Fungsi <span class="highlight">handleCardClick</span> menampilkan alert dengan judul proyek dan informasi proyek telah selesai.', integrasi: 'Feedback <b>UX</b> (tidak navigasi).' },
+                { no: '24', code: 'return (', desc: 'Memulai JSX yang akan dirender.', integrasi: '-' },
+                { no: '25', code: '&lt;section className="container py-5"&gt;', desc: 'Section dengan <span class="highlight">container</span> Bootstrap dan <span class="highlight-blue">py-5</span> (padding vertikal 3rem).', integrasi: 'Menggunakan <b>Bootstrap container</b>.' },
+                { no: '26', code: '&lt;h2 className="section-title"&gt;{t.projects_title}&lt;/h2&gt;', desc: 'Judul halaman menggunakan kelas <span class="highlight">section-title</span> (CSS kustom) dan mengambil nilai <span class="highlight-blue">t.projects_title</span> dari terjemahan.', integrasi: 'Konten dari <b>translations.js</b> (projects_title).' },
+                { no: '27', code: '&lt;p className="section-subtitle"&gt;{t.projects_subtitle}&lt;/p&gt;', desc: 'Subjudul dengan kelas <span class="highlight">section-subtitle</span> (CSS kustom) dan nilai dari <span class="highlight-blue">t.projects_subtitle</span>.', integrasi: 'Konten dari <b>translations.js</b> (projects_subtitle).' },
+                { no: '28', code: '&lt;div className="row g-4"&gt;', desc: 'Container grid Bootstrap dengan <span class="highlight">row</span> dan <span class="highlight-blue">g-4</span> (gap 1.5rem antar kolom).', integrasi: 'Menggunakan <b>Bootstrap grid</b>.' },
+                { no: '29-46', code: '{projectsData.map((proj, idx) => ( ... ))}', desc: 'Mapping data projectsData menjadi kartu proyek dengan ikon, judul, deskripsi, dan tags.', integrasi: 'Semua teks dari <b>translations.js</b>, interaksi klik, dan Bootstrap grid.' },
+                { no: '47', code: '&lt;/div&gt; &lt;/section&gt;', desc: 'Penutup div.row dan section.', integrasi: '-' },
+                { no: '49', code: 'export default Proyek;', desc: 'Mengekspor komponen <span class="highlight">Proyek</span> untuk digunakan di App.jsx.', integrasi: 'Digunakan di <b>routing</b> App.jsx.' },
+            ]
+        }, {
+            id: 'sertifikasi',
+            label: 'Sertifikasi',
+            icon: 'fa-certificate',
+            badge: '70 baris',
+            data: [
+                { no: '1', code: 'import React from \'react\';', desc: 'Mengimpor <span class="highlight">React</span>.', integrasi: '-' },
+                { no: '2', code: 'import ciscoLogo from \'../assets/cisco-logo.svg\';', desc: 'Mengimpor <span class="highlight">logo Cisco</span> sebagai file gambar SVG dari folder assets.', integrasi: 'Aset gambar lokal untuk ikon merek.' },
+                { no: '4', code: 'const Sertifikasi = ({ t }) => {', desc: 'Komponen <span class="highlight">Sertifikasi</span> menerima props <span class="highlight-blue">t</span> (objek terjemahan).', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '5-11', code: 'const certsData = [ ... ];', desc: 'Array 6 objek sertifikasi dengan properti: <span class="highlight-blue">icon</span>, <span class="highlight-blue">iconType</span> ("icon", "brand", "image"), <span class="highlight-blue">titleKey</span>, <span class="highlight-blue">descKey</span>, dan <span class="highlight-blue">reg</span>.', integrasi: 'Data konten dari <b>translations.js</b> melalui key, dan aset gambar untuk logo Cisco.' },
+                { no: '13-15', code: 'const handleCardClick = (title, desc, reg) => { alert(...); };', desc: 'Fungsi <span class="highlight">handleCardClick</span> menampilkan alert dengan detail sertifikasi.', integrasi: 'Feedback <b>UX</b> dengan detail sertifikasi.' },
+                { no: '17-23', code: 'const renderIcon = (cert) => { ... };', desc: 'Fungsi <span class="highlight">renderIcon</span> menangani <span class="highlight-blue">tiga tipe ikon</span>: "image", "brand", dan "icon".', integrasi: 'Fleksibilitas tampilan ikon dari Font Awesome dan gambar lokal.' },
+                { no: '25', code: 'return (', desc: 'Memulai JSX yang akan dirender.', integrasi: '-' },
+                { no: '26', code: '&lt;section className="container py-5"&gt;', desc: 'Section dengan <span class="highlight">container</span> Bootstrap dan <span class="highlight-blue">py-5</span>.', integrasi: 'Menggunakan <b>Bootstrap container</b>.' },
+                { no: '27', code: '&lt;h2 className="section-title"&gt;{t.certs_title}&lt;/h2&gt;', desc: 'Judul halaman menggunakan kelas <span class="highlight">section-title</span> dan nilai <span class="highlight-blue">t.certs_title</span>.', integrasi: 'Konten dari <b>translations.js</b> (certs_title).' },
+                { no: '28', code: '&lt;p className="section-subtitle"&gt;{t.certs_subtitle}&lt;/p&gt;', desc: 'Subjudul dengan kelas <span class="highlight">section-subtitle</span> dan nilai <span class="highlight-blue">t.certs_subtitle</span>.', integrasi: 'Konten dari <b>translations.js</b> (certs_subtitle).' },
+                { no: '29', code: '&lt;div className="row g-4"&gt;', desc: 'Container grid Bootstrap dengan <span class="highlight">row</span> dan <span class="highlight-blue">g-4</span>.', integrasi: 'Menggunakan <b>Bootstrap grid</b>.' },
+                { no: '30-49', code: '{certsData.map((cert, idx) => ( ... ))}', desc: 'Mapping data certsData menjadi kartu sertifikasi dengan efek <span class="highlight-blue">flip 3D</span>, aksesibilitas keyboard (onKeyDown), dan role button.', integrasi: 'Efek <b>flip</b> interaktif, aksesibilitas keyboard, konten dari <b>translations.js</b>, dan Bootstrap grid.' },
+                { no: '50', code: '&lt;/div&gt; &lt;/section&gt;', desc: 'Penutup div.row dan section.', integrasi: '-' },
+                { no: '52', code: 'export default Sertifikasi;', desc: 'Mengekspor komponen <span class="highlight">Sertifikasi</span> untuk digunakan di App.jsx.', integrasi: 'Digunakan di <b>routing</b> App.jsx.' },
+            ]
+        }, {
+            id: 'kontak',
+            label: 'Kontak',
+            icon: 'fa-envelope',
+            badge: '100 baris',
+            data: [
+                { no: '1', code: 'import React, { useRef, useState } from \'react\';', desc: 'Mengimpor <span class="highlight">React</span> dan hook-hook: <span class="highlight-blue">useRef</span> untuk referensi form, <span class="highlight-blue">useState</span> untuk status pengiriman.', integrasi: 'Hook untuk form handling dan state management.' },
+                { no: '2', code: 'import emailjs from \'@emailjs/browser\';', desc: 'Mengimpor pustaka <span class="highlight">EmailJS</span> untuk mengirim email langsung dari client-side tanpa server.', integrasi: 'Layanan <b>EmailJS</b> untuk pengiriman email.' },
+                { no: '4', code: 'const Kontak = ({ t }) => {', desc: 'Komponen <span class="highlight">Kontak</span> menerima props <span class="highlight-blue">t</span> (objek terjemahan) yang berisi semua teks untuk halaman ini.', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '5', code: 'const formRef = useRef();', desc: 'Membuat <span class="highlight">ref</span> untuk mengakses elemen form DOM secara langsung, digunakan untuk mengambil nilai input dan mereset form setelah submit.', integrasi: 'Digunakan dalam <b>handleSubmit</b> untuk reset form dan mengambil data form.' },
+                { no: '6', code: 'const [status, setStatus] = useState({ sending: false, sent: false, error: null });', desc: 'State <span class="highlight">status</span> untuk mengelola UI form: <span class="highlight-blue">sending</span> (sedang mengirim), <span class="highlight-blue">sent</span> (berhasil terkirim), dan <span class="highlight-blue">error</span> (pesan error).', integrasi: 'Digunakan untuk menampilkan loading, sukses, dan error pada form.' },
+                { no: '8', code: 'const handleSubmit = (e) => {', desc: 'Fungsi <span class="highlight">handleSubmit</span> menangani pengiriman form.', integrasi: 'Event handler untuk onSubmit form.' },
+                { no: '9', code: 'e.preventDefault();', desc: 'Mencegah <span class="highlight">reload halaman</span> default saat form disubmit, sehingga aplikasi tetap SPA.', integrasi: 'Mengatur perilaku form.' },
+                { no: '10', code: 'setStatus({ sending: true, sent: false, error: null });', desc: 'Mengupdate state <span class="highlight">status</span> menjadi "sedang mengirim" dan menghapus error/sukses sebelumnya.', integrasi: 'Menampilkan indikator loading pada tombol.' },
+                { no: '12-14', code: 'const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID; const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID; const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;', desc: 'Mengambil <span class="highlight">environment variables</span> dari Vite (<span class="highlight-blue">import.meta.env</span>) untuk konfigurasi EmailJS. <span class="highlight-blue">VITE_EMAILJS_SERVICE_ID</span>, <span class="highlight-blue">VITE_EMAILJS_TEMPLATE_ID</span>, dan <span class="highlight-blue">VITE_EMAILJS_PUBLIC_KEY</span>.', integrasi: 'Konfigurasi <b>EmailJS</b> disimpan di file <b>.env</b> untuk keamanan.' },
+                { no: '16-19', code: 'if (!serviceId || !templateId || !publicKey) { setStatus({ sending: false, sent: false, error: \'Konfigurasi EmailJS belum lengkap.\' }); return; }', desc: 'Validasi <span class="highlight">konfigurasi EmailJS</span>: jika salah satu environment variable tidak ada, tampilkan error dan hentikan proses.', integrasi: 'Error handling jika konfigurasi tidak lengkap.' },
+                { no: '21-34', code: 'emailjs .sendForm(serviceId, templateId, formRef.current, publicKey) .then( () => { setStatus({ sending: false, sent: true, error: null }); formRef.current.reset(); setTimeout(() => setStatus({ sending: false, sent: false, error: null }), 5000); }, (err) => { console.error(\'EmailJS error:\', err); setStatus({ sending: false, sent: false, error: \'Gagal mengirim pesan. Silakan coba lagi.\' }); } );', desc: 'Memanggil <span class="highlight">EmailJS</span> dengan <span class="highlight-blue">sendForm</span> untuk mengirim data form. Pada <span class="highlight-blue">then</span>: reset form, tampilkan pesan sukses selama 5 detik, lalu reset status. Pada <span class="highlight-blue">catch</span>: tampilkan error dan log ke console.', integrasi: 'Integrasi dengan <b>EmailJS API</b> untuk pengiriman email.' },
+                { no: '36', code: 'return (', desc: 'Memulai JSX yang akan dirender.', integrasi: '-' },
+                { no: '37', code: '&lt;div className="container py-5"&gt;', desc: 'Container utama dengan <span class="highlight">container</span> Bootstrap dan <span class="highlight-blue">py-5</span> (padding vertikal 3rem).', integrasi: 'Menggunakan <b>Bootstrap container</b>.' },
+                { no: '38', code: '&lt;div className="row g-5"&gt;', desc: 'Row Bootstrap dengan <span class="highlight">g-5</span> (gap 3rem antar kolom) untuk layout dua kolom.', integrasi: 'Menggunakan <b>Bootstrap grid</b>.' },
+                { no: '39', code: '&lt;div className="col-lg-6"&gt;', desc: 'Kolom kiri dengan lebar <span class="highlight">6 dari 12</span> pada layar besar (lg) untuk info kontak.', integrasi: 'Menggunakan <b>Bootstrap grid</b> untuk responsif.' },
+                { no: '40', code: '&lt;h2 className="display-5 fw-bold mb-4"&gt;{t.contact_title}&lt;/h2&gt;', desc: 'Judul halaman menggunakan <span class="highlight">display-5</span> (ukuran besar), <span class="highlight-blue">fw-bold</span> (tebal), dan <span class="highlight-blue">mb-4</span> (margin bawah). Mengambil nilai <span class="highlight-blue">t.contact_title</span> dari terjemahan.', integrasi: 'Konten dari <b>translations.js</b> (contact_title).' },
+                { no: '41', code: '&lt;div className="d-flex flex-column gap-4"&gt;', desc: 'Flex container dengan <span class="highlight">flex-column</span> dan <span class="highlight-blue">gap-4</span> (jarak antar item 1.5rem) untuk daftar kontak.', integrasi: 'Menggunakan <b>Bootstrap flex utilities</b>.' },
+                { no: '42-53', code: '&lt;div className="d-flex gap-3 align-items-center"&gt; ... &lt;/div&gt;', desc: 'Item kontak <span class="highlight">Email</span>: ikon biru dengan latar transparan, label dari <span class="highlight-blue">t.label_email</span>, dan tautan mailto dengan email <span class="highlight-blue">info@cyberinfra.co.id</span>.', integrasi: 'Menggunakan <b>mailto link</b> untuk membuka email client.' },
+                { no: '54-67', code: '&lt;div className="d-flex gap-3 align-items-center"&gt; ... &lt;/div&gt;', desc: 'Item kontak <span class="highlight">Telepon / WhatsApp</span>: ikon hijau, label dari <span class="highlight-blue">t.label_phone</span>, dan tautan WhatsApp dengan nomor <span class="highlight-blue">+62 812-3456-7890</span>.', integrasi: 'Menggunakan <b>WhatsApp link</b> (wa.me) untuk chat langsung.' },
+                { no: '68-81', code: '&lt;div className="d-flex gap-3 align-items-start"&gt; ... &lt;/div&gt;', desc: 'Item kontak <span class="highlight">Alamat</span>: ikon kuning, label dari <span class="highlight-blue">t.label_address</span>, dan nilai alamat dari <span class="highlight-blue">t.val_address</span>.', integrasi: 'Konten dari <b>translations.js</b> (label_address dan val_address).' },
+                { no: '82-94', code: '&lt;div className="rounded-4 overflow-hidden border border-light border-opacity-10" style={{ height: \'250px\', background: \'rgba(0,0,0,0.3)\' }}&gt; &lt;iframe src="..." title="Google Maps - CyberInfra Solutions" className="w-100 h-100 border-0" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" style={{ filter: \'grayscale(0.2) invert(0.9) hue-rotate(180deg)\' }} /&gt; &lt;/div&gt;', desc: 'Embed <span class="highlight">Google Maps</span> dengan iframe: styling border-radius, overflow hidden, dan filter CSS untuk tampilan dark mode (<span class="highlight-blue">grayscale</span>, <span class="highlight-blue">invert</span>, <span class="highlight-blue">hue-rotate</span>).', integrasi: '<b>Google Maps iframe</b> untuk menampilkan lokasi kantor.' },
+                { no: '96-97', code: '&lt;div className="col-lg-6"&gt;', desc: 'Kolom kanan dengan lebar <span class="highlight">6 dari 12</span> pada layar besar untuk form kontak.', integrasi: 'Menggunakan <b>Bootstrap grid</b> untuk responsif.' },
+                { no: '98-102', code: '&lt;form ref={formRef} onSubmit={handleSubmit} className="p-4 p-md-5 rounded-4 bg-dark bg-opacity-25 border border-light border-opacity-10" style={{ backdropFilter: \'blur(16px)\', boxShadow: \'0 20px 45px rgba(0,0,0,0.3)\' }}&gt;', desc: 'Form dengan <span class="highlight">ref={formRef}</span> untuk akses form, <span class="highlight-blue">onSubmit={handleSubmit}</span>, efek <span class="highlight-blue">glassmorphism</span> (backdrop-filter blur), dan shadow yang dalam.', integrasi: 'Form handling dengan <b>useRef</b> dan <b>handleSubmit</b>.' },
+                { no: '103-112', code: '&lt;div className="mb-3"&gt; &lt;input type="text" name="user_name" className="form-control bg-dark bg-opacity-50 text-white border-light border-opacity-10" placeholder={t.form_name} required /&gt; &lt;/div&gt;', desc: 'Input <span class="highlight">Nama</span> dengan Bootstrap <span class="highlight-blue">form-control</span>, latar gelap transparan, border tipis, placeholder dari <span class="highlight-blue">t.form_name</span>, dan atribut <span class="highlight-blue">required</span>.', integrasi: 'Konten dari <b>translations.js</b> (form_name).' },
+                { no: '113-121', code: '... input email ...', desc: 'Input <span class="highlight">Email</span> dengan type email, placeholder dari <span class="highlight-blue">t.form_email</span>, dan required.', integrasi: 'Konten dari <b>translations.js</b> (form_email).' },
+                { no: '122-130', code: '... input subject ...', desc: 'Input <span class="highlight">Subjek</span> dengan placeholder dari <span class="highlight-blue">t.form_subject</span>, dan required.', integrasi: 'Konten dari <b>translations.js</b> (form_subject).' },
+                { no: '131-140', code: '... textarea ...', desc: 'Textarea <span class="highlight">Pesan</span> dengan <span class="highlight-blue">rows="4"</span>, <span class="highlight-blue">resize: none</span>, placeholder dari <span class="highlight-blue">t.form_msg</span>, dan required.', integrasi: 'Konten dari <b>translations.js</b> (form_msg).' },
+                { no: '141-148', code: '&lt;button type="submit" className="btn btn-primary w-100 fw-semibold py-2" disabled={status.sending} style={{ boxShadow: \'0 5px 15px rgba(66,133,244,0.3)\' }}&gt; {status.sending ? \'⏳ Mengirim...\' : t.btn_send} &lt;/button&gt;', desc: 'Tombol submit: <span class="highlight">btn btn-primary</span> dengan lebar penuh, teks bold, padding, disabled jika sedang mengirim. Teks tombol berubah antara <span class="highlight-blue">⏳ Mengirim...</span> saat sending dan <span class="highlight-blue">t.btn_send</span> dari terjemahan.', integrasi: 'Menampilkan <b>loading state</b> dan teks dari <b>translations.js</b> (btn_send).' },
+                { no: '149-154', code: '{status.sent && ( &lt;div className="alert alert-success mt-3 text-center"&gt;✅ Pesan terkirim! Kami akan segera merespons.&lt;/div&gt; )} {status.error && ( &lt;div className="alert alert-danger mt-3 text-center"&gt;{status.error}&lt;/div&gt; )}', desc: 'Menampilkan <span class="highlight">alert sukses</span> (hijau) jika status.sent true, dan <span class="highlight">alert error</span> (merah) jika status.error ada. Menggunakan Bootstrap alert classes.', integrasi: 'Feedback <b>UX</b> untuk status pengiriman.' },
+                { no: '156', code: '&lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt;', desc: 'Penutup tag form, div.col-lg-6, div.row, dan div.container.', integrasi: '-' },
+                { no: '158', code: 'export default Kontak;', desc: 'Mengekspor komponen <span class="highlight">Kontak</span> agar dapat digunakan di App.jsx.', integrasi: 'Digunakan di <b>routing</b> App.jsx.' },
+            ]
+        }, {
+            id: 'engineer',
+            label: 'Engineer',
+            icon: 'fa-users-cog',
+            badge: '75 baris',
+            data: [
+                { no: '1-2', code: 'import React, { useState } from \'react\'; import dimasImg from \'../assets/dimas.jpeg\'; import devaImg from \'../assets/devaagriani.jpg\';', desc: 'Mengimpor React, <span class="highlight">useState</span>, dan gambar aset.', integrasi: 'Aset gambar lokal untuk engineer.' },
+                { no: '4-5', code: 'const Engineer = ({ t }) => { const [filter, setFilter] = useState(\'all\');', desc: 'Komponen menerima <span class="highlight-blue">t</span>, state filter.', integrasi: 'Props <b>t</b> dari <b>translations.js</b>.' },
+                { no: '7-24', code: 'const engineers = [ ... ];', desc: 'Array data 3 engineer dengan name, role, category, img, descKey, link, badge.', integrasi: 'Deskripsi dari <b>translations.js</b> (eng1_desc, dst), link ke portofolio eksternal.' },
+                { no: '26', code: 'const filteredEngineers = filter === \'all\' ? engineers : engineers.filter(e => e.category === filter);', desc: 'Menyaring berdasarkan kategori yang dipilih.', integrasi: 'Fitur <b>filter</b> UI.' },
+                { no: '28', code: 'if (!t) return <div>Loading translations...</div>;', desc: 'Conditional loading jika t belum tersedia.', integrasi: 'Loading state.' },
+                { no: '30-64', code: 'return ( ... section ... )', desc: 'Render halaman dengan filter dropdown dan grid kartu engineer.', integrasi: 'Dropdown filter mengubah state <b>filter</b>, gambar dengan fallback, link ke portofolio.' },
+            ]
+        }];
+
+        // ===== RENDER TAB DAN KONTEN =====
+
+        const tabNav = document.getElementById('tabNav');
+        const contentContainer = document.getElementById('tabContentContainer');
+
+        // Buat tab buttons
+        componentData.forEach((comp, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${idx === 0 ? 'active' : ''}`;
+            btn.dataset.tab = comp.id;
+            btn.innerHTML = `<i class="fas ${comp.icon}"></i> ${comp.label}`;
+            tabNav.appendChild(btn);
+        });
+
+        // Buat konten
+        componentData.forEach((comp, idx) => {
+            const div = document.createElement('div');
+            div.id = comp.id;
+            div.className = `tab-content ${idx === 0 ? 'active' : ''}`;
+            div.innerHTML = `
+                <div class="card glow-pulse">
+                    <div class="card-header">
+                        <i class="fas ${comp.icon}"></i>
+                        <h2>${comp.label}.jsx</h2>
+                        <span class="badge"><i class="fas fa-code"></i> ${comp.badge}</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kode / Struktur</th>
+                                    <th>Penjelasan & Fungsi</th>
+                                    <th>Integrasi / Korelasi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-${comp.id}"></tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            contentContainer.appendChild(div);
+        });
+
+        // Isi tabel
+        componentData.forEach((comp) => {
+            const tbody = document.getElementById(`tbody-${comp.id}`);
+            if (!tbody) return;
+            let html = '';
+            comp.data.forEach((row, index) => {
+                const delay = index * 30;
+                html += `<tr class="row-fade" style="animation-delay:${delay}ms">
+                            <td>${row.no}</td>
+                            <td><code>${row.code}</code></td>
+                            <td>${row.desc}</td>
+                            <td>${row.integrasi}</td>
+                        </tr>`;
+            });
+            tbody.innerHTML = html;
+        });
+
+        // ===== TAB SWITCH =====
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = {};
+        componentData.forEach(comp => {
+            tabContents[comp.id] = document.getElementById(comp.id);
+        });
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const target = this.dataset.tab;
+                Object.values(tabContents).forEach(content => content.classList.remove('active'));
+                if (tabContents[target]) {
+                    tabContents[target].classList.add('active');
+                    const tbody = tabContents[target].querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('.row-fade');
+                        rows.forEach((row, i) => {
+                            row.style.animation = 'none';
+                            row.offsetHeight;
+                            row.style.animation = `fadeUp 0.5s forwards`;
+                            row.style.animationDelay = `${i * 30}ms`;
+                        });
+                    }
+                }
+            });
+        });
+
+        // Trigger animasi awal untuk tab pertama
+        setTimeout(() => {
+            const firstTbody = document.querySelector('#tbody-home');
+            if (firstTbody) {
+                const rows = firstTbody.querySelectorAll('.row-fade');
+                rows.forEach((row, i) => {
+                    row.style.animation = `fadeUp 0.5s forwards`;
+                    row.style.animationDelay = `${i * 30}ms`;
+                });
+            }
+        }, 100);
+    </script>
+
+</body>
+</html>

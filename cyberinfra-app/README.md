@@ -24,6 +24,8 @@ cyberinfra-app/
 ├── .env
 ├── public/
 │   └── _redirects
+│   └── favicon , icon
+
 src/
 ├── assets/              | # Gambar & logo (dimas.jpeg, devaagriani.jpg, cisco-logo.svg)
 ├── components/

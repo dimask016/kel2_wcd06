@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Kode - Presentasi Interaktif</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* (CSS sama seperti sebelumnya, tidak diubah) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0b0f1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 2rem 1rem;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, #1a2a4a, #0b0f1a 70%);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 60% 40%, rgba(66, 133, 244, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(52, 168, 83, 0.08), transparent 40%);
+            animation: rotateBg 30s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #4285F4 40%, #34A853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(66, 133, 244, 0.15);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.15);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.25), rgba(52, 168, 83, 0.15));
+            border-color: #4285F4;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(66, 133, 244, 0.2);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem 1.5rem 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header i {
+            font-size: 2rem;
+            color: #4285F4;
+            background: rgba(66, 133, 244, 0.15);
+            padding: 0.8rem;
+            border-radius: 16px;
+        }
+
+        .card-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .card-header .badge {
+            margin-left: auto;
+            background: rgba(52, 168, 83, 0.2);
+            color: #34A853;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(52, 168, 83, 0.2);
+        }
+
+        .table-wrapper {
+            max-height: 520px;
+            overflow-y: auto;
+            border-radius: 16px;
+            scroll-behavior: smooth;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #4285F4;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        thead th {
+            background: rgba(10, 14, 26, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4285F4;
+            border-bottom: 2px solid rgba(66, 133, 244, 0.3);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        thead th:first-child {
+            width: 60px;
+            text-align: center;
+        }
+
+        thead th:nth-child(2) {
+            width: 25%;
+        }
+
+        thead th:nth-child(3) {
+            width: 40%;
+        }
+
+        thead th:nth-child(4) {
+            width: 20%;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease, transform 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        tbody tr:hover {
+            background: rgba(66, 133, 244, 0.08);
+            transform: scale(1.002);
+        }
+
+        tbody td {
+            padding: 0.8rem 1.2rem;
+            vertical-align: top;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        tbody td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: #4285F4;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        tbody td:nth-child(2) {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #e6e6e6;
+            word-break: break-word;
+        }
+
+        tbody td:nth-child(3) {
+            font-size: 0.9rem;
+        }
+
+        tbody td:nth-child(4) {
+            font-size: 0.85rem;
+            color: #34A853;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .highlight {
+            color: #34A853;
+            font-weight: 500;
+        }
+
+        .highlight-blue {
+            color: #4285F4;
+            font-weight: 500;
+        }
+
+        .row-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeSlide 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            opacity: 0.4;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            .tab-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+                gap: 0.4rem;
+            }
+            .card {
+                padding: 1rem 0.8rem 1.5rem;
+            }
+            .card-header h2 {
+                font-size: 1.2rem;
+            }
+            .card-header i {
+                font-size: 1.4rem;
+                padding: 0.5rem;
+            }
+            .table-wrapper {
+                max-height: 400px;
+            }
+            thead th {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            tbody td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.75rem;
+            }
+            thead th:nth-child(2) {
+                width: 20%;
+            }
+            thead th:nth-child(3) {
+                width: 35%;
+            }
+            thead th:nth-child(4) {
+                width: 25%;
+            }
+            tbody td:nth-child(2) {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tabs {
+                gap: 0.5rem;
+            }
+            .tab-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+            }
+            .tab-btn i {
+                font-size: 0.8rem;
+            }
+            thead th {
+                font-size: 0.6rem;
+                padding: 0.4rem 0.5rem;
+            }
+            tbody td {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.65rem;
+            }
+            .card-header .badge {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.6rem;
+            }
+        }
+
+        .glow-pulse {
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(66, 133, 244, 0.1); }
+            100% { box-shadow: 0 0 30px rgba(66, 133, 244, 0.25); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <div class="container">
+
+        <header class="header">
+            <h1><i class="fas fa-code" style="font-size:0.8em; margin-right:0.3rem; background: none; -webkit-text-fill-color: #4285F4;"></i> Analisis Kode <span style="background: linear-gradient(135deg,#4285F4,#34A853); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Portofolio</span></h1>
+            <p>Penjelasan per baris kode dari <strong>App.jsx</strong> · <strong>index.css</strong> · <strong>main.jsx</strong> — dengan efek interaktif</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab1"><i class="fab fa-react"></i> App.jsx</button>
+            <button class="tab-btn" data-tab="tab2"><i class="fab fa-css3-alt"></i> index.css</button>
+            <button class="tab-btn" data-tab="tab3"><i class="fas fa-js"></i> main.jsx</button>
+        </div>
+
+        <!-- Tab 1: App.jsx -->
+        <div id="tab1" class="tab-content active">
+            <div class="card glow-pulse">
+                <div class="card-header">
+                    <i class="fab fa-react"></i>
+                    <h2>App.jsx</h2>
+                    <span class="badge"><i class="fas fa-code"></i> 56 baris</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Baris Kode</th>
+                                <th>Penjelasan & Fungsi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="app-body">
+                            <!-- Data akan diisi oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: index.css -->
+        <div id="tab2" class="tab-content">
+            <div class="card glow-pulse">
+                <div class="card-header">
+                    <i class="fab fa-css3-alt"></i>
+                    <h2>index.css</h2>
+                    <span class="badge"><i class="fas fa-paint-brush"></i> 520+ baris</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Selektor / Aturan</th>
+                                <th>Penjelasan & Fungsi</th>
+                                <th>Halaman / Menu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="css-body">
+                            <!-- Data akan diisi oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: main.jsx -->
+        <div id="tab3" class="tab-content">
+            <div class="card glow-pulse">
+                <div class="card-header">
+                    <i class="fas fa-js"></i>
+                    <h2>main.jsx</h2>
+                    <span class="badge"><i class="fas fa-rocket"></i> 14 baris</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Baris Kode</th>
+                                <th>Penjelasan & Fungsi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="main-body">
+                            <!-- Data akan diisi oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <i class="fas fa-arrow-up" style="margin-right:6px;"></i> Scroll tabel untuk melihat semua baris &bull; Hover baris untuk efek interaktif
+        </div>
+
+    </div>
+
+    <script>
+        // ===== DATA TABEL (dengan escape HTML) =====
+
+        // App.jsx
+        const appData = [
+            { no: 1, code: 'import React, { lazy, Suspense, useState, useEffect } from \'react\';', desc: 'Mengimpor React dan hook-hook yang diperlukan: <span class="highlight">lazy</span> untuk code splitting, <span class="highlight">Suspense</span> untuk fallback loading, <span class="highlight">useState</span>/<span class="highlight">useEffect</span> untuk state bahasa.' },
+            { no: 2, code: 'import { BrowserRouter, Routes, Route } from \'react-router-dom\';', desc: 'Mengimpor komponen routing dari React Router v6 untuk navigasi SPA tanpa reload halaman.' },
+            { no: 3, code: 'import Layout from \'./components/Layout\';', desc: 'Mengimpor komponen <span class="highlight-blue">Layout</span> (navbar + struktur utama) yang membungkus semua halaman.' },
+            { no: 4, code: 'import ErrorBoundary from \'./components/ErrorBoundary\';', desc: 'Mengimpor ErrorBoundary untuk menangkap error di komponen React, mencegah crash total.' },
+            { no: 5, code: 'import { translations } from \'./translations\';', desc: 'Mengimpor objek terjemahan (id/en) untuk mengubah teks antarmuka sesuai bahasa.' },
+            { no: '7–15', code: 'const Home = lazy(() => import(\'./pages/Home\')); ... const Engineer = lazy(() => import(\'./pages/Engineer\'));', desc: 'Mendefinisikan komponen halaman dengan <span class="highlight">lazy</span> (loading dinamis). Code splitting: setiap halaman diunduh saat dibutuhkan.' },
+            { no: 17, code: 'function App() {', desc: 'Deklarasi komponen utama App, entry point setelah main.jsx.' },
+            { no: 18, code: 'const [lang, setLang] = useState(localStorage.getItem(\'lang\') || \'id\');', desc: 'State <span class="highlight">lang</span> diinisialisasi dari localStorage, default \'id\'. Menyimpan preferensi bahasa user.' },
+            { no: '20–22', code: 'useEffect(() => { localStorage.setItem(\'lang\', lang); }, [lang]);', desc: 'Efek yang menyimpan <span class="highlight">lang</span> ke localStorage setiap kali berubah. Sinkronisasi state dengan penyimpanan lokal.' },
+            { no: 24, code: 'const t = translations[lang];', desc: 'Mengambil objek terjemahan sesuai bahasa aktif. <span class="highlight">t</span> digunakan di semua komponen halaman.' },
+            { no: 27, code: '&lt;ErrorBoundary&gt;', desc: 'Pembungkus error boundary yang menangkap error di seluruh komponen di dalamnya.' },
+            { no: 28, code: '&lt;BrowserRouter&gt;', desc: 'Pembungkus router untuk mengaktifkan routing di seluruh aplikasi.' },
+            { no: '29–35', code: '&lt;Suspense fallback={...}&gt;', desc: 'Menampilkan fallback (spinner) saat komponen lazy dimuat. Memberi indikasi loading yang halus.' },
+            { no: '36–47', code: '&lt;Routes&gt; dan &lt;Route&gt;', desc: 'Mendefinisikan rute aplikasi. <span class="highlight-blue">path="/"</span> dengan Layout sebagai elemen utama, rute anak dirender di dalam <span class="highlight-blue">&lt;Outlet /&gt;</span> dari Layout.' },
+            { no: '48–54', code: 'Penutup tag', desc: 'Menutup semua pembungkus (Suspense, BrowserRouter, ErrorBoundary).' },
+            { no: 56, code: 'export default App;', desc: 'Mengekspor komponen App agar bisa digunakan di main.jsx untuk di-render.' }
+        ];
+
+        // ===== INDEX.CSS - PENJELASAN DETAIL PER BAGIAN + IMPLEMENTASI =====
+        const cssData = [
+            { no: '1–3', code: '@import url(...Space+Grotesk...); @import url(...font-awesome...);', desc: 'Mengimpor <span class="highlight">font Google Space Grotesk</span> (7 ketebalan) untuk tampilan modern dan tegas, serta <span class="highlight">Font Awesome 6</span> untuk menyediakan ribuan ikon vektor yang digunakan di skill, proyek, dan sertifikasi.', halaman: '🌐 Global' },
+            { no: '5–9', code: '* { margin:0; padding:0; box-sizing:border-box; }', desc: 'Reset CSS universal: menghilangkan margin/padding bawaan browser dan menerapkan <span class="highlight">box-sizing: border-box</span> agar perhitungan ukuran (width/height) menyertakan padding dan border, sehingga tata letak lebih konsisten lintas browser.', halaman: '🌐 Global' },
+            { no: '11–15', code: 'body { font-family:...; overflow-x:hidden; color:#fff; background:#000; }', desc: 'Gaya dasar body: font utama <span class="highlight">Space Grotesk</span>, latar hitam pekat, teks putih, dan <span class="highlight">overflow-x:hidden</span> untuk mencegah scroll horizontal yang tidak diinginkan.', halaman: '🌐 Global' },
+            { no: '18–22', code: '#canvas-container { position:fixed; ... z-index:0; }', desc: 'Kontainer untuk <span class="highlight">latar belakang Three.js</span> dengan posisi fixed di belakang semua konten (z-index:0). Digunakan untuk menampilkan animasi 3D interaktif di halaman.', halaman: '🌐 Global (Background)' },
+            { no: '24–28', code: '.overlay { position:fixed; ... background: radial-gradient(...); pointer-events:none; }', desc: 'Lapisan transparan di atas canvas dengan <span class="highlight">gradasi radial</span> dari hitam transparan ke lebih gelap, berfungsi untuk menggelapkan tepi layar agar teks lebih kontras. <span class="highlight">pointer-events:none</span> memastikan interaksi tetap bisa dilakukan pada elemen di bawahnya.', halaman: '🌐 Global (Background)' },
+            { no: '30–34', code: '.content { position:relative; z-index:2; min-height:100vh; }', desc: 'Pembungkus utama konten halaman dengan <span class="highlight">z-index:2</span> (di atas canvas dan overlay) dan tinggi minimal 100vh agar selalu memenuhi layar.', halaman: '🌐 Global' },
+            { no: '37–46', code: 'nav { position:fixed; ... backdrop-filter:blur(12px); background:rgba(0,0,0,0.5); ... }', desc: 'Gaya <span class="highlight">navbar fixed</span> dengan efek <span class="highlight">glassmorphism</span> (backdrop-filter blur 12px), latar transparan gelap, border bawah tipis, dan flex-wrap untuk responsif. Navbar selalu berada di atas (z-index:100).', halaman: '🌐 Global (Layout)' },
+            { no: '48–53', code: '.logo { font-size:1.4rem; font-weight:700; background:linear-gradient(...); -webkit-background-clip:text; ... }', desc: 'Gaya <span class="highlight">logo</span> dengan gradien warna dari putih ke biru (#4285F4) menggunakan teknik <span class="highlight">background-clip: text</span> sehingga teks berwarna gradien, terlihat premium dan modern.', halaman: '🌐 Global (Layout)' },
+            { no: '55–64', code: '.nav-links { display:flex; gap:1rem; ... } .nav-links a:hover, .nav-links a.active { color:#4285F4; }', desc: 'Gaya tautan navigasi: tata letak <span class="highlight">flex horizontal</span> dengan jarak 1rem, teks putih, dan saat hover/active berubah menjadi biru <span class="highlight-blue">#4285F4</span> dengan transisi halus 0.3s.', halaman: '🌐 Global (Layout)' },
+            { no: '66–80', code: '.lang-toggle, .lang-btn, .lang-btn.active', desc: 'Gaya <span class="highlight">tombol switch bahasa</span>: tombol bulat dengan latar transparan, saat aktif berwarna biru dengan <span class="highlight">box-shadow glow</span> (0 0 8px #4285F4). Hover juga berubah biru, memberikan umpan balik visual yang jelas.', halaman: '🌐 Global (Layout)' },
+            { no: '83–93', code: '.hero { min-height:100vh; ... } .hero h1 { ... background:linear-gradient(...); ... }', desc: 'Gaya bagian <span class="highlight">Hero (Home)</span>: flex column center, tinggi 100vh, teks dengan shadow. Judul berukuran responsif (clamp) dengan <span class="highlight">gradien 3 warna</span> (putih → biru → hijau) dan teks bayangan untuk keterbacaan.', halaman: '🏠 Home' },
+            { no: '95–106', code: '.cta-btn { background:linear-gradient(...); ... } .cta-btn:hover { transform:translateY(-2px); ... }', desc: 'Tombol <span class="highlight">Call-to-Action</span> dengan gradien biru-hijau, border-radius penuh, efek hover naik 2px dan bayangan lebih kuat (box-shadow) untuk memberikan kesan interaktif dan mendorong klik.', halaman: '🏠 Home' },
+            { no: '109–117', code: 'section { padding:6rem 2rem 4rem; min-height:100vh; ... max-width:1200px; margin:0 auto; }', desc: 'Gaya dasar untuk <span class="highlight">semua halaman (section)</span>: padding atas besar, tinggi minimal 100vh, flex column center, lebar maksimal 1200px, dan teks bayangan untuk kontras dengan latar gelap.', halaman: '📄 Semua Halaman' },
+            { no: '119–128', code: '.section-title { font-size:clamp(...); text-align:center; ... } .section-title::after { ... }', desc: 'Gaya <span class="highlight">judul setiap bagian</span> dengan ukuran responsif (clamp), di tengah, dan pseudo-element <span class="highlight">::after</span> berupa garis gradien (biru-merah) di bawah judul sebagai dekorasi.', halaman: '📄 Semua Halaman' },
+            { no: '131–139', code: '.carousel-container { width:100%; max-width:900px; height:500px; perspective:1200px; ... }', desc: 'Kontainer untuk <span class="highlight">carousel 3D</span> (halaman Keahlian) dengan <span class="highlight">perspective:1200px</span> untuk efek 3D, tinggi tetap 500px, dan display flex center untuk menengahkan carousel.', halaman: '🛠️ Keahlian' },
+            { no: '141–146', code: '.carousel-3d { transform-style:preserve-3d; transition:transform 0.1s; cursor:grab; }', desc: 'Area putar carousel dengan <span class="highlight">transform-style:preserve-3d</span> untuk mempertahankan efek 3D, transisi halus 0.1s, dan kursor <span class="highlight">grab</span> (berubah menjadi grabbing saat di-drag).', halaman: '🛠️ Keahlian' },
+            { no: '148–165', code: '.carousel-card { position:absolute; width:200px; height:240px; ... background:rgba(...); backdrop-filter:blur(12px); ... }', desc: 'Gaya <span class="highlight">kartu skill</span> dalam carousel: posisi absolut di tengah, ukuran 200x240, latar transparan dengan <span class="highlight">glassmorphism</span> (blur 12px), border biru, efek hover scale 1.05 dan shadow bercahaya.', halaman: '🛠️ Keahlian' },
+            { no: '167–178', code: '.carousel-indicators, .indicator-dot, .indicator-dot.active', desc: 'Gaya <span class="highlight">indikator titik</span> di bawah carousel: titik-titik horizontal dengan transisi, saat aktif berwarna biru dan melebar (dari 40px ke 50px) dengan glow, memberikan navigasi visual yang jelas.', halaman: '🛠️ Keahlian' },
+            { no: '186–194', code: '.timeline { ... } .timeline::after { ... left:50%; ... }', desc: 'Gaya <span class="highlight">timeline</span> dengan garis vertikal di tengah (menggunakan pseudo-element ::after) untuk menampilkan riwayat pengalaman secara kronologis.', halaman: '💼 Pengalaman' },
+            { no: '196–208', code: '.timeline-item { padding:10px 40px; ... opacity:0; transform:translateY(40px); transition:...; }', desc: 'Gaya <span class="highlight">setiap item timeline</span>: awalnya tersembunyi (opacity:0, translateY 40px), saat diberi kelas <span class="highlight">.visible</span> akan muncul dengan animasi slide-up halus 0.6s.', halaman: '💼 Pengalaman' },
+            { no: '210–220', code: '.timeline-item.left, .timeline-item.right, ::after', desc: 'Penempatan item di <span class="highlight">kiri atau kanan</span> garis timeline dengan bulatan indikator (border 3px biru, glow) yang menandai setiap peristiwa.', halaman: '💼 Pengalaman' },
+            { no: '222–235', code: '.timeline-content { padding:1.5rem; background:rgba(0,0,0,0.3); backdrop-filter:blur(16px); ... } :hover', desc: 'Gaya <span class="highlight">kartu konten timeline</span> dengan efek glassmorphism (blur 16px), border transparan, dan saat hover border berubah biru, background menjadi biru transparan, dan scale 1.02 untuk interaksi.', halaman: '💼 Pengalaman' },
+            { no: '237–252', code: '.date, .timeline-content h3, .company, .timeline-content p', desc: 'Gaya elemen teks dalam timeline: <span class="highlight">.date</span> berwarna biru dengan shadow, <span class="highlight">h3</span> putih, <span class="highlight">.company</span> hijau (#34A853), dan paragraf dengan opacity 0.9 untuk hierarki visual yang jelas.', halaman: '💼 Pengalaman' },
+            { no: '261–265', code: '.projects-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:2.5rem; }', desc: 'Gaya <span class="highlight">grid proyek</span> responsif dengan <span class="highlight">auto-fit</span> dan minimal 320px per kolom, otomatis menyesuaikan jumlah kolom berdasarkan lebar layar, jarak antar kartu 2.5rem.', halaman: '📁 Proyek' },
+            { no: '267–280', code: '.project-card { background:rgba(...); border:...; backdrop-filter:blur(16px); ... } :hover', desc: 'Gaya <span class="highlight">kartu proyek</span> dengan glassmorphism, border transparan, efek hover naik 8px, border berubah biru, dan shadow dengan warna biru untuk memberikan kesan mengambang.', halaman: '📁 Proyek' },
+            { no: '306–309', code: '.certs-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2.5rem; }', desc: 'Gaya <span class="highlight">grid sertifikasi</span> responsif dengan minimal 300px per kolom, otomatis menyesuaikan, jarak antar kartu 2.5rem.', halaman: '📜 Sertifikasi' },
+            { no: '311–316', code: '.cert-card { height:220px; perspective:1000px; cursor:pointer; }', desc: 'Kontainer <span class="highlight">kartu sertifikasi</span> dengan perspektif 3D (1000px) dan tinggi 220px, kursor pointer untuk menunjukkan interaksi flip.', halaman: '📜 Sertifikasi' },
+            { no: '318–326', code: '.cert-inner { width:100%; height:100%; transform-style:preserve-3d; transition:transform 0.6s; }', desc: 'Bagian dalam kartu yang berputar dengan <span class="highlight">transform-style:preserve-3d</span>, transisi 0.6s untuk efek flip yang halus saat hover.', halaman: '📜 Sertifikasi' },
+            { no: '328–340', code: '.cert-front, .cert-back { position:absolute; ... backface-visibility:hidden; ... }', desc: 'Gaya <span class="highlight">sisi depan dan belakang</span> kartu flip: posisi absolut, <span class="highlight">backface-visibility:hidden</span> untuk menyembunyikan sisi belakang saat tidak terlihat, dengan glassmorphism dan border.', halaman: '📜 Sertifikasi' },
+            { no: '342–350', code: '.cert-back { transform:rotateY(180deg); background:rgba(0,0,0,0.4); ... }', desc: 'Sisi belakang kartu diputar 180° secara default, latar lebih gelap, border biru, dan menampilkan deskripsi serta kode sertifikasi.', halaman: '📜 Sertifikasi' },
+            { no: '364–372', code: '@media (max-width:768px) { .certs-grid { grid-template-columns:1fr; gap:1.8rem; } .cert-card { height:200px; } }', desc: 'Penyesuaian <span class="highlight">sertifikasi di mobile</span>: grid menjadi 1 kolom, jarak lebih kecil, tinggi kartu 200px agar tetap proporsional.', halaman: '📜 Sertifikasi (Responsif)' },
+            { no: '374–385', code: '.tags, .tag, :hover', desc: 'Gaya <span class="highlight">label teknologi (tag)</span> di proyek: flex wrap, bulat dengan latar transparan, saat kartu proyek di-hover tag berubah menjadi biru transparan dengan border biru.', halaman: '📁 Proyek' },
+            { no: '388–413', code: '@media (max-width:768px) { nav { flex-direction:column; ... } .carousel-container { height:400px; } .timeline::after { left:31px; } ... }', desc: 'Media query untuk <span class="highlight">layar ≤768px</span>: navbar menjadi kolom, carousel lebih kecil (400px), timeline garis pindah ke kiri dan semua item di kiri, projects grid 1 kolom, dan berbagai penyesuaian ukuran.', halaman: '📱 Responsif Global' },
+            { no: '416–422', code: '*:focus-visible { outline:2px solid #4285F4; outline-offset:2px; border-radius:4px; }', desc: 'Gaya <span class="highlight">fokus untuk aksesibilitas keyboard</span>: outline biru 2px pada elemen yang difokuskan (misal saat menekan Tab), memudahkan navigasi tanpa mouse.', halaman: '♿ Aksesibilitas' },
+            { no: '424–427', code: '.carousel-card:focus-visible, .cert-card:focus-visible, ...', desc: 'Perbaikan fokus khusus untuk kartu interaktif (carousel, sertifikasi, proyek, timeline) dengan outline lebih besar dan border-radius 12px.', halaman: '♿ Aksesibilitas' },
+            { no: '430–435', code: 'a:focus-visible, button:focus-visible, ...', desc: 'Fokus untuk elemen form dan tautan dengan outline biru yang konsisten, meningkatkan aksesibilitas.', halaman: '♿ Aksesibilitas' },
+            { no: '438–446', code: '.navbar-toggler { border-color: rgba(255,255,255,0.7) !important; z-index:1050 !important; } .navbar-toggler-icon { ... }', desc: 'Gaya <span class="highlight">tombol hamburger</span> di navbar mobile: border putih, z-index tinggi, dan ikon SVG dengan warna putih (filter brightness) agar terlihat jelas.', halaman: '📱 Mobile (Navbar)' },
+            { no: '448–450', code: '.navbar { z-index:1030 !important; }', desc: 'Memastikan <span class="highlight">navbar berada di atas</span> elemen lain (z-index 1030) untuk mengatasi tumpang tindih dengan carousel 3D.', halaman: '📱 Mobile (Navbar)' },
+            { no: '469–477', code: '.navbar { z-index:9999 !important; position:fixed !important; }', desc: 'Override <span class="highlight">z-index sangat tinggi</span> (9999) untuk navbar dan posisi fixed, memastikan navbar selalu di atas konten apapun termasuk carousel 3D.', halaman: '📱 Mobile (Navbar)' },
+            { no: '510–521', code: '@media (max-width:768px) { .carousel-container { height:300px !important; } .carousel-card { width:130px !important; height:170px !important; } ... }', desc: 'Penyesuaian <span class="highlight">carousel di mobile</span> agar lebih kecil (tinggi 300px, kartu 130x170) sehingga tidak menutupi navbar dan tetap proporsional di layar kecil.', halaman: '🛠️ Keahlian (Responsif)' }
+        ];
+
+        // main.jsx
+        const mainData = [
+            { no: 1, code: 'import { StrictMode } from \'react\'', desc: 'Mengimpor StrictMode dari React untuk memberi peringatan praktik tidak aman di development.' },
+            { no: 2, code: 'import { createRoot } from \'react-dom/client\'', desc: 'Mengimpor createRoot dari React DOM client (API baru React 18 untuk rendering).' },
+            { no: 3, code: 'import \'bootstrap/dist/css/bootstrap.min.css\';', desc: 'Mengimpor CSS Bootstrap untuk utility classes dan komponen dasar.' },
+            { no: 4, code: 'import \'bootstrap/dist/js/bootstrap.bundle.min.js\';', desc: 'Mengimpor JavaScript Bootstrap (termasuk Popper) untuk mengaktifkan toggle navbar, dropdown, dll.' },
+            { no: 5, code: 'import \'./index.css\'', desc: 'Mengimpor CSS kustom untuk menimpa atau menambah gaya Bootstrap.' },
+            { no: 6, code: 'import App from \'./App.jsx\'', desc: 'Mengimpor komponen utama App.' },
+            { no: 7, code: 'import ErrorBoundary from \'./components/ErrorBoundary\';', desc: 'Mengimpor ErrorBoundary (siap pakai, meski tidak digunakan di sini).' },
+            { no: 9, code: 'createRoot(document.getElementById(\'root\')).render(', desc: 'Membuat root React di elemen dengan id "root" dan memulai rendering.' },
+            { no: 10, code: '&lt;StrictMode&gt;', desc: 'Membungkus App dengan StrictMode untuk mendeteksi efek samping dan komponen usang.' },
+            { no: 11, code: '&lt;App /&gt;', desc: 'Merender komponen App — seluruh aplikasi dimulai dari sini.' },
+            { no: 12, code: '&lt;/StrictMode&gt;', desc: 'Menutup StrictMode.' },
+            { no: 13, code: ')', desc: 'Menutup render.' }
+        ];
+
+        // ===== RENDER FUNGSI =====
+
+        function renderTable(data, targetId, hasPage = false) {
+            const tbody = document.getElementById(targetId);
+            if (!tbody) return;
+            let html = '';
+            data.forEach((row, index) => {
+                const delay = index * 20;
+                let rowHtml = `<tr class="row-fade" style="animation-delay:${delay}ms">
+                            <td>${row.no}</td>
+                            <td><code>${row.code}</code></td>
+                            <td>${row.desc}</td>`;
+                if (hasPage && row.halaman) {
+                    rowHtml += `<td>${row.halaman}</td>`;
+                }
+                rowHtml += `</tr>`;
+                html += rowHtml;
+            });
+            tbody.innerHTML = html;
+        }
+
+        renderTable(appData, 'app-body', false);
+        renderTable(cssData, 'css-body', true);
+        renderTable(mainData, 'main-body', false);
+
+        // ===== TAB SWITCH =====
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = {
+            tab1: document.getElementById('tab1'),
+            tab2: document.getElementById('tab2'),
+            tab3: document.getElementById('tab3')
+        };
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                Object.values(tabContents).forEach(content => content.classList.remove('active'));
+
+                const target = this.dataset.tab;
+                if (tabContents[target]) {
+                    tabContents[target].classList.add('active');
+                    const tbody = tabContents[target].querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('.row-fade');
+                        rows.forEach((row, i) => {
+                            row.style.animation = 'none';
+                            row.offsetHeight;
+                            row.style.animation = `fadeUp 0.5s forwards`;
+                            row.style.animationDelay = `${i * 20}ms`;
+                        });
+                    }
+                }
+            });
+        });
+
+        // Trigger initial animation
+        setTimeout(() => {
+            const firstTbody = document.querySelector('#app-body');
+            if (firstTbody) {
+                const rows = firstTbody.querySelectorAll('.row-fade');
+                rows.forEach((row, i) => {
+                    row.style.animation = `fadeUp 0.5s forwards`;
+                    row.style.animationDelay = `${i * 20}ms`;
+                });
+            }
+        }, 100);
+    </script>
+
+</body>
+</html>
