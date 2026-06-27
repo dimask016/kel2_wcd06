@@ -25,8 +25,7 @@ cyberinfra-app/
 ├── public/
 │   └── _redirects
 │   └── favicon , icon
-
-src/
+|src/                    |
 ├── assets/              | # Gambar & logo (dimas.jpeg, devaagriani.jpg, cisco-logo.svg)
 ├── components/
 │   ├── Layout.jsx       | # Layout utama (navbar + background Three.js)
