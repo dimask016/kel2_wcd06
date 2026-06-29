@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import ThreeBackground from './ThreeBackground';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ChatBot from './ChatBot';  // <-- tambahkan ini
 
 const Layout = ({ lang, setLang, t }) => {
   return (
@@ -15,6 +16,8 @@ const Layout = ({ lang, setLang, t }) => {
           <Outlet />
         </main>
         <Footer />
+        {/* ChatBot ditempatkan di sini, tetap terlihat di semua halaman */}
+        <ChatBot t={t} />
       </div>
     </>
   );
