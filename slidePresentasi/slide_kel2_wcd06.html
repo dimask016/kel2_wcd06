@@ -510,27 +510,40 @@ cyberinfra-app/
             </div>
         </div>
 
-        <!-- SLIDE 13: KESIMPULAN & REKOMENDASI -->
-        <div class="slide" id="slide13">
-            <div class="slide-header"><h2><i class="fas fa-clipboard-check"></i> Kesimpulan & Rekomendasi</h2></div>
-            <div class="slide-content">
-                <div class="highlight"><strong>✨ Keunggulan Proyek:</strong> Portofolio modern dengan 3D interactivity, bilingual, responsif, dan mudah di-maintain.</div>
-                <h3>📌 Rekomendasi Pengembangan Lanjutan</h3>
-                <ul>
-                    <li>Lazy loading untuk Three.js agar performa lebih baik di perangkat rendah.</li>
-                    <li>Tambah modal detail proyek (mengganti alert).</li>
-                    <li>Implementasi aksesibilitas penuh (role, aria-label).</li>
-                    <li>Integrasi form kontak dengan layanan email.</li>
-                </ul>
-                <div style="text-align: center; margin-top: 30px;">
-                    <p><i class="fas fa-certificate"></i> Proyek ini merupakan solusi portofolio profesional yang mencerminkan keahlian dalam Web Client Development & Infrastruktur IT.</p>
-                    <hr style="margin: 20px 0;">
-                    <p><strong>Terima kasih – Web Company Portofolio Interaktif siap digunakan!</strong></p>
-                    <p style="font-size: 0.9rem;">📧 Kontak tim: Kelompok 02 - WCD06 | <i class="fab fa-github"></i> dimask016/kel2_wcd06</p>
-                </div>
-            </div>
+     <!-- SLIDE 13: KESIMPULAN & REKOMENDASI -->
+<div class="slide" id="slide13">
+    <div class="slide-header"><h2><i class="fas fa-clipboard-check"></i> Kesimpulan & Rekomendasi</h2></div>
+    <div class="slide-content">
+        <div class="highlight"><strong>✨ Keunggulan Proyek:</strong> Portofolio modern dengan 3D interactivity, bilingual, responsif, dan mudah di-maintain.</div>
+
+        <!-- ===== PENJELASAN LOADING ICON ===== -->
+        <h3 style="margin-top: 25px;">⏳ Mengapa Muncul Icon Loading Saat Navigasi?</h3>
+        <p>Pada website yang di-deploy di Netlify, beberapa halaman menampilkan ikon loading saat diakses. Hal ini disebabkan oleh teknik optimasi performa yang diterapkan pada aplikasi React:</p>
+        <ul>
+            <li><strong>Lazy Loading (Code Splitting):</strong> Aplikasi menggunakan <code>React.lazy()</code> dan <code>Suspense</code> untuk memuat komponen secara <em>lazy</em>. Setiap halaman (Home, Tentang, Keahlian, dll.) dipisahkan menjadi <em>chunk</em> JavaScript tersendiri yang hanya dimuat saat halaman tersebut diakses untuk pertama kali.</li>
+            <li><strong>Manfaat:</strong> Mempercepat waktu muat awal (<em>initial load</em>) karena hanya kode untuk halaman pertama yang diunduh. Ini mengurangi <em>bundle size</em> dan meningkatkan performa, terutama pada koneksi lambat.</li>
+            <li><strong>Fallback Loading:</strong> Komponen <code>Suspense</code> menampilkan <em>spinner/loading</em> sebagai penanda bahwa konten sedang dimuat. Ini memberikan <em>feedback</em> visual yang baik kepada pengguna.</li>
+            <li><strong>Faktor Lain:</strong> Selain lazy loading, beberapa fitur seperti <strong>Three.js</strong> (background 3D) dan <strong>API eksternal</strong> (harga pasar, berita) juga membutuhkan waktu muat tambahan, yang dapat memicu indikator loading.</li>
+        </ul>
+        <div class="highlight" style="background: #fff3e0; border-left-color: #f39c12;">
+            <i class="fas fa-lightbulb"></i> <strong>Tips:</strong> Loading icon hanya muncul saat pertama kali mengunjungi halaman. Setelah halaman dimuat, navigasi berikutnya akan terasa lebih cepat karena kode telah tersimpan di <em>cache</em> browser.
+        </div>
+
+        <h3>📌 Rekomendasi Pengembangan Lanjutan</h3>
+        <ul>
+            <li>Lazy loading untuk Three.js agar performa lebih baik di perangkat rendah.</li>
+            <li>Tambah modal detail proyek (mengganti alert).</li>
+            <li>Implementasi aksesibilitas penuh (role, aria-label).</li>
+            <li>Integrasi form kontak dengan layanan email.</li>
+        </ul>
+        <div style="text-align: center; margin-top: 30px;">
+            <p><i class="fas fa-certificate"></i> Proyek ini merupakan solusi portofolio profesional yang mencerminkan keahlian dalam Web Client Development & Infrastruktur IT.</p>
+            <hr style="margin: 20px 0;">
+            <p><strong>Terima kasih – Web Company Portofolio Interaktif siap digunakan!</strong></p>
+            <p style="font-size: 0.9rem;">📧 Kontak tim: Kelompok 02 - WCD06 | <i class="fab fa-github"></i> dimask016/kel2_wcd06</p>
         </div>
     </div>
+</div>
 
     <div class="controls">
         <div class="slide-nav">
