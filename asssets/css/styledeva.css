@@ -49,6 +49,12 @@ h2 {
     border-radius: 2px;
 }
 
+.about-text {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 /* --- Navigation --- */
 header {
     background-color: #fff;
@@ -63,8 +69,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
     padding: 20px;
 }
 
@@ -77,10 +81,7 @@ header {
 .nav-links {
     display: flex;
     list-style: none;
-}
-
-.nav-links li {
-    margin-left: 20px;
+    gap: 20px;
 }
 
 .nav-links a {
@@ -97,27 +98,29 @@ header {
 /* --- Hero Section --- */
 .hero {
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    min-height: 100vh;     /* Mengubah height menjadi min-height agar aman jika konten memanjang */
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    padding: 120px 0 60px 0;
+}
+
+.hero-content {
     text-align: center;
-    padding: 120px 0 60px 0; /* Menyesuaikan padding atas agar tidak tertutup navbar fixed */
 }
 
 .profile-img {
-    width: 160px;          /* Mengatur lebar foto */
-    height: 160px;         /* Mengatur tinggi foto (harus sama agar lingkaran sempurna) */
-    border-radius: 50%;    /* Membuat foto berbentuk lingkaran */
-    object-fit: cover;     /* Menjaga foto tidak gepeng/distorsi */
-    margin-bottom: 20px;   /* Memberikan jarak antara foto dan nama */
-    border: 4px solid #ffffff; /* Memberikan bingkai putih elegan di luar foto */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Memberikan efek bayangan lembut */
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
 }
 
 .profile-img:hover {
-    transform: scale(1.05); /* Efek sedikit membesar saat kursor diarahkan ke foto */
+    transform: scale(1.05);
 }
 
 .hero-content h1 {
@@ -134,6 +137,8 @@ header {
     color: #4b5563;
     margin-bottom: 30px;
     max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* --- Buttons --- */
@@ -203,12 +208,11 @@ header {
     font-style: italic;
 }
 
-/* --- Skills Grid (Modern & Interactive) --- */
+/* --- Skills Grid --- */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
-    padding: 10px 0;
 }
 
 .skill-card {
@@ -220,7 +224,7 @@ header {
     font-size: 1.05rem;
     text-align: center;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -275,15 +279,46 @@ footer {
     font-size: 0.9rem;
 }
 
-/* --- Responsive Layout --- */
+/* --- Responsive Layout (Media Queries) --- */
 @media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+    
     .navbar {
         flex-direction: column;
+        gap: 10px;
+        padding: 15px;
     }
+
     .nav-links {
-        margin-top: 15px;
+        gap: 15px;
     }
+
+    .hero {
+        padding-top: 140px;
+    }
+
     .hero-content h1 {
         font-size: 2.2rem;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-links .btn {
+        width: 100%;
+        margin: 5px 0;
     }
 }
